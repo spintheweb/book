@@ -1,5 +1,123 @@
-% Chapter 15 stub
-\chapter{Chapter 15}
-\label{chap:15}
+% Chapter 15: Datasource Management and Query Processing
+\chapter{Datasource Management and Query Processing}
+\label{chap:datasource-management}
 
-[Content to be added for Chapter 15]
+\begin{quote}
+\textit{"Data is the new oil, but analytics is the refinery."} \\
+— Anonymous
+\end{quote}
+
+\section{Introduction}
+
+The Web Spinner's datasource management system is a critical component that enables the portal to connect with diverse data sources and process queries efficiently. This chapter explores the sophisticated mechanisms that power data integration and query execution.
+
+\section{Datasource Connection and Query Management}
+
+The Web Spinner maintains a sophisticated datasource management system designed for enterprise-scale operations:
+
+\subsection{Connection Pooling}
+Database and API connections are pooled and reused across requests to optimize performance and resource utilization. This approach:
+\begin{itemize}
+\item Reduces connection overhead and improves response times
+\item Manages resource consumption efficiently
+\item Provides resilience against connection failures
+\item Enables horizontal scaling across multiple instances
+\end{itemize}
+
+\subsection{Query Processing}
+Raw queries defined in \texttt{STWContent} elements undergo several processing steps:
+
+\begin{enumerate}
+\item \textbf{WBPL Processing}: Placeholders are resolved using session data, URL parameters, and global variables
+\item \textbf{Security Validation}: Processed queries are validated to prevent injection attacks
+\item \textbf{Optimization}: Query plans may be cached for frequently-executed queries
+\end{enumerate}
+
+\subsection{Multi-Datasource Support}
+The system supports heterogeneous datasources:
+
+\begin{itemize}
+\item \textbf{Relational Databases}: SQL queries with full WBPL placeholder support
+\item \textbf{REST APIs}: HTTP requests with parameter substitution and response transformation
+\item \textbf{NoSQL Databases}: Native query languages (MongoDB, Elasticsearch, etc.)
+\item \textbf{File Systems}: Direct file access and processing
+\end{itemize}
+
+\subsection{Error Handling}
+Datasource errors are gracefully handled through multiple mechanisms:
+\begin{itemize}
+\item Connection failures trigger automatic retry logic
+\item Query errors are logged and appropriate error responses are returned
+\item Partial failures in multi-content pages don't affect other content elements
+\end{itemize}
+
+\section{Just-in-Time Content Layout Compilation}
+
+The Web Spinner employs a dynamic compilation approach for content layouts:
+
+\subsection{Layout Processing}
+The \texttt{STWLayout} elements containing Webbase Layout Language are compiled on-demand:
+\begin{itemize}
+\item Layout templates are parsed and validated
+\item Data binding expressions are resolved
+\item Component hierarchies are built
+\end{itemize}
+
+\subsection{Caching Strategy}
+Compiled layouts are cached in memory with invalidation based on:
+\begin{itemize}
+\item Layout template changes
+\item Datasource schema changes
+\item User role changes that might affect layout visibility
+\end{itemize}
+
+\subsection{Responsive Rendering}
+Layout compilation takes into account:
+\begin{itemize}
+\item Device type and screen size (from HTTP headers)
+\item User preferences and accessibility requirements
+\item Performance constraints and bandwidth limitations
+\end{itemize}
+
+\section{Performance Optimization and Timeout Management}
+
+The Web Spinner implements several performance and reliability features:
+
+\subsection{Content Timeouts}
+Each content element has configurable timeout settings:
+\begin{itemize}
+\item \textbf{Query Timeout}: Maximum time allowed for datasource queries
+\item \textbf{Layout Timeout}: Maximum time for layout compilation and rendering
+\item \textbf{Total Request Timeout}: Overall timeout for content delivery
+\end{itemize}
+
+\subsection{Caching Mechanisms}
+Multiple levels of caching improve performance:
+\begin{itemize}
+\item \textbf{Query Result Caching}: Datasource results are cached based on query signatures
+\item \textbf{Layout Caching}: Compiled layouts are cached until templates change
+\item \textbf{Response Caching}: Complete HTTP responses may be cached for static content
+\end{itemize}
+
+\subsection{Load Balancing}
+Multiple Web Spinner instances can operate in parallel:
+\begin{itemize}
+\item Session affinity ensures consistent user experience
+\item Shared cache layers enable scaling across multiple servers
+\item Health monitoring ensures failed instances are automatically excluded
+\end{itemize}
+
+\subsection{Monitoring and Metrics}
+The Web Spinner provides comprehensive monitoring:
+\begin{itemize}
+\item Request/response times and throughput metrics
+\item Datasource performance and error rates
+\item User session analytics and behavior patterns
+\item System resource utilization and capacity planning data
+\end{itemize}
+
+\section{Chapter Summary}
+
+This chapter explored the Web Spinner's sophisticated datasource management, query processing, and performance optimization systems. These mechanisms ensure that the Web Spinner can handle enterprise-scale workloads while maintaining high performance, security, and reliability standards.
+
+\textbf{Next}: In \chapref{chap:16}, we will examine the Spin the Web Studio and its role in the development process.

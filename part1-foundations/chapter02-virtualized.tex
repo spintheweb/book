@@ -1,7 +1,7 @@
-% Chapter 2: The Virtualized Company Concept
+% Chapter 2: The WBDL Language
 
-\chapter{The Virtualized Company Concept}
-\label{chap:virtualized}
+\chapter{The WBDL Language}
+\label{chap:wbdl}
 
 \begin{quote}
 \textit{"The best interface is no interface."} \\
@@ -10,10 +10,72 @@
 
 \section{Introduction}
 
-[This chapter will explore the concept of the virtualized company in detail.]
+WBDL is formally defined using two standard schema languages: \textbf{XML Schema Definition (XSD)} and \textbf{JSON Schema}. This dual-schema approach ensures broad compatibility and facilitates validation and data exchange across different platforms and programming languages.
+
+\section{The Book Analogy}
+
+To better understand the structure of a web portal defined in WBDL, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs.
+
+\begin{itemize}
+\item \textbf{Areas (\texttt{STWArea})}: These are the main sections of the portal, analogous to the \textbf{chapters} of a book. An area groups related pages together.
+\item \textbf{Pages (\texttt{STWPage})}: Contained within Areas, these are the individual \textbf{pages} of the book. Each page holds the actual content that users will see.
+\item \textbf{Content (\texttt{STWContents})}: These are the building blocks of a page, similar to the \textbf{paragraphs} or other content elements (like images or tables) on a page.
+\end{itemize}
+
+\texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
+
+\section{Portal Organization and User Journeys}
+
+The structure of a web portal built with WBDL is typically organized around the core functions of the business it represents. This creates a logical and intuitive navigation system for all users. Common top-level \textbf{Areas (\texttt{STWArea})} would include:
+
+\begin{itemize}
+\item Sales
+\item Administration
+\item Backoffice
+\item Technical Office
+\item Logistics
+\item Products \& Services (often publicly viewable)
+\end{itemize}
+
+The full potential of the portal is revealed when we consider the specific journeys of different users, or \textbf{personas}. The portal uses a role-based system to present a completely different experience to each user, tailored to their needs and permissions.
+
+\subsection{Example User Journeys}
+
+\subsubsection{The Customer}
+\begin{itemize}
+\item Logs into the portal and is directed to a personalized ``Customer Dashboard'' page.
+\item Can view their complete order history in a dedicated ``My Orders'' area.
+\item Can track the real-time status of current orders (e.g., ``Processing,'' ``Shipped'').
+\item Can initiate a video chat with their designated sales representative directly from the portal.
+\item Can open a support ticket or schedule a consultation with the Technical Office.
+\end{itemize}
+
+\subsubsection{The Supplier}
+\begin{itemize}
+\item Logs in and sees a ``Supplier Dashboard.''
+\item Can access a ``Kanban View'' page to see which materials or components require replenishment.
+\item Can submit new quotations through an integrated form.
+\item Can view the status of their invoices and payments.
+\end{itemize}
+
+\subsubsection{The Employee}
+\begin{itemize}
+\item Logs in and is presented with an ``Employee Self-Service'' area.
+\item Can access a ``Welfare Management'' page to view and adjust their benefits.
+\item Can view internal company news, submit vacation requests, and access HR documents.
+\end{itemize}
+
+\subsubsection{The CEO}
+\begin{itemize}
+\item Logs in to a high-level ``Executive Dashboard.''
+\item Can view key performance indicators (KPIs) for the entire company, such as sales figures, production output, and financial health.
+\item Can access detailed reports from various departments.
+\end{itemize}
+
+These user journeys demonstrate how WBDL's hierarchical structure and role-based visibility rules work together to create a highly functional and personalized web portal that serves as a central hub for the entire business ecosystem.
 
 \section{Chapter Summary}
 
-This chapter introduced the virtualized company concept, laying the foundation for understanding how web portals can serve as comprehensive digital channels.
+This chapter introduced the WBDL language, its hierarchical structure based on the book analogy, and how it enables role-based portal experiences for different user personas.
 
 \textbf{Next}: In \chapref{chap:architecture}, we will examine the three-pillar architecture that makes this vision possible.
