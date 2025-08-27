@@ -13,38 +13,25 @@
 
 In today's digital economy, businesses operate through a complex web of disparate software systems—\erp{s}, \crm{s}, \bpms{s}, \mrp{s}, and much more. While individually capable, these systems often create siloed user experiences, forcing employees, customers, and partners to navigate multiple interfaces to perform their tasks. This fragmentation leads to inefficiency, poor user adoption, and a disjointed view of the enterprise.
 
-The \textbf{Spin the Web Project} addresses this challenge head-on. The word ``Spin'' is used in the sense of ``to weave,'' as a spider dynamically weaves a web. The project is designed to weave together disparate systems and user experiences into a single, coherent whole, based on Internet technologies.
+The \textbf{Spin the Web Project} addresses this challenge head-on. The word ``Spin'' is used in the sense of ``to weave,'' as a spider dynamically weaves a web. The project is designed to weave together disparate systems and user experiences into a single, coherent whole, based on Internet technologies. It introduces a new paradigm for developing web portals centered on three core components: a specialized language, the \textbf{Webbase Description Language (\wbdl{})}; a server-side rendering engine, the \textbf{Web Spinner}; and a specialized \webbaselet{} for editing \webbase{s}, the \textbf{Spin the Web Studio}. The project's core mission is to enable the creation of unified, role-based web portals that act as a ``virtualized company''—a single, coherent digital channel for all business interactions.
 
-\section{The Three-Pillar Solution}
-\label{sec:three-pillars}
+This document serves as the foundational guide for the Spin the Web project. It outlines the vision, defines the core components of the \wbdl{} specification, and provides concrete examples of how this technology can be used to build the next generation of integrated web portals.
 
-The Spin the Web Project introduces a new paradigm for developing web portals centered on three core components:
-
-\begin{description}
-\item[\textbf{Webbase Description Language (\wbdl{})}]: A specialized declarative language for modeling portal structure, content, and behavior
-\item[\textbf{Web Spinner}]: A server-side rendering engine that interprets \wbdl{} specifications to dynamically generate user experiences  
-\item[\textbf{Spin the Web Studio}]: A specialized \webbaselet{} for editing \webbase{s}, providing the development environment for creating and managing portals
-\end{description}
-
-The project's core mission is to enable the creation of unified, role-based web portals that act as a ``virtualized company''—a single, coherent digital channel for all business interactions.
+It is important to note that the Spin the Web Project is a professional framework intended for full-stack developers. It is not a low-code/no-code platform for the general public, but rather a comprehensive toolset for engineers building bespoke, enterprise-grade web portals.
 
 \section{Understanding Web Portals}
 \label{sec:web-portals}
 
-Web portals are \textbf{``websites on steroids.''} They expand on the concept of a traditional website by serving a diverse, segmented audience that includes not only the general public but also internal and external stakeholders like employees, clients, suppliers, governance bodies, and developers.
+Web portals are \textbf{``websites on steroids.''} They expand on the concept of a traditional website by serving a diverse, segmented audience that includes not only the general public but also internal and external stakeholders like employees, clients, suppliers, governance bodies, developers, and more.
 
-Web portals function as \textbf{virtualized companies}, an all-encompassing digital channel that allows individuals, based on their specific role, to interact with every facet of the organization—from administration and logistics to sales, marketing, human resources, and production.
-
-\subsection{Portal Characteristics}
-
-A comprehensive web portal provides:
+Web portals function as \textbf{virtualized companies}, an all-encompassing digital channel that allows individuals, based on their specific role, to interact with every facet of the organization—from administration and logistics to sales, marketing, human resources, and production. It is a comprehensive platform for:
 
 \begin{description}
 \item[\textbf{Multi-Audience Communication}]: Providing tailored content and functionality for different user groups
 \item[\textbf{Bi-directional Data Interaction}]: Enabling users to not only consume data but also to input, manage, and interact with it, effectively participating in business processes
 \item[\textbf{Centralized Access}]: Acting as a single point of access to a wide array of company information, applications, and services
 \item[\textbf{Role-Based Personalization}]: Ensuring that the experience is secure and customized, granting each user access only to the information and tools relevant to their role
-\item[\textbf{Application Programming Interface (API) Management}]: \rest{}ful services and microservices integration for system-to-system communication
+\item[\textbf{System-to-System Integration}]: Exposing its functionalities as an API, allowing it to be contacted by other web portals or external systems, which can interact with it programmatically
 \end{description}
 
 \wbdl{} is the language specifically designed to model the complexity of web portals, defining their structures, data integrations, and authorization rules that govern this dynamic digital ecosystem.
@@ -56,22 +43,73 @@ The concept of the \textbf{\webbaselet{}} opens the door to a vision for the fut
 
 Instead, the front-end of each of these critical business systems could be engineered as a self-contained \textbf{\webbaselet{}}. These \webbaselet{s} could then be seamlessly integrated into a single, unified company \textbf{\webbase{}}.
 
-\subsection{Benefits of Unified Integration}
-
 The result would be a high level of coherence and consistency across the entire enterprise software landscape. Users would navigate a single, familiar portal environment, moving effortlessly between what were once separate applications. This approach would not only improve the user experience but also simplify the development, deployment, and maintenance of enterprise front-ends.
-
-\subsection{Modular Composition}
-
-\webbaselet{s} allow incremental integration of enterprise systems without disrupting existing workflows. Each system can be integrated as a standalone module while maintaining the overall portal coherence.
 
 Extending large platforms can be costly. Spin the Web excels at adding smaller, targeted features that are often prohibitively expensive for major vendors to implement.
 
-\section{Target Audience and Scope}
-\label{sec:target-audience}
+\section{The Book Analogy}
+\label{sec:book-analogy}
 
-It is important to note that the Spin the Web Project is a professional framework intended for full-stack developers. It is not a low-code/no-code platform for the general public, but rather a comprehensive toolset for engineers building bespoke, enterprise-grade web portals.
+To better understand the structure of a web portal defined in \wbdl{}, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs.
 
-This document serves as the foundational guide for the Spin the Web project. It outlines the vision, defines the core components of the \wbdl{} specification, and provides concrete examples of how this technology can be used to build the next generation of integrated web portals.
+\begin{description}
+\item[\textbf{Areas (\texttt{STWArea})}]: These are the main sections of the portal, analogous to the \textbf{chapters} of a book. An area groups related pages together.
+\item[\textbf{Pages (\texttt{STWPage})}]: Contained within Areas, these are the individual \textbf{pages} of the book. Each page holds the actual content that users will see.
+\item[\textbf{Content (\texttt{STWContent})}]: These are the building blocks of a page, similar to the \textbf{paragraphs} or other content elements (like images or tables) on a page.
+\end{description}
+
+\texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
+
+\section{Portal Organization and User Journeys}
+\label{sec:user-journeys}
+
+The structure of a web portal built with \wbdl{} is typically organized around the core functions of the business it represents. This creates a logical and intuitive navigation system for all users. Common top-level \textbf{Areas (\texttt{STWArea})} would include:
+
+\begin{itemize}
+    \item Sales
+    \item Administration
+    \item Backoffice
+    \item Technical Office
+    \item Logistics
+    \item Products \& Services (often publicly viewable)
+\end{itemize}
+
+The full potential of the portal is revealed when we consider the specific journeys of different users, or \textbf{personas}. The portal uses a role-based system to present a completely different experience to each user, tailored to their needs and permissions.
+
+\subsection{Example User Journeys}
+
+\textbf{The Customer:}
+\begin{itemize}
+    \item Logs into the portal and is directed to a personalized ``Customer Dashboard'' page
+    \item Can view their complete order history in a dedicated ``My Orders'' area
+    \item Can track the real-time status of current orders (e.g., ``Processing,'' ``Shipped'')
+    \item Can initiate a video chat with their designated sales representative directly from the portal
+    \item Can open a support ticket or schedule a consultation with the Technical Office
+\end{itemize}
+
+\textbf{The Supplier:}
+\begin{itemize}
+    \item Logs in and sees a ``Supplier Dashboard''
+    \item Can access a ``Kanban View'' page to see which materials or components require replenishment
+    \item Can submit new quotations through an integrated form
+    \item Can view the status of their invoices and payments
+\end{itemize}
+
+\textbf{The Employee:}
+\begin{itemize}
+    \item Logs in and is presented with an ``Employee Self-Service'' area
+    \item Can access a ``Welfare Management'' page to view and adjust their benefits
+    \item Can view internal company news, submit vacation requests, and access HR documents
+\end{itemize}
+
+\textbf{The CEO:}
+\begin{itemize}
+    \item Logs in to a high-level ``Executive Dashboard''
+    \item Can view key performance indicators (KPIs) for the entire company, such as sales figures, production output, and financial health
+    \item Can access detailed reports from various departments
+\end{itemize}
+
+These user journeys demonstrate how \wbdl{}'s hierarchical structure and role-based visibility rules work together to create a highly functional and personalized web portal that serves as a central hub for the entire business ecosystem.
 
 \section{Looking Forward}
 \label{sec:looking-forward}
@@ -79,3 +117,5 @@ This document serves as the foundational guide for the Spin the Web project. It 
 The three-pillar architecture—\wbdl{}, \webspinner{}, and \studio{}—provides the foundation for creating enterprise portals that can adapt to complex organizational needs while maintaining simplicity for developers and end-users alike.
 
 In the next chapter (\cref{chap:virtualized}), we will explore how these components work together to create truly virtualized enterprise environments, and Chapter \ref{chap:architecture} will detail the technical architecture that makes this vision possible.
+
+For more information about the project, visit \url{https://www.spintheweb.org}.

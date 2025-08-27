@@ -1,81 +1,254 @@
-% Chapter 2: The WBDL Language
+% Chapter 2: Web Spinner Architecture and Mechanics
 
-\chapter{The WBDL Language}
-\label{chap:wbdl}
+\chapter{Web Spinner Architecture and Mechanics}
+\label{chap:virtualized}
 
 \begin{quote}
-\textit{"The best interface is no interface."} \\
-— Golden Krishna
+\textit{"The web of our life is of a mingled yarn, good and ill together."} \\
+— William Shakespeare
 \end{quote}
 
-\section{Introduction}
+\wbdl{} is processed by a server-side engine called the \textbf{Web Spinner}. In a direct analogy to how a client-side web browser renders HTML into a user-facing webpage, the Web Spinner interprets \wbdl{} descriptions to generate and manage the web portal on the server. It is the runtime engine of the project, complemented by the \textbf{Spin the Web Studio}, which serves as the design-time tool for creating and modifying the \webbase{} itself. This architecture allows for dynamic, data-driven portal generation based on the \wbdl{} specification.
 
-WBDL is formally defined using two standard schema languages: \textbf{XML Schema Definition (XSD)} and \textbf{JSON Schema}. This dual-schema approach ensures broad compatibility and facilitates validation and data exchange across different platforms and programming languages.
+When the Web Spinner starts, it loads the \webbase{} (whether in XML or JSON format) into memory. This \webbase{} is transformed into an optimized, in-memory object, allowing for fast access and manipulation of the portal's structure.
 
-\section{The Book Analogy}
+\section{Primary Roles and Responsibilities}
+\label{sec:primary-roles}
 
-To better understand the structure of a web portal defined in WBDL, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs.
+The Web Spinner's primary roles are routing and content delivery:
+
+\begin{enumerate}
+    \item \textbf{URL-Based Routing:} It maps the incoming URL directly to a \webbase{} object. For example, a URL like \texttt{https://portal.acme.com/areaslug/areaslug/pageslug} is interpreted as a path to a specific \texttt{STWPage} element within the \webbase{} hierarchy.
+
+    \item \textbf{Page Composition:} When a user requests a page, the Web Spinner acts as the initial router. It identifies the requested page and its associated \texttt{STWContent} elements. Crucially, it checks the \texttt{visibility} rules for the page and each content element against the user's roles. Elements that are not visible to the user are filtered out and never sent to the client. The spinner then returns the list of slugs for the visible contents.
+
+    \item \textbf{Asynchronous Content Fetching:} The client receives the list of content slugs and proceeds to request each one asynchronously and individually. For instance, it would request \texttt{https://portal.acme.com/areaslug/areaslug/pageslug/contentslug}. This approach allows the main page structure to load quickly while content is fetched in parallel, improving perceived performance.
+
+    \item \textbf{Dynamic Content:} A content element is not limited to rendering data but also managing data like an API.
+\end{enumerate}
+
+This architecture ensures that the server handles the core logic of structure, routing, and security, while the client is responsible for the final rendering, leading to a flexible and performant web portal.
+
+\section{System Startup and Initialization}
+\label{sec:system-startup}
+
+When the Web Spinner starts up, it performs several critical initialization steps:
+
+\subsection{Webbase Loading}
+
+The engine loads the complete \wbdl{} document (\webbase{}) from disk, whether stored in XML or JSON format. This document contains the entire portal structure, including all areas, pages, content definitions, and configuration data.
+
+\subsection{In-Memory Optimization}
+
+The loaded \webbase{} is parsed and transformed into an optimized in-memory object graph. This transformation includes:
 
 \begin{itemize}
-\item \textbf{Areas (\texttt{STWArea})}: These are the main sections of the portal, analogous to the \textbf{chapters} of a book. An area groups related pages together.
-\item \textbf{Pages (\texttt{STWPage})}: Contained within Areas, these are the individual \textbf{pages} of the book. Each page holds the actual content that users will see.
-\item \textbf{Content (\texttt{STWContents})}: These are the building blocks of a page, similar to the \textbf{paragraphs} or other content elements (like images or tables) on a page.
+    \item Resolving all GUID references between elements
+    \item Building navigation hierarchies for fast traversal
+    \item Pre-compiling visibility rules for rapid role-based filtering
+    \item Indexing elements by slug for efficient URL routing
 \end{itemize}
 
-\texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
+\subsection{Datasource Configuration}
 
-\section{Portal Organization and User Journeys}
+All datasources defined in the \texttt{STWSite} element are initialized and connection pools are established. This includes databases, \rest{} APIs, file systems, and any other external data providers.
 
-The structure of a web portal built with WBDL is typically organized around the core functions of the business it represents. This creates a logical and intuitive navigation system for all users. Common top-level \textbf{Areas (\texttt{STWArea})} would include:
+\subsection{Route Table Generation}
 
+A comprehensive routing table is built from the \webbase{} structure, mapping URL patterns to specific \texttt{STWPage} and \texttt{STWContent} elements.
+
+\section{User Session Management}
+\label{sec:session-management}
+
+The Web Spinner maintains stateful user sessions to manage authentication, authorization, and personalization:
+
+\subsection{Session Establishment}
+
+When a user first accesses the portal, a new session is created with a unique identifier, guest is set as the session user (guest has is assigned the guests role). Sessions are maintained using cookies, JWT tokens, or other mechanisms.
+
+\subsection{Authentication Integration}
+
+The system integrates with various authentication providers (LDAP, OAuth, SAML, etc.) to verify user credentials and establish their identity.
+
+\subsection{Role Assignment}
+
+Once authenticated, the user's roles are determined through integration with identity providers or internal role mappings. These roles are cached in the session for performance.
+
+\subsection{Session State}
+
+The session maintains:
 \begin{itemize}
-\item Sales
-\item Administration
-\item Backoffice
-\item Technical Office
-\item Logistics
-\item Products \& Services (often publicly viewable)
+    \item User identity and roles
+    \item Current language preference
+    \item Navigation history
+    \item Cached query results (when appropriate)
+    \item Active datasource connections
 \end{itemize}
 
-The full potential of the portal is revealed when we consider the specific journeys of different users, or \textbf{personas}. The portal uses a role-based system to present a completely different experience to each user, tailored to their needs and permissions.
+\section{Request Routing and Processing}
+\label{sec:request-routing}
 
-\subsection{Example User Journeys}
+The Web Spinner handles incoming HTTP requests through a sophisticated routing mechanism:
 
-\subsubsection{The Customer}
+\subsection{URL Parsing}
+
+Incoming URLs are parsed to extract the area/page/content hierarchy. For example:
 \begin{itemize}
-\item Logs into the portal and is directed to a personalized ``Customer Dashboard'' page.
-\item Can view their complete order history in a dedicated ``My Orders'' area.
-\item Can track the real-time status of current orders (e.g., ``Processing,'' ``Shipped'').
-\item Can initiate a video chat with their designated sales representative directly from the portal.
-\item Can open a support ticket or schedule a consultation with the Technical Office.
+    \item \texttt{https://portal.acme.com/sales/dashboard} → Area: ``sales'', Page: ``dashboard''
+    \item \texttt{https://portal.acme.com/sales/dashboard/orders-table} → Area: ``sales'', Page: ``dashboard'', Content: ``orders-table''
 \end{itemize}
 
-\subsubsection{The Supplier}
+\subsection{Element Resolution}
+
+Using the pre-built routing table, URLs are resolved to specific \wbdl{} elements. Missing or invalid paths result in no result in case of contents the nearest site or area main page in case of a page.
+
+\subsection{Protocol Handling}
+
+The Web Spinner supports both HTTP and WebSocket protocols:
+\begin{description}
+    \item[\textbf{HTTP}]: Used for standard page and content requests, following RESTful principles
+    \item[\textbf{WebSocket}]: Used for real-time content updates, live data feeds, and interactive features
+\end{description}
+
+\section{Visibility and Authorization Engine}
+\label{sec:authorization-engine}
+
+Before any content is delivered, the Web Spinner performs comprehensive authorization checks:
+
+\subsection{Role-Based Filtering}
+
+For each requested element (page or content), the visibility rules are evaluated against the user's session roles:
 \begin{itemize}
-\item Logs in and sees a ``Supplier Dashboard.''
-\item Can access a ``Kanban View'' page to see which materials or components require replenishment.
-\item Can submit new quotations through an integrated form.
-\item Can view the status of their invoices and payments.
+    \item Elements with no matching role rules inherit visibility from their parent elements
+    \item The hierarchical check continues up to the root element
+    \item Elements without explicit or inherited visibility permissions are denied by default
 \end{itemize}
 
-\subsubsection{The Employee}
+\subsection{Dynamic Filtering}
+
+Visibility checks are performed in real-time for every request, ensuring that changes to user roles or permissions take immediate effect.
+
+\subsection{Secure Response Generation}
+
+Only authorized elements are included in the response. Unauthorized elements are completely omitted, preventing information leakage.
+
+\section{Content Request and Response Cycle}
+\label{sec:content-cycle}
+
+The Web Spinner handles content requests through a multi-stage process:
+
+\subsection{Page Structure Delivery}
+
+When a page is requested, the Web Spinner:
 \begin{itemize}
-\item Logs in and is presented with an ``Employee Self-Service'' area.
-\item Can access a ``Welfare Management'' page to view and adjust their benefits.
-\item Can view internal company news, submit vacation requests, and access HR documents.
+    \item Identifies all visible \texttt{STWContent} elements for the page
+    \item Returns a lightweight response containing the list of content slugs and their metadata
+    \item Includes section assignments and sequencing information for layout
 \end{itemize}
 
-\subsubsection{The CEO}
+\subsection{Asynchronous Content Fetching}
+
+The client then requests individual content elements:
 \begin{itemize}
-\item Logs in to a high-level ``Executive Dashboard.''
-\item Can view key performance indicators (KPIs) for the entire company, such as sales figures, production output, and financial health.
-\item Can access detailed reports from various departments.
+    \item Each content request triggers a separate web socket call to the Web Spinner
+    \item Content elements are fetched in parallel, improving perceived performance
+    \item Each content element is processed independently, allowing for granular caching and error handling
 \end{itemize}
 
-These user journeys demonstrate how WBDL's hierarchical structure and role-based visibility rules work together to create a highly functional and personalized web portal that serves as a central hub for the entire business ecosystem.
+\subsection{Content Processing Pipeline}
 
-\section{Chapter Summary}
+For each content request, the Web Spinner:
+\begin{enumerate}
+    \item Validates user authorization for the specific content element
+    \item Resolves the associated datasource and query
+    \item Processes the query through the \wbpl{} (Webbase Placeholders Language) engine
+    \item Executes the processed query against the datasource
+    \item Applies the content layout transformation
+    \item Returns the rendered content or raw data (depending on the request type)
+\end{enumerate}
 
-This chapter introduced the WBDL language, its hierarchical structure based on the book analogy, and how it enables role-based portal experiences for different user personas.
+\section{Datasource Connection and Query Management}
+\label{sec:datasource-management}
 
-\textbf{Next}: In \chapref{chap:architecture}, we will examine the three-pillar architecture that makes this vision possible.
+The Web Spinner maintains a sophisticated datasource management system:
+
+\subsection{Connection Pooling}
+
+Database and API connections are pooled and reused across requests to optimize performance and resource utilization.
+
+\subsection{Query Processing}
+
+Raw queries defined in \texttt{STWContent} elements undergo several processing steps:
+\begin{description}
+    \item[\textbf{\wbpl{} Processing}]: Placeholders are resolved using session data, URL parameters, and global variables
+    \item[\textbf{Security Validation}]: Processed queries are validated to prevent injection attacks
+    \item[\textbf{Optimization}]: Query plans may be cached for frequently-executed queries
+\end{description}
+
+\subsection{Multi-Datasource Support}
+
+The system supports heterogeneous datasources:
+\begin{description}
+    \item[\textbf{Relational Databases}]: SQL queries with full \wbpl{} placeholder support
+    \item[\textbf{\rest{} APIs}]: HTTP requests with parameter substitution and response transformation
+    \item[\textbf{NoSQL Databases}]: Native query languages (MongoDB, Elasticsearch, etc.)
+    \item[\textbf{File Systems}]: Direct file access and processing
+\end{description}
+
+\subsection{Error Handling}
+
+Datasource errors are gracefully handled:
+\begin{itemize}
+    \item Connection failures trigger automatic retry logic
+    \item Query errors are logged and appropriate error responses are returned
+    \item Partial failures in multi-content pages don't affect other content elements
+\end{itemize}
+
+\section{Performance Optimization and Timeout Management}
+\label{sec:performance-optimization}
+
+The Web Spinner implements several performance and reliability features:
+
+\subsection{Content Timeouts}
+
+Each content element has configurable timeout settings:
+\begin{description}
+    \item[\textbf{Query Timeout}]: Maximum time allowed for datasource queries
+    \item[\textbf{Layout Timeout}]: Maximum time for layout compilation and rendering
+    \item[\textbf{Total Request Timeout}]: Overall timeout for content delivery
+\end{description}
+
+\subsection{Caching Mechanisms}
+
+Multiple levels of caching improve performance:
+\begin{description}
+    \item[\textbf{Query Result Caching}]: Datasource results are cached based on query signatures
+    \item[\textbf{Layout Caching}]: Compiled layouts are cached until templates change
+    \item[\textbf{Response Caching}]: Complete HTTP responses may be cached for static content
+\end{description}
+
+\subsection{Load Balancing}
+
+Multiple Web Spinner instances can operate in parallel:
+\begin{itemize}
+    \item Session affinity ensures consistent user experience
+    \item Shared cache layers enable scaling across multiple servers
+    \item Health monitoring ensures failed instances are automatically excluded
+\end{itemize}
+
+\subsection{Monitoring and Metrics}
+
+The Web Spinner provides comprehensive monitoring:
+\begin{itemize}
+    \item Request/response times and throughput metrics
+    \item Datasource performance and error rates
+    \item User session analytics and behavior patterns
+    \item System resource utilization and capacity planning data
+\end{itemize}
+
+This architecture ensures that the Web Spinner can handle enterprise-scale workloads while maintaining high performance, security, and reliability standards.
+
+\section{Looking Forward}
+\label{sec:webspinner-forward}
+
+The Web Spinner serves as the runtime foundation for the entire Spin the Web ecosystem. In the following chapters, we will explore how the \wbdl{} language provides the declarative foundation for portal definition, and how the Spin the Web Studio enables developers to create and maintain these complex portal structures efficiently.

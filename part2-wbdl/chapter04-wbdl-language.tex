@@ -1,0 +1,291 @@
+% Chapter 4: The WBDL Language
+
+\chapter{The WBDL Language}
+\label{chap:wbdl-language}
+
+\begin{quote}
+\textit{"The limits of my language mean the limits of my world."} \\
+— Ludwig Wittgenstein
+\end{quote}
+
+\wbdl{} is formally defined using two standard schema languages: \textbf{XML Schema Definition (XSD)} and \textbf{JSON Schema}. This dual-schema approach ensures broad compatibility and facilitates validation and data exchange across different platforms and programming languages.
+
+\section{Spin the Web Studio}
+\label{sec:studio}
+
+The third and final component of the Spin the Web Project is the \textbf{Spin the Web Studio}. Alongside the \textbf{\wbdl{}} and the \textbf{Web Spinner}, it completes the framework. The Spin the Web Studio is a specialized \webbaselet{} engineered for editing \webbase{s}. To use it, you simply add the \webbaselet{} to the \webbase{} you wish to edit, enabling direct, in-place modification.
+
+\section{The STWElement Base}
+\label{sec:stwelement-base}
+
+\wbdl{} defines a base element, \texttt{STWElement}, from which all other elements inherit. Below is the XSD definition for this fundamental type.
+
+\begin{lstlisting}[language=XML,caption={STWElement Base Type Definition}]
+<xs:complexType name="STWElement">
+    <xs:sequence>
+        <xs:element name="name" type="STWLocalized" minOccurs="1" />
+        <xs:element name="slug" type="STWLocalized" minOccurs="1" />
+        <xs:element name="keywords" type="STWLocalized" minOccurs="0" />
+        <xs:element name="description" type="STWLocalized" minOccurs="0" />
+        <xs:element name="visibility" type="STWVisibility" minOccurs="0" />
+        <xs:element name="children" minOccurs="0">
+            <xs:complexType>
+                <xs:choice minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="area" type="STWArea" />
+                    <xs:element name="page" type="STWPage" />
+                    <xs:element name="content" type="STWContent" />
+                </xs:choice>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="_id" type="GUID" use="required" />
+    <xs:attribute name="type" type="STWElementType" use="required" />
+</xs:complexType>
+
+<xs:simpleType name="GUID">
+    <xs:restriction base="xs:string">
+        <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="STWElementType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="Site"/>
+        <xs:enumeration value="Area"/>
+        <xs:enumeration value="Page"/>
+        <xs:enumeration value="Content"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="STWLocalized">
+    <xs:sequence>
+        <xs:element name="text" minOccurs="1" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="lang" type="xs:language" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="STWVisibility">
+    <xs:sequence>
+        <xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:attribute name="role" type="xs:string" use="required"/>
+                <xs:attribute name="visible" type="xs:boolean" use="required"/>
+            </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="STWLayout">
+    <xs:complexContent>
+        <xs:extension base="STWLocalized">
+            <!-- Content holds Webbase Layout Language text, to be defined later. -->
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\subsection{Property Description}
+
+\begin{description}
+\item[\textbf{\_id}]: A unique identifier for the element (GUID).
+\item[\textbf{type}]: The specific type of the element. Can be one of 'Site', 'Area', 'Page', or 'Content'.
+\item[\textbf{name}]: A localizable name for the element. It is composed of one or more \texttt{text} elements, each with a \texttt{lang} attribute specifying the language (e.g., "en", "it-IT"). The text content is wrapped in \texttt{<![CDATA[...]]>} to prevent issues with special characters. Example: \texttt{<name><text lang="en"><![CDATA[R\&D]]></text><text lang="it"><![CDATA[R\&S]]></text></name>}
+\item[\textbf{slug}]: A localizable, URL-friendly version of the name. It is initially derived from the \texttt{name} by converting it to lowercase and removing all characters except for letters (a-z, A-Z), numbers (0-9), and underscores (\_), but can be manually overridden. Follows the same structure as \texttt{name}.
+\item[\textbf{keywords}]: Localizable keywords for SEO. Follows the same structure as \texttt{name}.
+\item[\textbf{description}]: A localizable description of the element. Follows the same structure as \texttt{name}.
+\item[\textbf{visibility}]: Defines the visibility rules for the element based on user roles. It contains a set of rules, where each rule assigns \texttt{true} (visible) or \texttt{false} (not visible) to a specific role. If a rule for a role is not defined (is \texttt{null}), the visibility is determined by checking the parent element's visibility rules. This hierarchical check continues up to the root element. If no rule is found, the element is not visible by default.
+\item[\textbf{children}]: A list of child \texttt{STWElement} objects.
+\end{description}
+
+\section{WBDL Element Types}
+\label{sec:wbdl-element-types}
+
+This section describes the specialized element types available in \wbdl{}.
+
+\subsection{STWSite}
+
+\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure. There must be exactly one \texttt{STWSite} element in any \wbdl{} document.
+
+\begin{lstlisting}[language=XML,caption={STWSite Type Definition}]
+<xs:complexType name="STWSite">
+    <xs:complexContent>
+        <xs:extension base="STWElement">
+            <xs:sequence>
+                <xs:element name="langs" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lang" type="xs:language" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="datasources" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="mainpage" type="GUID"/>
+            <xs:attribute name="version" type="xs:string"/>
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\subsubsection{Property Description}
+
+\begin{description}
+\item[\textbf{langs}]: A list of supported languages for the site. The first of the list is the default site language.
+\item[\textbf{datasources}]: Defines the data sources used by the portal.
+\item[\textbf{mainpage}]: The GUID of the \texttt{STWPage} that serves as the main entry point for the site.
+\item[\textbf{version}]: A version string for the site.
+\end{description}
+
+\subsection{STWArea}
+
+\texttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
+
+\begin{lstlisting}[language=XML,caption={STWArea Type Definition}]
+<xs:complexType name="STWArea">
+    <xs:complexContent>
+        <xs:extension base="STWElement">
+            <xs:attribute name="mainpage" type="GUID"/>
+            <xs:attribute name="version" type="xs:string"/>
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\subsubsection{Property Description}
+
+\begin{description}
+\item[\textbf{mainpage}]: The GUID of the \texttt{STWPage} that serves as the main entry point for this area.
+\item[\textbf{version}]: A version string for the area.
+\end{description}
+
+\subsection{STWPage}
+
+\texttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
+
+\begin{lstlisting}[language=XML,caption={STWPage Type Definition}]
+<xs:complexType name="STWPage">
+    <xs:complexContent>
+        <xs:restriction base="STWElement">
+            <xs:sequence>
+                <xs:element name="name" type="STWLocalized" minOccurs="1" />
+                <xs:element name="slug" type="STWLocalized" minOccurs="1" />
+                <xs:element name="keywords" type="STWLocalized" minOccurs="0" />
+                <xs:element name="description" type="STWLocalized" minOccurs="0" />
+                <xs:element name="visibility" type="STWVisibility" minOccurs="0" />
+                <xs:element name="children" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="content" type="STWContent" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="_id" type="GUID" use="required" />
+            <xs:attribute name="type" type="STWElementType" use="required" />
+        </xs:restriction>
+    </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\subsection{STWContent}
+
+\texttt{STWContent} represents a piece of content on a page. It extends the base \texttt{STWElement} but is not allowed to have any \texttt{children}. It adds several attributes for data binding and layout control.
+
+\begin{lstlisting}[language=XML,caption={STWContent Type Definition}]
+<xs:complexType name="STWContent">
+    <xs:complexContent>
+        <xs:restriction base="STWElement">
+            <xs:sequence>
+                <xs:element name="name" type="STWLocalized" minOccurs="1" />
+                <xs:element name="slug" type="STWLocalized" minOccurs="1" />
+                <xs:element name="keywords" type="STWLocalized" minOccurs="0" />
+                <xs:element name="description" type="STWLocalized" minOccurs="0" />
+                <xs:element name="visibility" type="STWVisibility" minOccurs="0" />
+                <xs:element name="layout" type="STWLayout" />
+            </xs:sequence>
+            <xs:attribute name="_id" type="GUID" use="required" />
+            <xs:attribute name="type" type="STWElementType" use="required" fixed="Content" />
+            <xs:attribute name="subtype" type="xs:string" />
+            <xs:attribute name="cssClass" type="xs:string" />
+            <xs:attribute name="section" type="xs:string" />
+            <xs:attribute name="sequence" type="xs:integer" />
+            <xs:attribute name="dsn" type="xs:string" />
+            <xs:attribute name="query" type="xs:string" />
+            <xs:attribute name="params" type="xs:string" />
+        </xs:restriction>
+    </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\subsubsection{Property Description}
+
+\begin{description}
+\item[\textbf{type}]: Overrides the base element's type and is fixed to "Content".
+\item[\textbf{subtype}]: Specifies the type of content to be rendered, which determines the component used on the front-end. Possible values include \texttt{Text}, \texttt{Form}, \texttt{Table}, \texttt{Tree}, \texttt{Calendar}, and \texttt{Breadcrumbs}.
+\item[\textbf{cssClass}]: An optional CSS class to apply to the content element for styling.
+\item[\textbf{section}]: The name of the page section where this content should be rendered (e.g., "header", "main", "sidebar").
+\item[\textbf{sequence}]: A number that determines the order of content within a section.
+\item[\textbf{dsn}]: The "data source name," which identifies a specific data source configured in the \texttt{STWSite} element.
+\item[\textbf{query}]: The query to be executed against the specified data source. Before execution, the query text is processed by the \textbf{Webbase Placeholders Language (\wbpl{})} processor. This processor replaces placeholders within the query with values sourced from several locations: the \texttt{params} attribute, the URL querystring, session variables, global variables, and HTTP headers. After this substitution, the resulting query is executed by the data source using its native language (e.g., SQL for a relational database, or JSONata if the data source is a JSON-based API).
+\item[\textbf{params}]: A string containing parameters for the query, formatted as a standard query string (e.g., \texttt{key1=value1\&key2=value2}).
+\item[\textbf{layout}]: The \texttt{STWLayout} element that defines how the fetched data should be rendered.
+\end{description}
+
+\subsection{STWContentWithOptions}
+
+\texttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
+
+\begin{lstlisting}[language=XML,caption={STWContentWithOptions Type Definition}]
+<xs:complexType name="STWContentWithOptions">
+    <xs:annotation>
+        <xs:documentation>A content element that holds a list of references (options) to other STWElements, instead of nested child elements. Useful for menus and tabs where content is sourced from elsewhere.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+        <xs:extension base="STWElement">
+            <xs:sequence>
+                <xs:element name="options" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="option" type="GUID" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="layout" type="STWLayout" minOccurs="0" />
+            </xs:sequence>
+            <xs:attribute name="subtype" type="xs:string" use="optional" />
+            <xs:attribute name="override" type="xs:boolean" use="optional" />
+            <xs:attribute name="readonly" type="xs:boolean" use="optional" />
+            <xs:attribute name="cssClass" type="xs:string" use="optional" />
+            <xs:attribute name="section" type="xs:string" use="optional" />
+            <xs:attribute name="sequence" type="xs:integer" use="optional" />
+            <xs:attribute name="dsn" type="xs:string" use="optional" />
+            <xs:attribute name="query" type="xs:string" use="optional" />
+            <xs:attribute name="params" type="xs:string" use="optional" />
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\subsubsection{Property Description}
+
+\begin{description}
+\item[\textbf{subtype}]: Specifies the type of content to be rendered. Possible values include \texttt{Menu}, \texttt{Tabs}, and \texttt{Accordion}.
+\end{description}
+
+\section{Looking Forward}
+\label{sec:wbdl-forward}
+
+This chapter has provided a comprehensive overview of the \wbdl{} language specification, including its hierarchical structure and specialized element types. In the next chapter, we will explore the Webbase Placeholders Language (\wbpl{}) that enables dynamic query processing and data binding within \wbdl{} content elements.
