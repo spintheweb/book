@@ -55,5 +55,4 @@
 2. Add figures and diagrams as needed
 3. Populate bibliography with references
 4. Add glossary entries
-5. Include appendices with code examples
-6. Add index entries throughout the content
+5. Add index entries throughout the content
