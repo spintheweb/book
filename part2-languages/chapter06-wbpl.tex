@@ -1,0 +1,136 @@
+% Chapter 6: The Webbase Placeholders Language (WBPL)
+
+\chapter{The Webbase Placeholders Language (WBPL)}
+\label{chap:wbpl}
+
+\begin{quote}
+\textit{"The real problem is not whether machines think but whether men do."} \\
+— B.F. Skinner
+\end{quote}
+
+The Webbase Placeholders Language (\wbpl{}) is a string processing language designed for creating dynamic, data-driven queries. It works by taking a template string and a map of placeholders, then producing a final string by substituting placeholders and conditionally including or excluding parts of the template based on whether the placeholders have values.
+
+\section{Core Functionality}
+\label{sec:wbpl-core}
+
+Here is a detailed breakdown of \wbpl{} functionality:
+
+\subsection{Placeholder Syntax}
+
+\wbpl{} identifies placeholders using an \texttt{@} symbol. The syntax supports different forms, such as \texttt{@}, \texttt{@@}, and \texttt{@@@}, which may have distinct meanings. Placeholders can be used directly (unquoted) or enclosed in single or double quotes.
+
+\subsection{Substitution Mechanisms}
+
+\begin{description}
+\item[\textbf{Simple Substitution}]: For unquoted placeholders like \texttt{@name}, the engine directly replaces them with the corresponding value from the placeholders map.
+
+\item[\textbf{Quoted Substitution}]: For quoted placeholders like \texttt{'@name'}, the engine replaces them with the value, automatically ensuring the value is correctly quoted and that any internal quotes are escaped. This is crucial for safely embedding string values in languages like SQL.
+
+\item[\textbf{List Expansion}]: A special syntax exists for quoted placeholders followed by an ellipsis (\texttt{...}), such as \texttt{'@ids'...'}. This is designed to expand a comma-separated value into a properly quoted, comma-separated list (e.g., expanding a string \texttt{"1,2,3"} into \texttt{'1','2','3'}). This is particularly useful for generating SQL \texttt{IN} clauses.
+\end{description}
+
+\subsection{Conditional Blocks}
+
+The language supports two types of conditional blocks that control whether a piece of text is included in the final output.
+
+\subsubsection{Curly Braces \{\texttt{...}\}}
+
+Text inside curly braces is included \textbf{only if} at least one placeholder within it is successfully replaced with a non-empty value. If all placeholders inside are empty or non-existent, the entire block (including the braces) is removed. This is useful for including optional text that depends on a value being present.
+
+\subsubsection{Square Brackets [\texttt{...}]}
+
+This block behaves similarly to curly braces, but with an added feature for cleaning up query syntax. If the block is removed because its placeholders are empty, the engine will also intelligently remove a single adjacent keyword (like \texttt{AND}, \texttt{OR}, \texttt{WHERE}). This is designed to handle optional conditional clauses in SQL.
+
+For example, in \texttt{SELECT * FROM users WHERE 1=1 [AND user\_id = @id]}, the \texttt{AND} keyword and the entire bracketed expression will be removed if \texttt{@id} has no value.
+
+\subsection{Escaping}
+
+\begin{itemize}
+\item The language respects escaped at-symbols (\texttt{\textbackslash @}), treating them as literal \texttt{@} characters rather than the start of a placeholder.
+\item It correctly handles and escapes quotes within values during substitution to prevent syntax errors or potential injection vulnerabilities.
+\end{itemize}
+
+\section{Security Features}
+\label{sec:wbpl-security}
+
+In essence, \wbpl{} is a security-conscious templating engine tailored for generating dynamic queries and other text formats where parts of the content are conditional. Key security features include:
+
+\begin{itemize}
+\item Automatic quote escaping to prevent SQL injection attacks
+\item Input validation and sanitization
+\item Safe handling of user-provided parameters
+\item Proper encoding for different target languages (SQL, JSON, etc.)
+\end{itemize}
+
+\section{Usage Examples}
+\label{sec:wbpl-examples}
+
+\subsection{Basic Placeholder Substitution}
+
+\begin{lstlisting}[language=SQL,caption={Simple WBPL Substitution}]
+SELECT * FROM users WHERE username = '@username'
+\end{lstlisting}
+
+With placeholder \texttt{username = "john\_doe"}, this becomes:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM users WHERE username = 'john_doe'
+\end{lstlisting}
+
+\subsection{Conditional Query Clauses}
+
+\begin{lstlisting}[language=SQL,caption={WBPL Conditional Blocks}]
+SELECT * FROM products 
+WHERE 1=1 
+[AND category = '@category'] 
+[AND price >= @min_price] 
+[AND price <= @max_price]
+\end{lstlisting}
+
+If only \texttt{category = "electronics"} is provided, this becomes:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM products 
+WHERE 1=1 
+AND category = 'electronics'
+\end{lstlisting}
+
+\subsection{List Expansion for IN Clauses}
+
+\begin{lstlisting}[language=SQL,caption={WBPL List Expansion}]
+SELECT * FROM orders WHERE status IN ('@statuses'...)
+\end{lstlisting}
+
+With placeholder \texttt{statuses = "pending,shipped,delivered"}, this becomes:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM orders WHERE status IN ('pending','shipped','delivered')
+\end{lstlisting}
+
+\section{Integration with WBDL}
+\label{sec:wbpl-integration}
+
+\wbpl{} is primarily used within \texttt{STWContent} elements in \wbdl{} documents. The \texttt{query} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified datasource.
+
+The placeholder values are sourced from multiple locations in order of precedence:
+\begin{enumerate}
+\item The \texttt{params} attribute of the \texttt{STWContent} element
+\item URL query string parameters
+\item Session variables (user context, roles, preferences)
+\item Global variables (site configuration, system settings)
+\item HTTP headers (for device type, language preferences, etc.)
+\end{enumerate}
+
+\section{Performance Considerations}
+\label{sec:wbpl-performance}
+
+The \wbpl{} processor is optimized for high-performance scenarios:
+
+\begin{itemize}
+\item Template parsing is cached to avoid repeated compilation
+\item Placeholder resolution is optimized for minimal overhead
+\item Query plans may be cached when placeholder patterns are stable
+\item Security validation is performed efficiently without sacrificing safety
+\end{itemize}
+
+\section{Looking Forward}
+\label{sec:wbpl-forward}
+
+\wbpl{} provides the dynamic query capabilities that make \wbdl{} content elements truly data-driven and responsive to user context. In the next chapter, we will explore webbase and webbaselet concepts, which enable modular portal development and maintenance.
