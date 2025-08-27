@@ -1,0 +1,111 @@
+% Custom commands for the Spin the Web Book
+% This file contains custom LaTeX commands and macros
+
+% Define subtitle command
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\newcommand{\@subtitle}{}
+\makeatother
+
+% Project-specific terminology commands
+\newcommand{\wbdl}{\texttt{WBDL}\xspace}
+\newcommand{\wbpl}{\texttt{WBPL}\xspace}
+\newcommand{\wbll}{\texttt{WBLL}\xspace}
+\newcommand{\webspinner}{\textit{Web Spinner}\xspace}
+\newcommand{\studio}{\textit{Spin the Web Studio}\xspace}
+\newcommand{\webbase}{\textit{webbase}\xspace}
+\newcommand{\webbaselet}{\textit{webbaselet}\xspace}
+
+% WBDL element types
+\newcommand{\stwsite}{\texttt{STWSite}\xspace}
+\newcommand{\stwarea}{\texttt{STWArea}\xspace}
+\newcommand{\stwpage}{\texttt{STWPage}\xspace}
+\newcommand{\stwcontent}{\texttt{STWContent}\xspace}
+\newcommand{\stwele}{\texttt{STWElement}\xspace}
+\newcommand{\stwvis}{\texttt{STWVisibility}\xspace}
+\newcommand{\stwloc}{\texttt{STWLocalized}\xspace}
+
+% Code and file references
+\newcommand{\codefile}[1]{\texttt{#1}\xspace}
+\newcommand{\xmltag}[1]{\texttt{<#1>}\xspace}
+\newcommand{\jsonfld}[1]{\texttt{"#1"}\xspace}
+\newcommand{\apiendpoint}[1]{\texttt{#1}\xspace}
+\newcommand{\httpmethod}[1]{\texttt{#1}\xspace}
+\newcommand{\sqlkw}[1]{\texttt{\textbf{#1}}\xspace}
+
+% URL and web references
+\newcommand{\weburl}[1]{\texttt{#1}\xspace}
+\newcommand{\placeholder}[1]{\texttt{@#1}\xspace}
+
+% Inline code with better formatting
+\newcommand{\code}[1]{\texttt{#1}\xspace}
+\newcommand{\inlinecode}[1]{\colorbox{codebackground}{\texttt{#1}}\xspace}
+
+% Abbreviations and acronyms
+\newcommand{\api}{\textsc{api}\xspace}
+\newcommand{\rest}{\textsc{rest}\xspace}
+\newcommand{\json}{\textsc{json}\xspace}
+\newcommand{\xml}{\textsc{xml}\xspace}
+\newcommand{\sql}{\textsc{sql}\xspace}
+\newcommand{\http}{\textsc{http}\xspace}
+\newcommand{\https}{\textsc{https}\xspace}
+\newcommand{\uri}{\textsc{uri}\xspace}
+\newcommand{\guid}{\textsc{guid}\xspace}
+\newcommand{\uuid}{\textsc{uuid}\xspace}
+
+% Enterprise systems
+\newcommand{\erp}{\textsc{erp}\xspace}
+\newcommand{\crm}{\textsc{crm}\xspace}
+\newcommand{\bpms}{\textsc{bpms}\xspace}
+\newcommand{\mrp}{\textsc{mrp}\xspace}
+
+% Custom environments for different types of content
+\newenvironment{implementation}
+    {\begin{tcolorbox}[title=Implementation Note,colback=yellow!10!white,colframe=yellow!50!black]}
+    {\end{tcolorbox}}
+
+\newenvironment{bestpractice}
+    {\begin{tcolorbox}[title=Best Practice,colback=green!10!white,colframe=green!50!black]}
+    {\end{tcolorbox}}
+
+\newenvironment{security}
+    {\begin{tcolorbox}[title=Security Consideration,colback=red!10!white,colframe=red!50!black]}
+    {\end{tcolorbox}}
+
+\newenvironment{performance}
+    {\begin{tcolorbox}[title=Performance Note,colback=blue!10!white,colframe=blue!50!black]}
+    {\end{tcolorbox}}
+
+% Commands for consistent formatting of schema elements
+\newcommand{\xsdtype}[1]{\texttt{#1}\xspace}
+\newcommand{\xsdattr}[1]{\texttt{#1}\xspace}
+\newcommand{\xsdelem}[1]{\texttt{#1}\xspace}
+
+% Figure and table reference commands
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+
+% Math notation for technical concepts
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\tuple}[1]{\langle#1\rangle}
+
+% Special formatting for version numbers
+\newcommand{\version}[1]{\texttt{v#1}\xspace}
+
+% Index entries for consistent indexing
+\newcommand{\indexwbdl}{\index{WBDL|textbf}}
+\newcommand{\indexwbpl}{\index{WBPL|textbf}}
+\newcommand{\indexwbll}{\index{WBLL|textbf}}
+\newcommand{\indexspinner}{\index{Web Spinner|textbf}}
+\newcommand{\indexstudio}{\index{Spin the Web Studio|textbf}}
+
+% Glossary entries (to be defined in glossary file)
+\newcommand{\glswebbase}{\gls{webbase}}
+\newcommand{\glswebbaselet}{\gls{webbaselet}}
+\newcommand{\glsportal}{\gls{portal}}
+
+% Commands for consistent cross-referencing
+\newcommand{\xref}[2]{\hyperref[#1]{#2}}

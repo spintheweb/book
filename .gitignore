@@ -1,0 +1,50 @@
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.idx
+*.ind
+*.ilg
+*.lof
+*.lot
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.bcf
+*.run.xml
+
+# Build directory (except README)
+build/*
+!build/README.md
+
+# Editor files
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+
+# Python cache (for Pygments)
+__pycache__/
+*.pyc
+
+# Personal notes
+notes/
+drafts/

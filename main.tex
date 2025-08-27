@@ -1,0 +1,80 @@
+% Main document file for the Spin the Web Book
+% This file orchestrates the entire book structure
+
+\documentclass[11pt,openright,twoside,a4paper]{book}
+
+% Load all packages and formatting
+\input{preamble/packages}
+\input{preamble/formatting}
+\input{preamble/commands}
+
+% Document metadata
+\title{The Spin the Web Project}
+\subtitle{Virtualizing the Enterprise}
+\author{Giancarlo Trevisan}
+\date{\today}
+
+% Generate index
+\makeindex
+\makeglossaries
+
+\begin{document}
+
+%% FRONT MATTER %%
+\frontmatter
+\input{frontmatter/titlepage}
+\input{frontmatter/abstract}
+\input{frontmatter/preface}
+
+% Table of contents
+\tableofcontents
+
+%% MAIN MATTER %%
+\mainmatter
+
+% Part I: Foundations and Concepts
+\part{Foundations and Concepts}
+\input{part1-foundations/part1}
+\input{part1-foundations/chapter01-intro}
+\input{part1-foundations/chapter02-virtualized}
+\input{part1-foundations/chapter03-architecture}
+
+% Part II: The Webbase Description Language (WBDL)
+\part{The Webbase Description Language (WBDL)}
+\input{part2-wbdl/part2-wbdl}
+
+% Part III: The Webbase Placeholders Language (WBPL)  
+\part{The Webbase Placeholders Language (WBPL)}
+\input{part3-wbpl/part3-wbpl}
+
+% Part IV: The Webbase Layout Language (WBLL)
+\part{The Webbase Layout Language (WBLL)}
+\input{part4-wbll/part4-wbll}
+
+% Part V: The Web Spinner Engine
+\part{The Web Spinner Engine}
+\input{part5-spinner/part5-spinner}
+
+% Part VI: Spin the Web Studio
+\part{Spin the Web Studio}
+\input{part6-studio/part6-studio}
+
+% Part VII: Implementation and Deployment
+\part{Implementation and Deployment}
+\input{part7-implementation/part7-implementation}
+
+% Part VIII: Advanced Topics and Future Directions
+\part{Advanced Topics and Future Directions}
+\input{part8-advanced/part8-advanced}
+
+%% APPENDICES %%
+\appendix
+\input{appendices/appendix-a-stub}
+
+%% BACK MATTER %%
+\backmatter
+\bibliographystyle{plain}
+\bibliography{bibliography/references}
+\printindex
+
+\end{document}
