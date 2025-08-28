@@ -55,6 +55,22 @@
 \definecolor{stringcolor}{RGB}{206,145,120}
 
 % Listings configuration
+% Enable UTF-8 characters commonly used in examples inside listings
+\lstset{
+        inputencoding=utf8,
+        literate=
+            {‹}{{\guilsinglleft}}1 {›}{{\guilsinglright}}1 % single guillemets
+            {«}{{\guillemotleft}}1 {»}{{\guillemotright}}1 % double guillemets
+            {“}{{\textquotedblleft}}1 {”}{{\textquotedblright}}1 % curly double quotes
+            {‘}{{\textquoteleft}}1 {’}{{\textquoteright}}1 % curly single quotes/apostrophe
+            {–}{{\textendash}}1 {—}{{\textemdash}}1 % en/em dashes
+            {…}{{\ldots}}1 % ellipsis
+            {°}{{\textdegree}}1 % degree symbol
+            {€}{{\texteuro}}1 % euro sign
+            {™}{{\texttrademark}}1 {®}{{\textregistered}}1 {©}{{\textcopyright}}1 % symbols
+            {•}{{\textbullet}}1
+}
+
 \lstdefinestyle{xmlstyle}{
     language=XML,
     backgroundcolor=\color{codebackground},

@@ -32,23 +32,23 @@ This book provides complete documentation for the Spin the Web ecosystem, coveri
 │   ├── abstract.tex           # Abstract with project figure
 │   └── preface.tex            # Preface with mathematical philosophy
 ├── part1-foundations/         # Part I: Philosophy (Foundations and Concepts)
-│   ├── part1.tex             # Part introduction
+│   ├── intro.tex             # Part introduction
 │   ├── chapter01-genesis.tex  # Project history and genesis
 │   ├── chapter02-intro.tex    # Introduction to enterprise portals
 │   ├── chapter03-virtualized.tex # Virtualized portal framework
 │   └── chapter04-architecture.tex # Technical architecture
 ├── part2-languages/           # Part II: Theory (Languages and Mechanics)
-│   ├── part2.tex             # Part introduction
+│   ├── intro.tex             # Part introduction
 │   ├── chapter05-wbdl.tex     # Web Base Definition Language
 │   ├── chapter06-wbpl.tex     # Web Base Programming Language
 │   ├── chapter07-webbaselets.tex # Webbaselets and components
 │   └── chapter08-web-spinner-engine.tex # Web Spinner Engine
 ├── part3-implementation/      # Part III: Practice (Implementation)
-│   ├── part3.tex             # Part introduction
+│   ├── intro.tex             # Part introduction
 │   ├── chapter09-learning.tex # Practical insights and methodology
 │   └── chapter10-technology-stack.tex # Technology stack and implementation mechanics
 ├── part4-future/              # Part IV: Future (Evolution)
-│   ├── part4.tex             # Part introduction
+│   ├── intro.tex             # Part introduction
 │   └── chapter10-future-directions.tex # Roadmap and evolution
 ├── figures/                   # Images and diagrams
 │   ├── logo.png              # Project logo (75x75)

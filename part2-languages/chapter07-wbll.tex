@@ -1,0 +1,169 @@
+% Chapter 7: Webbase Layout Language (WBLL)
+
+\chapter{Webbase Layout Language (WBLL)}
+\label{chap:wbll}
+
+\begin{quote}
+\textit{"Simplicity is the ultimate sophistication."} \\
+— Leonardo da Vinci
+\end{quote}
+
+The Webbase Layout Language (\textbf{WBLL}) defines how content is presented. Where \wbdl{} describes \textit{what} exists (site, areas, pages, contents), WBLL describes \textit{how} it looks and behaves at render time.
+
+WBLL is a compact, token-based layout language parsed by the Web Spinner’s layout engine. It compiles into an efficient render function that merges data (records, session values, placeholders) into accessible, responsive HTML.
+
+\section{Design Goals}
+\label{sec:wbll-goals}
+
+\begin{itemize}
+  \item Declarative, compact, and readable by non-front-end specialists
+  \item Safe by default: XSS-aware escaping and controlled injection points
+  \item Data-driven: first-class support for records, fields, lists, and placeholders
+  \item Composable: reusable fragments and wrappers
+  \item Accessible: semantic outputs compatible with ARIA and keyboard navigation
+\end{itemize}
+
+\section{Layout Structure}
+\label{sec:wbll-structure}
+
+At a high level, a WBLL layout contains:
+
+\begin{description}
+  \item[Header/Footer Wrappers] Optional shells that frame the body
+  \item[Body] The main fragment, typically a mix of text, tokens, and sections
+  \item[Sections] Named containers (e.g., \texttt{header}, \texttt{body}, \texttt{footer}) to organize outputs
+\end{description}
+
+Typical WBLL is authored as a single string per language. The layout engine tokenizes and compiles it once, then reuses the compiled function.
+
+\section{Placeholders and Data Binding}
+\label{sec:wbll-placeholders}
+
+WBLL works with the placeholders system used by \wbpl{}:
+
+\begin{itemize}
+  \item Session placeholders (user, roles, locale)
+  \item Request placeholders (query/path params)
+  \item Record placeholders (first row fields, list iteration variables)
+\end{itemize}
+
+Inline placeholders typically use the \verb|@@name| syntax. The engine escapes interpolated values by default; raw insertion is explicitly marked where needed.
+
+\section{Core Token Categories}
+\label{sec:wbll-tokens}
+
+While concrete syntax may evolve, token categories are stable:
+
+\subsection{Text and Headings}
+\begin{itemize}
+  \item Headings: \verb|#|, \verb|##|, \verb|###| → h1/h2/h3
+  \item Inline emphasis: \verb|*italic*|, \verb|**bold**|
+  \item Code spans and blocks for technical content
+\end{itemize}
+
+\subsection{Fields and Values}
+\begin{itemize}
+  \item Field: \verb|{{ fieldName }}| retrieves from the current record
+  \item Session/Request: \verb|@@locale|, \verb|@@user|
+  \item Formatting filters: e.g., \verb+{{ total | number:2 }}+
+\end{itemize}
+
+\subsection{Lists and Tables}
+\begin{itemize}
+  \item Iterate: \verb|{{#each rows}} ... {{/each}}|
+  \item Empty state: \verb|{{#empty}} No results {{/empty}}|
+  \item Table helpers: header/row/cell builders
+\end{itemize}
+
+\subsection{Links and Actions}
+\begin{itemize}
+  \item Internal links built from slugs and params
+  \item Action buttons with method, payload, and confirmation
+  \item Download links for binary responses
+\end{itemize}
+
+\subsection{Conditionals}
+\begin{itemize}
+  \item \verb|{{#if expr}} ... {{/if}}| with basic boolean logic
+  \item \verb|{{#when role='admin'}} ... {{/when}}| role-scoped blocks
+\end{itemize}
+
+\section{Examples}
+\label{sec:wbll-examples}
+
+\subsection{Detail Card}
+\begin{lstlisting}[language=HTML,caption={WBLL detail card (illustrative)}]
+<section class="card">
+  <h2>Order #{{ order_id }}</h2>
+  <div class="grid">
+    <div><strong>Date:</strong> {{ order_date | date }}</div>
+    <div><strong>Customer:</strong> {{ customer_name }}</div>
+    <div><strong>Total:</strong> {{ total | currency:'EUR' }}</div>
+  </div>
+  {{#when role='sales'}}
+  <button data-action="close-order" data-id="{{ order_id }}">
+    Close Order
+  </button>
+  {{/when}}
+</section>
+\end{lstlisting}
+
+\subsection{Paginated Table}
+\begin{lstlisting}[language=HTML,caption={WBLL list/table (illustrative)}]
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th><th>Customer</th><th>Status</th><th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+    <tr>
+      <td>{{ id }}</td>
+      <td>{{ customer }}</td>
+      <td>{{ status }}</td>
+      <td>{{ total | number:2 }}</td>
+    </tr>
+    {{/each}}
+    {{#empty}}
+    <tr><td colspan="4">No orders found</td></tr>
+    {{/empty}}
+  </tbody>
+</table>
+<nav class="pager">
+  {{#if has_prev}}
+  <a href="?page={{ prev }}" aria-label="Previous">‹</a>
+  {{/if}}
+  <span>{{ page }} / {{ pages }}</span>
+  {{#if has_next}}
+  <a href="?page={{ next }}" aria-label="Next">›</a>
+  {{/if}}
+</nav>
+\end{lstlisting}
+
+\section{Security and Escaping}
+\label{sec:wbll-security}
+
+By default, interpolated values are HTML-escaped. Tokens that explicitly request raw HTML must be used sparingly and validated. Links/actions sanitize parameters to prevent injection.
+
+\section{Internationalization}
+\label{sec:wbll-i18n}
+
+WBLL layouts are localized per language. Text nodes may be resolved through dictionaries; field formatting honors locale (dates, numbers, currency).
+
+\section{Performance}
+\label{sec:wbll-performance}
+
+The engine compiles layouts into specialized functions and caches them until the template changes. Streaming responses are supported for large lists.
+
+\section{Authoring Guidance}
+\label{sec:wbll-guidance}
+
+\begin{itemize}
+  \item Keep structure semantic; use headings and lists appropriately
+  \item Prefer built-in helpers over raw HTML for consistency and safety
+  \item Provide empty states and loading/error placeholders
+  \item Isolate reusable fragments; avoid duplication
+\end{itemize}
+
+This chapter establishes the presentation layer contracts. In the next chapters we detail modular composition (\cref{chap:webbaselets}) and the runtime engine (\cref{chap:web-spinner}).
