@@ -4,7 +4,7 @@
 \label{chap:webbaselets}
 
 \begin{quote}
-\textit{"The whole is more than the sum of its parts."} \\
+	extit{"The whole is more than the sum of its parts."} \\
 — Aristotle
 \end{quote}
 
@@ -31,34 +31,34 @@ A \webbase{} represents a complete, self-contained web portal. It includes:
 \begin{lstlisting}[language=XML,caption={Basic Webbase Structure}]
 <?xml version="1.0" encoding="UTF-8"?>
 <webbase xmlns="http://spintheweb.org/wbdl/1.0">
-    <site _id="12345678-1234-1234-1234-123456789012" type="Site" 
-          mainpage="87654321-4321-4321-4321-210987654321" version="1.0">
-        <name>
-            <text lang="en"><![CDATA[Corporate Portal]]></text>
-        </name>
-        <slug>
-            <text lang="en"><![CDATA[portal]]></text>
-        </slug>
+	<site _id="12345678-1234-1234-1234-123456789012" type="Site" 
+		  mainpage="87654321-4321-4321-4321-210987654321" version="1.0">
+		<name>
+			<text lang="en"><![CDATA[Corporate Portal]]></text>
+		</name>
+		<slug>
+			<text lang="en"><![CDATA[portal]]></text>
+		</slug>
         
-        <langs>
-            <lang>en</lang>
-            <lang>it</lang>
-            <lang>fr</lang>
-        </langs>
+		<langs>
+			<lang>en</lang>
+			<lang>it</lang>
+			<lang>fr</lang>
+		</langs>
         
-        <datasources>
-            <database name="main" type="postgresql" 
-                      connectionString="..." />
-            <api name="crm" type="rest" 
-                 baseUrl="https://api.crm.company.com" />
-        </datasources>
+		<datasources>
+			<database name="main" type="postgresql" 
+					  connectionString="..." />
+			<api name="crm" type="rest" 
+				 baseUrl="https://api.crm.company.com" />
+		</datasources>
         
-        <children>
-            <area _id="..." type="Area">
-                <!-- Area definition -->
-            </area>
-        </children>
-    </site>
+		<children>
+			<area _id="..." type="Area">
+				<!-- Area definition -->
+			</area>
+		</children>
+	</site>
 </webbase>
 \end{lstlisting}
 
@@ -79,37 +79,37 @@ A \webbaselet{} is a modular component that can be integrated into multiple \web
 \begin{lstlisting}[language=XML,caption={Example Webbaselet Structure}]
 <?xml version="1.0" encoding="UTF-8"?>
 <webbaselet xmlns="http://spintheweb.org/wbdl/1.0">
-    <area _id="98765432-8765-8765-8765-987654321098" type="Area" 
-          mainpage="11111111-1111-1111-1111-111111111111" version="2.1">
-        <name>
-            <text lang="en"><![CDATA[Customer Self-Service]]></text>
-        </name>
-        <slug>
-            <text lang="en"><![CDATA[customer-portal]]></text>
-        </slug>
+	<area _id="98765432-8765-8765-8765-987654321098" type="Area" 
+		  mainpage="11111111-1111-1111-1111-111111111111" version="2.1">
+		<name>
+			<text lang="en"><![CDATA[Customer Self-Service]]></text>
+		</name>
+		<slug>
+			<text lang="en"><![CDATA[customer-portal]]></text>
+		</slug>
         
-        <visibility>
-            <rule role="customer" visible="true"/>
-            <rule role="guest" visible="false"/>
-        </visibility>
+		<visibility>
+			<rule role="customer" visible="true"/>
+			<rule role="guest" visible="false"/>
+		</visibility>
         
-        <children>
-            <page _id="11111111-1111-1111-1111-111111111111" type="Page">
-                <name>
-                    <text lang="en"><![CDATA[My Dashboard]]></text>
-                </name>
-                <slug>
-                    <text lang="en"><![CDATA[dashboard]]></text>
-                </slug>
+		<children>
+			<page _id="11111111-1111-1111-1111-111111111111" type="Page">
+				<name>
+					<text lang="en"><![CDATA[My Dashboard]]></text>
+				</name>
+				<slug>
+					<text lang="en"><![CDATA[dashboard]]></text>
+				</slug>
                 
-                <children>
-                    <content _id="..." type="Content" subtype="Table">
-                        <!-- Content definition -->
-                    </content>
-                </children>
-            </page>
-        </children>
-    </area>
+				<children>
+					<content _id="..." type="Content" subtype="Table">
+						<!-- Content definition -->
+					</content>
+				</children>
+			</page>
+		</children>
+	</area>
 </webbaselet>
 \end{lstlisting}
 
@@ -138,10 +138,10 @@ Each \webbaselet{} can define its own namespace to avoid conflicts when multiple
 
 \begin{lstlisting}[language=XML,caption={Webbaselet with Namespace}]
 <webbaselet xmlns="http://spintheweb.org/wbdl/1.0"
-            xmlns:hr="http://company.com/webbaselets/hr/1.0">
-    <area _id="..." type="Area" namespace="hr">
-        <!-- HR-specific functionality -->
-    </area>
+			xmlns:hr="http://company.com/webbaselets/hr/1.0">
+	<area _id="..." type="Area" namespace="hr">
+		<!-- HR-specific functionality -->
+	</area>
 </webbaselet>
 \end{lstlisting}
 

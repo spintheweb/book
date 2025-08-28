@@ -4,7 +4,7 @@
 \label{chap:wbdl}
 
 \begin{quote}
-\textit{"The limits of my language mean the limits of my world."} \\
+	extit{"The limits of my language mean the limits of my world."} \\
 — Ludwig Wittgenstein
 \end{quote}
 
@@ -82,72 +82,72 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 
 \begin{lstlisting}[language=XML,caption={STWElement Base Type Definition}]
 <xs:complexType name="STWElement">
-    <xs:sequence>
-        <xs:element name="name" type="STWLocalized" minOccurs="1" />
-        <xs:element name="slug" type="STWLocalized" minOccurs="1" />
-        <xs:element name="keywords" type="STWLocalized" minOccurs="0" />
-        <xs:element name="description" type="STWLocalized" minOccurs="0" />
-        <xs:element name="visibility" type="STWVisibility" minOccurs="0" />
-        <xs:element name="children" minOccurs="0">
-            <xs:complexType>
-                <xs:choice minOccurs="1" maxOccurs="unbounded">
-                    <xs:element name="area" type="STWArea" />
-                    <xs:element name="page" type="STWPage" />
-                    <xs:element name="content" type="STWContent" />
-                </xs:choice>
-            </xs:complexType>
-        </xs:element>
-    </xs:sequence>
-    <xs:attribute name="_id" type="GUID" use="required" />
-    <xs:attribute name="type" type="STWElementType" use="required" />
+	<xs:sequence>
+		<xs:element name="name" type="STWLocalized" minOccurs="1" />
+		<xs:element name="slug" type="STWLocalized" minOccurs="1" />
+		<xs:element name="keywords" type="STWLocalized" minOccurs="0" />
+		<xs:element name="description" type="STWLocalized" minOccurs="0" />
+		<xs:element name="visibility" type="STWVisibility" minOccurs="0" />
+		<xs:element name="children" minOccurs="0">
+			<xs:complexType>
+				<xs:choice minOccurs="1" maxOccurs="unbounded">
+					<xs:element name="area" type="STWArea" />
+					<xs:element name="page" type="STWPage" />
+					<xs:element name="content" type="STWContent" />
+				</xs:choice>
+			</xs:complexType>
+		</xs:element>
+	</xs:sequence>
+	<xs:attribute name="_id" type="GUID" use="required" />
+	<xs:attribute name="type" type="STWElementType" use="required" />
 </xs:complexType>
 
 <xs:simpleType name="GUID">
-    <xs:restriction base="xs:string">
-        <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
-    </xs:restriction>
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+	</xs:restriction>
 </xs:simpleType>
 
 <xs:simpleType name="STWElementType">
-    <xs:restriction base="xs:string">
-        <xs:enumeration value="Site"/>
-        <xs:enumeration value="Area"/>
-        <xs:enumeration value="Page"/>
-        <xs:enumeration value="Content"/>
-    </xs:restriction>
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="Site"/>
+		<xs:enumeration value="Area"/>
+		<xs:enumeration value="Page"/>
+		<xs:enumeration value="Content"/>
+	</xs:restriction>
 </xs:simpleType>
 
 <xs:complexType name="STWLocalized">
-    <xs:sequence>
-        <xs:element name="text" minOccurs="1" maxOccurs="unbounded">
-            <xs:complexType>
-                <xs:simpleContent>
-                    <xs:extension base="xs:string">
-                        <xs:attribute name="lang" type="xs:language" use="required"/>
-                    </xs:extension>
-                </xs:simpleContent>
-            </xs:complexType>
-        </xs:element>
-    </xs:sequence>
-</xs:complexType>
+	<xs:sequence>
+		<xs:element name="text" minOccurs="1" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="lang" type="xs:language" use="required"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+		</xs:element>
+	</xs:sequence>
+	</xs:complexType>
 
 <xs:complexType name="STWVisibility">
-    <xs:sequence>
-        <xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
-            <xs:complexType>
-                <xs:attribute name="role" type="xs:string" use="required"/>
-                <xs:attribute name="visible" type="xs:boolean" use="required"/>
-            </xs:complexType>
-        </xs:element>
-    </xs:sequence>
+	<xs:sequence>
+		<xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:attribute name="role" type="xs:string" use="required"/>
+				<xs:attribute name="visible" type="xs:boolean" use="required"/>
+			</xs:complexType>
+		</xs:element>
+	</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="STWLayout">
-    <xs:complexContent>
-        <xs:extension base="STWLocalized">
-            <!-- Content holds Webbase Layout Language text, to be defined later. -->
-        </xs:extension>
-    </xs:complexContent>
+	<xs:complexContent>
+		<xs:extension base="STWLocalized">
+			<!-- Content holds Webbase Layout Language text, to be defined later. -->
+		</xs:extension>
+	</xs:complexContent>
 </xs:complexType>
 \end{lstlisting}
 
@@ -171,32 +171,32 @@ This section describes the specialized element types available in \wbdl{}.
 
 \subsection{STWSite}
 
-\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure. There must be exactly one \texttt{STWSite} element in any \wbdl{} document.
+	exttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure. There must be exactly one \texttt{STWSite} element in any \wbdl{} document.
 
 \begin{lstlisting}[language=XML,caption={STWSite Type Definition}]
 <xs:complexType name="STWSite">
-    <xs:complexContent>
-        <xs:extension base="STWElement">
-            <xs:sequence>
-                <xs:element name="langs" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="lang" type="xs:language" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="datasources" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="mainpage" type="GUID"/>
-            <xs:attribute name="version" type="xs:string"/>
-        </xs:extension>
-    </xs:complexContent>
+	<xs:complexContent>
+		<xs:extension base="STWElement">
+			<xs:sequence>
+				<xs:element name="langs" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="lang" type="xs:language" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="datasources" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="mainpage" type="GUID"/>
+			<xs:attribute name="version" type="xs:string"/>
+		</xs:extension>
+	</xs:complexContent>
 </xs:complexType>
 \end{lstlisting}
 
@@ -246,16 +246,16 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 \subsection{STWArea}
 
-\texttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
+	exttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
 
 \begin{lstlisting}[language=XML,caption={STWArea Type Definition}]
 <xs:complexType name="STWArea">
-    <xs:complexContent>
-        <xs:extension base="STWElement">
-            <xs:attribute name="mainpage" type="GUID"/>
-            <xs:attribute name="version" type="xs:string"/>
-        </xs:extension>
-    </xs:complexContent>
+	<xs:complexContent>
+		<xs:extension base="STWElement">
+			<xs:attribute name="mainpage" type="GUID"/>
+			<xs:attribute name="version" type="xs:string"/>
+		</xs:extension>
+	</xs:complexContent>
 </xs:complexType>
 \end{lstlisting}
 
@@ -268,60 +268,60 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 \subsection{STWPage}
 
-\texttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
+	exttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
 
 \begin{lstlisting}[language=XML,caption={STWPage Type Definition}]
 <xs:complexType name="STWPage">
-    <xs:complexContent>
-        <xs:restriction base="STWElement">
-            <xs:sequence>
-                <xs:element name="name" type="STWLocalized" minOccurs="1" />
-                <xs:element name="slug" type="STWLocalized" minOccurs="1" />
-                <xs:element name="keywords" type="STWLocalized" minOccurs="0" />
-                <xs:element name="description" type="STWLocalized" minOccurs="0" />
-                <xs:element name="visibility" type="STWVisibility" minOccurs="0" />
-                <xs:element name="children" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="content" type="STWContent" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="_id" type="GUID" use="required" />
-            <xs:attribute name="type" type="STWElementType" use="required" />
-        </xs:restriction>
-    </xs:complexContent>
+	<xs:complexContent>
+		<xs:restriction base="STWElement">
+			<xs:sequence>
+				<xs:element name="name" type="STWLocalized" minOccurs="1" />
+				<xs:element name="slug" type="STWLocalized" minOccurs="1" />
+				<xs:element name="keywords" type="STWLocalized" minOccurs="0" />
+				<xs:element name="description" type="STWLocalized" minOccurs="0" />
+				<xs:element name="visibility" type="STWVisibility" minOccurs="0" />
+				<xs:element name="children" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="content" type="STWContent" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="_id" type="GUID" use="required" />
+			<xs:attribute name="type" type="STWElementType" use="required" />
+		</xs:restriction>
+	</xs:complexContent>
 </xs:complexType>
 \end{lstlisting}
 
 \subsection{STWContent}
 
-\texttt{STWContent} represents a piece of content on a page. It extends the base \texttt{STWElement} but is not allowed to have any \texttt{children}. It adds several attributes for data binding and layout control.
+	exttt{STWContent} represents a piece of content on a page. It extends the base \texttt{STWElement} but is not allowed to have any \texttt{children}. It adds several attributes for data binding and layout control.
 
 \begin{lstlisting}[language=XML,caption={STWContent Type Definition}]
 <xs:complexType name="STWContent">
-    <xs:complexContent>
-        <xs:restriction base="STWElement">
-            <xs:sequence>
-                <xs:element name="name" type="STWLocalized" minOccurs="1" />
-                <xs:element name="slug" type="STWLocalized" minOccurs="1" />
-                <xs:element name="keywords" type="STWLocalized" minOccurs="0" />
-                <xs:element name="description" type="STWLocalized" minOccurs="0" />
-                <xs:element name="visibility" type="STWVisibility" minOccurs="0" />
-                <xs:element name="layout" type="STWLayout" />
-            </xs:sequence>
-            <xs:attribute name="_id" type="GUID" use="required" />
-            <xs:attribute name="type" type="STWElementType" use="required" fixed="Content" />
-            <xs:attribute name="subtype" type="xs:string" />
-            <xs:attribute name="cssClass" type="xs:string" />
-            <xs:attribute name="section" type="xs:string" />
-            <xs:attribute name="sequence" type="xs:integer" />
-            <xs:attribute name="dsn" type="xs:string" />
-            <xs:attribute name="query" type="xs:string" />
-            <xs:attribute name="params" type="xs:string" />
-        </xs:restriction>
-    </xs:complexContent>
+	<xs:complexContent>
+		<xs:restriction base="STWElement">
+			<xs:sequence>
+				<xs:element name="name" type="STWLocalized" minOccurs="1" />
+				<xs:element name="slug" type="STWLocalized" minOccurs="1" />
+				<xs:element name="keywords" type="STWLocalized" minOccurs="0" />
+				<xs:element name="description" type="STWLocalized" minOccurs="0" />
+				<xs:element name="visibility" type="STWVisibility" minOccurs="0" />
+				<xs:element name="layout" type="STWLayout" />
+			</xs:sequence>
+			<xs:attribute name="_id" type="GUID" use="required" />
+			<xs:attribute name="type" type="STWElementType" use="required" fixed="Content" />
+			<xs:attribute name="subtype" type="xs:string" />
+			<xs:attribute name="cssClass" type="xs:string" />
+			<xs:attribute name="section" type="xs:string" />
+			<xs:attribute name="sequence" type="xs:integer" />
+			<xs:attribute name="dsn" type="xs:string" />
+			<xs:attribute name="query" type="xs:string" />
+			<xs:attribute name="params" type="xs:string" />
+		</xs:restriction>
+	</xs:complexContent>
 </xs:complexType>
 \end{lstlisting}
 
@@ -389,36 +389,36 @@ All content types explicitly declare or request the data they interact with, and
 
 \subsection{STWContentWithOptions}
 
-\texttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
+	exttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
 
 \begin{lstlisting}[language=XML,caption={STWContentWithOptions Type Definition}]
 <xs:complexType name="STWContentWithOptions">
-    <xs:annotation>
-        <xs:documentation>A content element that holds a list of references (options) to other STWElements, instead of nested child elements. Useful for menus and tabs where content is sourced from elsewhere.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-        <xs:extension base="STWElement">
-            <xs:sequence>
-                <xs:element name="options" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="option" type="GUID" minOccurs="0" maxOccurs="unbounded" />
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="layout" type="STWLayout" minOccurs="0" />
-            </xs:sequence>
-            <xs:attribute name="subtype" type="xs:string" use="optional" />
-            <xs:attribute name="override" type="xs:boolean" use="optional" />
-            <xs:attribute name="readonly" type="xs:boolean" use="optional" />
-            <xs:attribute name="cssClass" type="xs:string" use="optional" />
-            <xs:attribute name="section" type="xs:string" use="optional" />
-            <xs:attribute name="sequence" type="xs:integer" use="optional" />
-            <xs:attribute name="dsn" type="xs:string" use="optional" />
-            <xs:attribute name="query" type="xs:string" use="optional" />
-            <xs:attribute name="params" type="xs:string" use="optional" />
-        </xs:extension>
-    </xs:complexContent>
+	<xs:annotation>
+		<xs:documentation>A content element that holds a list of references (options) to other STWElements, instead of nested child elements. Useful for menus and tabs where content is sourced from elsewhere.</xs:documentation>
+	</xs:annotation>
+	<xs:complexContent>
+		<xs:extension base="STWElement">
+			<xs:sequence>
+				<xs:element name="options" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="option" type="GUID" minOccurs="0" maxOccurs="unbounded" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="layout" type="STWLayout" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="subtype" type="xs:string" use="optional" />
+			<xs:attribute name="override" type="xs:boolean" use="optional" />
+			<xs:attribute name="readonly" type="xs:boolean" use="optional" />
+			<xs:attribute name="cssClass" type="xs:string" use="optional" />
+			<xs:attribute name="section" type="xs:string" use="optional" />
+			<xs:attribute name="sequence" type="xs:integer" use="optional" />
+			<xs:attribute name="dsn" type="xs:string" use="optional" />
+			<xs:attribute name="query" type="xs:string" use="optional" />
+			<xs:attribute name="params" type="xs:string" use="optional" />
+		</xs:extension>
+	</xs:complexContent>
 </xs:complexType>
 \end{lstlisting}
 

@@ -1,0 +1,84 @@
+% Part III: Implementation
+\chapter{Technology Stack and Implementation Mechanics}
+\label{chap:implementation-tech}
+
+This chapter documents the concrete technologies used to implement the web spinner mechanics and how the theoretical constructs from Part II are realized in a working system.
+
+\section{Runtime and Languages}
+The reference implementation is written in TypeScript and runs on the Deno runtime:\footnote{See the project repository: https://github.com/keyvisions/spintheweb}
+\begin{itemize}
+	\item Deno 2.x runtime and TypeScript for server-side logic
+	\item Standard Web APIs (URL, URLSearchParams, Fetch, Crypto) leveraged directly in server code
+	\item No Node.js dependency; tasks and scripts are run via Deno (e.g., CSS/JS minification)
+	\item Containerization via a multi-stage Dockerfile based on denoland/deno:alpine
+\end{itemize}
+
+\section{High-Level Architecture}
+The spinner is a server that understands WBML. On each request it:\footnote{See also the ``Paradigm'' section in the implementation README}
+\begin{enumerate}
+	\item Establishes or resumes a session (user, roles, locale, placeholders)
+	\item Ensures the requested WBML/Webbase is loaded into an in-memory tree
+	\item Decides whether to respond with a resource directly or with a list of REST calls the client should make (async via WebSockets)
+	\item Renders contents on demand using WBLL-driven layouts and returns HTML fragments/resources
+\end{enumerate}
+
+\section{Core Elements and Site Tree}
+The in-memory model mirrors the WBML structure:
+\begin{itemize}
+	\item \textbf{STWSite} (singleton root), \textbf{STWArea}, \textbf{STWPage}, \textbf{STWContent}
+	\item All derive from an abstract \textbf{STWElement} providing identity, naming, localization, hierarchy, and export to WBML
+	\item A content type (e.g., Text, Table, Menus, Breadcrumbs, Calendar, Code Editor, ...), implemented under \texttt{stwContents/}, encapsulates data access and rendering concerns
+\end{itemize}
+
+\section{Rendering Pipeline: WBLL and WBPL}
+Presentation is described with WBLL (Webbase Layout Language), interpreted by a layout engine:
+\begin{itemize}
+	\item WBLL strings are tokenized and validated; tokens drive generation of a specialized render function
+	\item Token handlers cover inputs, lists, links, media, buttons/actions, and structural fragments; they build HTML using placeholders and field values
+	\item WBPL expressions provide string interpolation and conditional/functional logic within layouts and settings
+	\item Placeholders (e.g., \verb|@@name|) merge session, request, and record values
+\end{itemize}
+
+\section{Request Flow in Practice}
+For a content render request:
+\begin{enumerate}
+	\item The session determines visibility (role-based) and language
+	\item The content locates its WBLL layout for the current language
+	\item Records are fetched (via a datasource or parameters); the first row and fields hydrate placeholders
+	\item The compiled WBLL render function executes, producing the HTML body; optional header/footer wrappers apply
+\end{enumerate}
+
+\section{Security, Localization, and State}
+\begin{itemize}
+	\item \textbf{Visibility}: role-based flags inherited along the element tree control exposure of nodes
+	\item \textbf{Localization}: localized properties (names, slugs, messages) are resolved through the session
+	\item \textbf{State}: per-session placeholders and content-level settings influence rendering and actions
+\end{itemize}
+
+\section{Build, Tooling, and Deployment}
+\begin{itemize}
+	\item Deno tasks: merge and minify static assets (e.g., CSS merger, JS minifier) for the \texttt{public/} client assets
+	\item Tests: parsing and evaluation tests for WBPL ensure correctness of expressions and escaping
+	\item Docker: multi-stage build caches Deno dependencies and ships a non-root runtime image
+\end{itemize}
+
+\section{Where the Mechanics Live (Guide to Source)}
+The following folders in the reference implementation contain the mechanics described above:
+\begin{itemize}
+	\item \texttt{stwElements/}: \textit{STWElement}, \textit{STWSite}, \textit{STWArea}, \textit{STWPage}, \textit{STWContent}
+	\item \texttt{stwContents/}: concrete contents and \textit{WBLL} engine (layout parsing/rendering)
+	\item \texttt{tests/}: WBPL and layout-related unit tests
+	\item \texttt{public/}: client-side scripts, styles, and SPA shell
+	\item \texttt{tasks/}: Deno-powered dev/build utilities (e.g., minification, CSS merge)
+\end{itemize}
+
+\section{Example: From WBML to HTML}
+At a glance:
+\begin{enumerate}
+	\item WBML defines the site tree; the spinner builds an in-memory model at startup/load
+	\item A user navigates to a page; the spinner locates the route and the associated contents
+	\item Each content loads data (if needed), prepares placeholders, and renders its WBLL layout
+	\item The server responds with an HTML fragment or instructs the client to fetch multiple fragments via REST/WebSockets
+\end{enumerate}
+
+\noindent This chapter bridges theory and implementation so future chapters can delve into deployment topologies, performance tuning, and advanced examples.

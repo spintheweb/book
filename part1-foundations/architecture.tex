@@ -4,7 +4,7 @@
 \label{chap:architecture}
 
 \begin{quote}
-\textit{"Architecture is about the important stuff. Whatever that is."} \\
+	extit{"Architecture is about the important stuff. Whatever that is."} \\
 — Ralph Johnson
 \end{quote}
 
@@ -49,10 +49,10 @@ The architecture consists of three core components:
 \subsection{Benefits of the Declarative Approach}
 
 \begin{itemize}
-    \item \textbf{Maintainability}: Changes to business requirements can be implemented through configuration rather than code changes
-    \item \textbf{Consistency}: Standard element types ensure consistent behavior across the entire portal
-    \item \textbf{Reusability}: Content elements can be reused across multiple pages and contexts
-    \item \textbf{Testability}: Declarative definitions are easier to validate and test than imperative code
+	\item \textbf{Maintainability}: Changes to business requirements can be implemented through configuration rather than code changes
+	\item \textbf{Consistency}: Standard element types ensure consistent behavior across the entire portal
+	\item \textbf{Reusability}: Content elements can be reused across multiple pages and contexts
+	\item \textbf{Testability}: Declarative definitions are easier to validate and test than imperative code
 \end{itemize}
 
 \section{Pillar II: Web Spinner Engine}
@@ -85,10 +85,10 @@ The Web Spinner operates through several key subsystems:
 \subsection{Performance and Scalability}
 
 \begin{itemize}
-    \item \textbf{Asynchronous Processing}: Content elements are fetched independently for optimal loading times
-    \item \textbf{Intelligent Caching}: Multi-level caching strategies reduce datasource load
-    \item \textbf{Connection Pooling}: Efficient resource management for database and API connections
-    \item \textbf{Horizontal Scaling}: Support for load-balanced, multi-instance deployments
+	\item \textbf{Asynchronous Processing}: Content elements are fetched independently for optimal loading times
+	\item \textbf{Intelligent Caching}: Multi-level caching strategies reduce datasource load
+	\item \textbf{Connection Pooling}: Efficient resource management for database and API connections
+	\item \textbf{Horizontal Scaling}: Support for load-balanced, multi-instance deployments
 \end{itemize}
 
 \section{Pillar III: Spin the Web Studio}
@@ -111,10 +111,10 @@ The Spin the Web Studio is a specialized \webbaselet{} designed for editing and 
 Unlike low-code/no-code platforms, the Studio is designed specifically for professional developers:
 
 \begin{itemize}
-    \item \textbf{Full Control}: Complete access to all \wbdl{} features and capabilities
-    \item \textbf{Extensibility}: Support for custom components and specialized functionality
-    \item \textbf{Integration}: Seamless integration with standard development workflows
-    \item \textbf{Performance Tools}: Profiling and optimization capabilities for enterprise-scale deployments
+	\item \textbf{Full Control}: Complete access to all \wbdl{} features and capabilities
+	\item \textbf{Extensibility}: Support for custom components and specialized functionality
+	\item \textbf{Integration}: Seamless integration with standard development workflows
+	\item \textbf{Performance Tools}: Profiling and optimization capabilities for enterprise-scale deployments
 \end{itemize}
 
 \section{Architectural Interactions}
@@ -125,29 +125,29 @@ The three pillars work together through well-defined interfaces and protocols:
 \subsection{Design-Time to Runtime}
 
 \begin{enumerate}
-    \item Developers use the Studio to create and modify \webbase{} definitions
-    \item \wbdl{} documents are saved and versioned using standard development practices
-    \item The Web Spinner Engine loads updated \webbase{} definitions and applies changes
-    \item Changes take effect immediately without requiring system restarts
+	\item Developers use the Studio to create and modify \webbase{} definitions
+	\item \wbdl{} documents are saved and versioned using standard development practices
+	\item The Web Spinner Engine loads updated \webbase{} definitions and applies changes
+	\item Changes take effect immediately without requiring system restarts
 \end{enumerate}
 
 \subsection{Runtime Operations}
 
 \begin{enumerate}
-    \item User requests arrive at the Web Spinner Engine
-    \item The engine consults the in-memory \webbase{} structure to route the request
-    \item Authorization rules defined in \wbdl{} are evaluated against user roles
-    \item Appropriate \texttt{STWContent} elements are identified and executed
-    \item Responses are assembled and delivered to the client
+	\item User requests arrive at the Web Spinner Engine
+	\item The engine consults the in-memory \webbase{} structure to route the request
+	\item Authorization rules defined in \wbdl{} are evaluated against user roles
+	\item Appropriate \texttt{STWContent} elements are identified and executed
+	\item Responses are assembled and delivered to the client
 \end{enumerate}
 
 \subsection{Feedback Loops}
 
 \begin{itemize}
-    \item Runtime performance metrics inform Studio optimization recommendations
-    \item User behavior analytics guide design decisions
-    \item Error logs and debugging information flow back to the development environment
-    \item A/B testing capabilities enable data-driven design refinements
+	\item Runtime performance metrics inform Studio optimization recommendations
+	\item User behavior analytics guide design decisions
+	\item Error logs and debugging information flow back to the development environment
+	\item A/B testing capabilities enable data-driven design refinements
 \end{itemize}
 
 \section{Architectural Benefits}
@@ -158,28 +158,28 @@ This three-pillar approach provides several key advantages over traditional port
 \subsection{Separation of Concerns}
 
 \begin{itemize}
-    \item Business logic is separated from presentation concerns
-    \item Security policies are defined declaratively rather than embedded in code
-    \item Data access patterns are standardized and centrally managed
-    \item UI rendering is handled consistently across all portal components
+	\item Business logic is separated from presentation concerns
+	\item Security policies are defined declaratively rather than embedded in code
+	\item Data access patterns are standardized and centrally managed
+	\item UI rendering is handled consistently across all portal components
 \end{itemize}
 
 \subsection{Development Efficiency}
 
 \begin{itemize}
-    \item Faster development cycles through declarative configuration
-    \item Reduced debugging time due to standardized runtime behavior
-    \item Easier maintenance through centralized configuration management
-    \item Lower training requirements for new team members
+	\item Faster development cycles through declarative configuration
+	\item Reduced debugging time due to standardized runtime behavior
+	\item Easier maintenance through centralized configuration management
+	\item Lower training requirements for new team members
 \end{itemize}
 
 \subsection{Enterprise Scalability}
 
 \begin{itemize}
-    \item Proven performance characteristics for large-scale deployments
-    \item Built-in support for high availability and disaster recovery
-    \item Comprehensive monitoring and operational management capabilities
-    \item Integration with enterprise identity and security systems
+	\item Proven performance characteristics for large-scale deployments
+	\item Built-in support for high availability and disaster recovery
+	\item Comprehensive monitoring and operational management capabilities
+	\item Integration with enterprise identity and security systems
 \end{itemize}
 
 \section{Implementation Patterns}
@@ -190,28 +190,28 @@ Common implementation patterns emerge when working with the three-pillar archite
 \subsection{Incremental Development}
 
 \begin{enumerate}
-    \item Start with core site structure and basic navigation
-    \item Add key business areas one at a time
-    \item Implement critical content elements first
-    \item Gradually add advanced features like real-time updates and complex workflows
+	\item Start with core site structure and basic navigation
+	\item Add key business areas one at a time
+	\item Implement critical content elements first
+	\item Gradually add advanced features like real-time updates and complex workflows
 \end{enumerate}
 
 \subsection{Modular Design}
 
 \begin{itemize}
-    \item Design \texttt{STWContent} elements as reusable components
-    \item Create area-specific templates for consistent user experience
-    \item Develop shared datasource configurations for common data patterns
-    \item Build libraries of common UI components and layouts
+	\item Design \texttt{STWContent} elements as reusable components
+	\item Create area-specific templates for consistent user experience
+	\item Develop shared datasource configurations for common data patterns
+	\item Build libraries of common UI components and layouts
 \end{itemize}
 
 \subsection{Testing and Validation}
 
 \begin{itemize}
-    \item Use Studio preview capabilities for immediate design feedback
-    \item Implement automated testing for critical business logic
-    \item Perform role-based testing to validate security configurations
-    \item Conduct performance testing under realistic load conditions
+	\item Use Studio preview capabilities for immediate design feedback
+	\item Implement automated testing for critical business logic
+	\item Perform role-based testing to validate security configurations
+	\item Conduct performance testing under realistic load conditions
 \end{itemize}
 
 \section{Looking Forward}
@@ -220,9 +220,9 @@ Common implementation patterns emerge when working with the three-pillar archite
 The three-pillar architecture provides a solid foundation for enterprise portal development, but its true power emerges through the detailed implementation of each component. In the following parts of this book, we will explore each pillar in depth:
 
 \begin{itemize}
-    \item \textbf{Part II} examines the \wbdl{} specification and its practical application
-    \item \textbf{Part V} details the Web Spinner Engine's runtime capabilities
-    \item \textbf{Part VI} covers the Spin the Web Studio development environment
+	\item \textbf{Part II} examines the \wbdl{} specification and its practical application
+	\item \textbf{Part V} details the Web Spinner Engine's runtime capabilities
+	\item \textbf{Part VI} covers the Spin the Web Studio development environment
 \end{itemize}
 
 Together, these three pillars enable the creation of sophisticated, enterprise-grade web portals that can adapt to changing business requirements while maintaining high performance and security standards.

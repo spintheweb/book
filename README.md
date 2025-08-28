@@ -33,23 +33,24 @@ This book provides complete documentation for the Spin the Web ecosystem, coveri
 │   └── preface.tex            # Preface with mathematical philosophy
 ├── part1-foundations/         # Part I: Philosophy (Foundations and Concepts)
 │   ├── intro.tex             # Part introduction
-│   ├── chapter01-genesis.tex  # Project history and genesis
-│   ├── chapter02-intro.tex    # Introduction to enterprise portals
-│   ├── chapter03-virtualized.tex # Virtualized portal framework
-│   └── chapter04-architecture.tex # Technical architecture
+│   ├── genesis.tex            # Project history and genesis
+│   ├── introduction.tex       # Introduction to enterprise portals
+│   ├── virtualized.tex        # Virtualized portal framework
+│   └── architecture.tex       # Technical architecture
 ├── part2-languages/           # Part II: Theory (Languages and Mechanics)
 │   ├── intro.tex             # Part introduction
-│   ├── chapter05-wbdl.tex     # Web Base Definition Language
-│   ├── chapter06-wbpl.tex     # Web Base Programming Language
-│   ├── chapter07-webbaselets.tex # Webbaselets and components
-│   └── chapter08-web-spinner-engine.tex # Web Spinner Engine
+│   ├── wbdl.tex               # Web Base Definition Language
+│   ├── wbpl.tex               # Web Base Placeholders Language
+│   ├── wbll.tex               # Webbase Layout Language
+│   ├── webbaselets.tex        # Webbaselets and components
+│   └── web-spinner-engine.tex # Web Spinner Engine
 ├── part3-implementation/      # Part III: Practice (Implementation)
 │   ├── intro.tex             # Part introduction
-│   ├── chapter09-learning.tex # Practical insights and methodology
-│   └── chapter10-technology-stack.tex # Technology stack and implementation mechanics
+│   ├── learning.tex           # Practical insights and methodology
+│   └── technology-stack.tex   # Technology stack and implementation mechanics
 ├── part4-future/              # Part IV: Future (Evolution)
 │   ├── intro.tex             # Part introduction
-│   └── chapter10-future-directions.tex # Roadmap and evolution
+│   └── future-directions.tex  # Roadmap and evolution
 ├── figures/                   # Images and diagrams
 │   ├── logo.png              # Project logo (75x75)
 │   └── spin-the-web.png      # Main project architecture diagram

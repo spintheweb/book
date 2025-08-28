@@ -4,7 +4,7 @@
 \label{chap:intro}
 
 \begin{quote}
-\textit{"The single biggest problem in communication is the illusion that it has taken place."} \\
+	extit{"The single biggest problem in communication is the illusion that it has taken place."} \\
 — George Bernard Shaw
 \end{quote}
 
@@ -13,7 +13,7 @@
 
 In today's digital economy, businesses operate through a complex web of disparate software systems—\erp{s}, \crm{s}, \bpms{s}, \mrp{s}, and much more. While individually capable, these systems often create siloed user experiences, forcing employees, customers, and partners to navigate multiple interfaces to perform their tasks. This fragmentation leads to inefficiency, poor user adoption, and a disjointed view of the enterprise.
 
-The \textbf{Spin the Web} addresses this challenge head-on. The word ``Spin'' is used in the sense of ``to weave,'' as a spider dynamically weaves a web. The project is designed to weave together disparate systems and user experiences into a single, coherent whole, based on Internet technologies. It introduces a new paradigm for developing web portals centered on three core components: a specialized language, the \textbf{Webbase Description Language (\wbdl{})}; a server-side rendering engine, the \textbf{Web Spinner}; and a specialized \webbaselet{} for editing \webbase{s}, the \textbf{Spin the Web Studio}. The project's core mission is to enable the creation of unified, role-based web portals that act as a ``virtualized company''—a single, coherent digital channel for all business interactions.
+The \textbf{Spin the Web} addresses this challenge head-on. The word ``Spin'' is used in the sense of ``to weave,'' as a spider dynamically weaves a web. The project is designed to weave together disparate systems and user experiences into a single, coherent whole, based on Internet technologies. It introduces a new paradigm for developing web portals centered on three core components: a specialized language, the \textbf{Webbase Description Language (\wbdl{})}; a server-side rendering engine, the \textbf{Web Spinner}; and a specialized \webbaselet{} for editing \webbase{s}, the \textbf{Spin the Web Studio}. The project's core mission is to enable the creation of unified, role-based web portals that act as a "virtualized company"—a single, coherent digital channel for all business interactions.
 
 This document serves as the foundational guide for Spin the Web. It outlines the vision, defines the core components of the \wbdl{} specification, and provides concrete examples of how this technology can be used to build the next generation of integrated web portals.
 
@@ -22,7 +22,7 @@ It is important to note that Spin the Web is a professional framework intended f
 \section{Understanding Web Portals}
 \label{sec:web-portals}
 
-Web portals are \textbf{``websites on steroids.''} They expand on the concept of a traditional website by serving a diverse, segmented audience that includes not only the general public but also internal and external stakeholders like employees, clients, suppliers, governance bodies, developers, and more.
+Web portals are \textbf{"websites on steroids."} They expand on the concept of a traditional website by serving a diverse, segmented audience that includes not only the general public but also internal and external stakeholders like employees, clients, suppliers, governance bodies, developers, and more.
 
 Web portals function as \textbf{virtualized companies}, an all-encompassing digital channel that allows individuals, based on their specific role, to interact with every facet of the organization—from administration and logistics to sales, marketing, human resources, and production. It is a comprehensive platform for:
 
@@ -58,7 +58,7 @@ To better understand the structure of a web portal defined in \wbdl{}, it's help
 \item[\textbf{Content (\texttt{STWContent})}]: These are the building blocks of a page, similar to the \textbf{paragraphs} or other content elements (like images or tables) on a page.
 \end{description}
 
-\texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
+	exttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
 
 \section{Portal Organization and User Journeys}
 \label{sec:user-journeys}
@@ -66,47 +66,47 @@ To better understand the structure of a web portal defined in \wbdl{}, it's help
 The structure of a web portal built with \wbdl{} is typically organized around the core functions of the business it represents. This creates a logical and intuitive navigation system for all users. Common top-level \textbf{Areas (\texttt{STWArea})} would include:
 
 \begin{itemize}
-    \item Sales
-    \item Administration
-    \item Backoffice
-    \item Technical Office
-    \item Logistics
-    \item Products \& Services (often publicly viewable)
+	\item Sales
+	\item Administration
+	\item Backoffice
+	\item Technical Office
+	\item Logistics
+	\item Products \& Services (often publicly viewable)
 \end{itemize}
 
 The full potential of the portal is revealed when we consider the specific journeys of different users, or \textbf{personas}. The portal uses a role-based system to present a completely different experience to each user, tailored to their needs and permissions.
 
 \subsection{Example User Journeys}
 
-\textbf{The Customer:}
+	extbf{The Customer:}
 \begin{itemize}
-    \item Logs into the portal and is directed to a personalized ``Customer Dashboard'' page
-    \item Can view their complete order history in a dedicated ``My Orders'' area
-    \item Can track the real-time status of current orders (e.g., ``Processing,'' ``Shipped'')
-    \item Can initiate a video chat with their designated sales representative directly from the portal
-    \item Can open a support ticket or schedule a consultation with the Technical Office
+	\item Logs into the portal and is directed to a personalized "Customer Dashboard" page
+	\item Can view their complete order history in a dedicated "My Orders" area
+	\item Can track the real-time status of current orders (e.g., "Processing," "Shipped")
+	\item Can initiate a video chat with their designated sales representative directly from the portal
+	\item Can open a support ticket or schedule a consultation with the Technical Office
 \end{itemize}
 
-\textbf{The Supplier:}
+	extbf{The Supplier:}
 \begin{itemize}
-    \item Logs in and sees a ``Supplier Dashboard''
-    \item Can access a ``Kanban View'' page to see which materials or components require replenishment
-    \item Can submit new quotations through an integrated form
-    \item Can view the status of their invoices and payments
+	\item Logs in and sees a "Supplier Dashboard"
+	\item Can access a "Kanban View" page to see which materials or components require replenishment
+	\item Can submit new quotations through an integrated form
+	\item Can view the status of their invoices and payments
 \end{itemize}
 
-\textbf{The Employee:}
+	extbf{The Employee:}
 \begin{itemize}
-    \item Logs in and is presented with an ``Employee Self-Service'' area
-    \item Can access a ``Welfare Management'' page to view and adjust their benefits
-    \item Can view internal company news, submit vacation requests, and access HR documents
+	\item Logs in and is presented with an "Employee Self-Service" area
+	\item Can access a "Welfare Management" page to view and adjust their benefits
+	\item Can view internal company news, submit vacation requests, and access HR documents
 \end{itemize}
 
-\textbf{The CEO:}
+	extbf{The CEO:}
 \begin{itemize}
-    \item Logs in to a high-level ``Executive Dashboard''
-    \item Can view key performance indicators (KPIs) for the entire company, such as sales figures, production output, and financial health
-    \item Can access detailed reports from various departments
+	\item Logs in to a high-level "Executive Dashboard"
+	\item Can view key performance indicators (KPIs) for the entire company, such as sales figures, production output, and financial health
+	\item Can access detailed reports from various departments
 \end{itemize}
 
 These user journeys demonstrate how \wbdl{}'s hierarchical structure and role-based visibility rules work together to create a highly functional and personalized web portal that serves as a central hub for the entire business ecosystem.
