@@ -2,7 +2,7 @@
 
 **Weaving Digital Portals**
 
-A comprehensive LaTeX technical book documenting the **Spin the Web** project - an innovative framework for building dynamic enterprise web portals using WBDL (Web Base Definition Language), WBPL (Web Base Programming Language), and the Web Spinner Engine.
+A comprehensive LaTeX technical book documenting the **Spin the Web** project - an innovative framework for building dynamic enterprise web portals using WBDL (Webbase Definition Language), WBPL (Webbase Programming Language), and the Web Spinner Engine.
 
 ## About This Project
 
@@ -39,8 +39,8 @@ This book provides complete documentation for the Spin the Web ecosystem, coveri
 │   └── architecture.tex       # Technical architecture
 ├── part2-languages/           # Part II: Theory (Languages and Mechanics)
 │   ├── intro.tex             # Part introduction
-│   ├── wbdl.tex               # Web Base Definition Language
-│   ├── wbpl.tex               # Web Base Placeholders Language
+│   ├── wbdl.tex               # Webbase Definition Language
+│   ├── wbpl.tex               # Webbase Placeholders Language
 │   ├── wbll.tex               # Webbase Layout Language
 │   ├── webbaselets.tex        # Webbaselets and components
 │   └── web-spinner-engine.tex # Web Spinner Engine
@@ -108,8 +108,8 @@ cp build/main.pdf SpinTheWeb.pdf
 - Chapter 4: Technical Architecture and Mechanics — System design principles
 
 ### Part II: Theory — Languages and Mechanics (Chapters 5–8)
-- Chapter 5: WBDL (Web Base Definition Language) — Declarative markup language
-- Chapter 6: WBPL (Web Base Programming Language) — Procedural scripting language
+- Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
+- Chapter 6: WBPL (Webbase Programming Language) — Procedural scripting language
 - Chapter 7: Webbaselets — Component-based architecture
 - Chapter 8: Web Spinner Engine — Core processing engine and mechanics
 
