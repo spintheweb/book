@@ -109,16 +109,17 @@ cp build/main.pdf SpinTheWeb.pdf
 
 ### Part II: Theory — Languages and Mechanics (Chapters 5–8)
 - Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
-- Chapter 6: WBPL (Webbase Programming Language) — Procedural scripting language
-- Chapter 7: Webbaselets — Component-based architecture
-- Chapter 8: Web Spinner Engine — Core processing engine and mechanics
+- Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder managment
+- Chapter 7: WBLL (Webbase Layout Language) — Component layout management
+- Chapter 8: Webbase and Webbaselets
+- Chapter 9: Web Spinner Engine Architecture and Mechanics
 
 ### Part III: Practice — Implementation (Chapters 9–10)
-- Chapter 9: Learning from Implementation — Practical insights and methodology
-- Chapter 10: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL engine, WBPL, session/state, security, and deployment
+- Chapter 10: Learning from Implementation — Practical insights and methodology
+- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL engine, WBPL, session/state, security, and deployment
 
-### Part IV: Future (Evolution)
-- Chapter 10: Future Directions — Roadmap, evolution, and next steps
+### Part IV: Future (Chapter 11)
+- Chapter 11: Future Directions — Roadmap, evolution, and next steps
 
 ## Development Status
 
