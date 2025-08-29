@@ -14,19 +14,19 @@ The reference implementation is written in TypeScript and runs on the Deno runti
 \end{itemize}
 
 \section{High-Level Architecture}
-The spinner is a server that understands WBML. On each request it:\footnote{See also the ``Paradigm'' section in the implementation README}
+The spinner is a server that understands WBDL. On each request it:\footnote{See also the ``Paradigm'' section in the implementation README}
 \begin{enumerate}
 	\item Establishes or resumes a session (user, roles, locale, placeholders)
-	\item Ensures the requested WBML/Webbase is loaded into an in-memory tree
+	\item Ensures the requested WBDL/Webbase is loaded into an in-memory tree
 	\item Decides whether to respond with a resource directly or with a list of REST calls the client should make (async via WebSockets)
 	\item Renders contents on demand using WBLL-driven layouts and returns HTML fragments/resources
 \end{enumerate}
 
 \section{Core Elements and Site Tree}
-The in-memory model mirrors the WBML structure:
+The in-memory model mirrors the WBDL structure:
 \begin{itemize}
 	\item \textbf{STWSite} (singleton root), \textbf{STWArea}, \textbf{STWPage}, \textbf{STWContent}
-	\item All derive from an abstract \textbf{STWElement} providing identity, naming, localization, hierarchy, and export to WBML
+	\item All derive from an abstract \textbf{STWElement} providing identity, naming, localization, hierarchy, and export to WBDL
 	\item A content type (e.g., Text, Table, Menus, Breadcrumbs, Calendar, Code Editor, ...), implemented under \texttt{stwContents/}, encapsulates data access and rendering concerns
 \end{itemize}
 
@@ -72,10 +72,10 @@ The following folders in the reference implementation contain the mechanics desc
 	\item \texttt{tasks/}: Deno-powered dev/build utilities (e.g., minification, CSS merge)
 \end{itemize}
 
-\section{Example: From WBML to HTML}
+\section{Example: From WBDL to HTML}
 At a glance:
 \begin{enumerate}
-	\item WBML defines the site tree; the spinner builds an in-memory model at startup/load
+	\item WBDL defines the site tree; the spinner builds an in-memory model at startup/load
 	\item A user navigates to a page; the spinner locates the route and the associated contents
 	\item Each content loads data (if needed), prepares placeholders, and renders its WBLL layout
 	\item The server responds with an HTML fragment or instructs the client to fetch multiple fragments via REST/WebSockets

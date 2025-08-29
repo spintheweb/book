@@ -74,7 +74,7 @@ through declarative configuration and dynamic content management.
 The current reference implementation of the spinner is built with:
 
 - Deno runtime (TypeScript) for server-side mechanics and tasks
-- In-memory WBML tree built from `STWSite`, `STWArea`, `STWPage`, `STWContent`
+- In-memory WBDL tree built from `STWSite`, `STWArea`, `STWPage`, `STWContent`
 - WBLL layout engine with token handlers generating specialized render functions
 - WBPL expression parsing for dynamic values and logic
 - Docker multi-stage build for deployment

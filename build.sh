@@ -5,10 +5,13 @@ echo "Running first pdflatex pass..."
 pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
 
 echo "Running bibtex..."
-(cd build && bibtex main)
+bibtex build/main
 
 echo "Running makeindex..."
-(cd build && makeindex main.idx)
+bibtex build/main
+
+echo "Running makeglossaries..."
+bibtex build/main
 
 echo "Running second pdflatex pass..."
 pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
