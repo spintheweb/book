@@ -50,7 +50,7 @@ Extending large platforms can be costly. Spin the Web excels at adding smaller, 
 \section{The Book Analogy}
 \label{sec:book-analogy}
 
-To better understand the structure of a web portal defined in \wbdl{}, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs.
+To better understand the structure of a web portal defined in \wbdl{}, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs. However, the book analogy ends there: web technologies introduce hyperlinks and dynamic routing that open a new, non-linear dimension. The sequence in which users traverse the portal is not fixed; it changes based on navigational setups---menus, breadcrumbs, deep links, search results, role-based visibility, and workflow-driven redirects---so journeys adapt to context, permissions, and intent.
 
 \begin{description}
 \item[\textbf{Areas (\texttt{STWArea})}]: These are the main sections of the portal, analogous to the \textbf{chapters} of a book. An area groups related pages together.
@@ -58,7 +58,7 @@ To better understand the structure of a web portal defined in \wbdl{}, it's help
 \item[\textbf{Content (\texttt{STWContent})}]: These are the building blocks of a page, similar to the \textbf{paragraphs} or other content elements (like images or tables) on a page.
 \end{description}
 
-	exttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
+	\texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} are all specialized types that inherit from the base \texttt{STWElement}, sharing its common properties while also having their own specific attributes and behaviors.
 
 \section{Portal Organization and User Journeys}
 \label{sec:user-journeys}
