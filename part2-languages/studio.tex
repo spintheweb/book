@@ -33,6 +33,47 @@ Crucially, the Studio is not an external, standalone application. It is itself a
     \item \textbf{Part of the Virtualized Portal}: As a \webbaselet{}, the Studio can be seamlessly integrated into any \webbase{}. This allows developers with the appropriate permissions to access the development environment directly from within the live portal, making it a true part of the virtualized web portal.
 \end{enumerate}
 
+\section{IDE Architecture and Activation}
+\label{sec:studio-architecture}
+
+The Studio operates as a specialized \webbaselet{} that is added to the portal \webbase{} and is accessible to users with developer permissions when they log in. The IDE remains hidden until activated by the developer using the keyboard shortcut \textbf{Alt+F12}.
+
+Upon activation, the Studio transforms the portal interface into a full-featured development environment with the following key components:
+
+\begin{description}
+    \item[Action Bar] Provides quick access to the IDE functions.
+    \item[Side Bar] Houses multiple views including interactive \webbase{} hierarchy, portal folder contents, search capabilities, debugging tools, source control integration, and IDE settings.
+    \item[Status Bar] Displays development status information, compilation results, and system feedback.
+    \item[Panel] Contains additional development tools, terminal access, and debugging output.
+    \item[Main Section] Features a tabbed interface where the live portal is displayed in a persistent browser tab alongside other editors.
+\end{description}
+
+\subsection{Unique Browser Tab Integration}
+\label{sec:studio-browser-tab}
+
+One of the Studio's most innovative features is its tab management system. The main section displays the live portal in a special browser tab that cannot be closed, ensuring developers always maintain visual connection to their running application. Portal resources such as files, configurations, and logs can be opened in separate tabs for editing and review.
+
+This design creates an in-place development experience where:
+\begin{itemize}
+    \item Changes to \wbdl{} files are immediately reflected in the persistent portal view
+    \item Developers can interact with the live portal while simultaneously editing its underlying code
+    \item The development environment becomes part of the portal ecosystem rather than an external tool
+\end{itemize}
+
+\subsection{Side Bar Navigation}
+\label{sec:studio-sidebar}
+
+The Studio's side bar provides comprehensive navigation and development tools through multiple specialized views:
+
+\begin{description}
+    \item[Interactive \webbase{} Hierarchy] A tree view displaying the complete structure of the \webbase{}, allowing developers to navigate between \webbaselets{}, datasources, and configurations with visual context.
+    \item[Portal Primary Folder Contents] Direct access to the portal's file system, enabling quick file management and resource organization.
+    \item[Search] Comprehensive search capabilities across both \webbase{} definitions and folder contents, supporting pattern matching and content searches.
+    \item[Debugging] Integrated debugging tools for \wbpl{} queries, \webbaselet{} execution, and runtime diagnostics.
+    \item[Source Control] Built-in version control integration for tracking changes to \webbase{} definitions and portal resources.
+    \item[IDE Settings] Customization options for the development environment, including themes, editor preferences, and workflow configurations.
+\end{description}
+
 \section{Key Features of the Studio}
 \label{sec:studio-features}
 

@@ -96,14 +96,18 @@ The Web Spinner operates through several key subsystems:
 
 The Spin the Web Studio is a specialized \webbaselet{} designed for editing and managing \webbase{} definitions. As a \webbaselet{}, it can be seamlessly integrated into any \webbase{} to provide in-place editing capabilities, enabling professional developers to create and maintain complex portal structures efficiently.
 
+The Studio is dynamically added to the portal \webbase{} when users with developer permissions log in, remaining dormant until activated via the \textbf{Alt+F12} keyboard shortcut. Upon activation, it transforms the portal interface into a comprehensive IDE with VSCode-like layout including action bars, side panels, status displays, and a main editing area where the live portal remains visible in a persistent browser tab.
+
 \subsection{Development Capabilities}
 
 \begin{description}
-\item[\textbf{Visual Design Interface}]: Graphical tools for designing portal structure and navigation
-\item[\textbf{Code Assistance}]: Intelligent editing support for \wbdl{} and \wbpl{} syntax
-\item[\textbf{Data Source Integration}]: Tools for connecting to and testing various data sources
-\item[\textbf{Preview and Testing}]: Real-time preview capabilities with role simulation
-\item[\textbf{Version Control}]: Integration with standard source control systems
+\item[\textbf{Visual Design Interface}]: Graphical tools for designing portal structure and navigation through an interactive \webbase{} hierarchy displayed in the side bar
+\item[\textbf{Code Assistance}]: Intelligent editing support for \wbdl{} and \wbpl{} syntax with multi-tab file editing capabilities
+\item[\textbf{Data Source Integration}]: Tools for connecting to and testing various data sources, accessible through portal primary folder contents
+\item[\textbf{Preview and Testing}]: Real-time preview capabilities with role simulation in the persistent browser tab that displays the live portal
+\item[\textbf{Version Control}]: Integration with standard source control systems through the side bar source control panel
+\item[\textbf{Comprehensive Search}]: Unified search capabilities across both \webbase{} definitions and folder contents
+\item[\textbf{Integrated Debugging}]: Built-in debugging tools for \wbpl{} queries and \webbaselet{} execution
 \end{description}
 
 \subsection{Professional Developer Focus}
