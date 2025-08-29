@@ -2,7 +2,7 @@
 
 **Weaving Digital Portals**
 
-[**Read the Latest PDF Version**](SpinTheWeb.pdf)
+[**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) | [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
 A comprehensive LaTeX technical book documenting the **Spin the Web** project -
 an framework for building dynamic enterprise web portals using WBDL
