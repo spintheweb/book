@@ -1,0 +1,80 @@
+% Chapter: Structuring a Web Portal: A Practical Guide
+\chapter{Structuring a Web Portal: A Practical Guide}
+\label{chap:portal-structure}
+
+\begin{quote}
+\textit{"Structure is not just a means to a solution. It is the solution."} \\
+— Alexandra V. Agranovsky
+\end{quote}
+
+\section{From Business to Portal Structure}
+\label{sec:business-to-portal}
+
+A company's partial or total structure can be projected in a web portal: the lobby, human resources, sales, marketing, production, logistics, administration, service, support… you name it. Each of these areas serves functionalities that address specific needs. Some functionalities satisfy cross-company needs, some are public while others are private, and some expose everything while others only a part based on authorization.
+
+The preceding chapters have detailed the languages and mechanics of the Spin the Web framework. This chapter provides a practical guide on how to translate an organization's business structure and user needs into a coherent and effective web portal using the core \wbdl{} elements: \texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent}.
+
+The key to a successful portal is a structure that feels intuitive to its users. This is achieved by mirroring the familiar functions of the business itself.
+
+\section{Step 1: Define Top-Level Areas}
+\label{sec:define-areas}
+
+The first step is to identify the primary functional divisions of the organization. These will become the top-level \textbf{Areas (\texttt{STWArea})} of your portal. Think of these as the main departments or directorates of the company.
+
+A typical manufacturing company might have the following top-level Areas:
+\begin{itemize}
+    \item \textbf{Sales}: For customers, sales representatives, and channel partners.
+    \item \textbf{Administration}: For finance, HR, and internal services.
+    \item \textbf{Backoffice}: For logistics, procurement, and supplier management.
+    \item \textbf{Technical Office}: For engineering, R\&D, and product support.
+    \item \textbf{Products \& Services}: A publicly accessible area showcasing the company's offerings.
+\end{itemize}
+
+Each of these would be defined as an \texttt{STWArea} element in your \wbdl{} file, forming the main navigation structure of your portal.
+
+\section{Step 2: Design Pages for User Journeys}
+\label{sec:design-pages}
+
+With the main Areas defined, the next step is to create the \textbf{Pages (\texttt{STWPage})} within each Area. The design of these pages should be driven by the specific tasks and journeys of your user personas.
+
+Consider the \textbf{Sales Area}. What do different users need to accomplish here?
+\begin{itemize}
+    \item \textbf{A Customer} might need to:
+        \begin{itemize}
+            \item View their order history (\textit{Page: "My Orders"}).
+            \item Track a shipment (\textit{Page: "Order Tracking"}).
+            \item Contact support (\textit{Page: "Support Center"}).
+        \end{itemize}
+    \item \textbf{A Sales Representative} might need to:
+        \begin{itemize}
+            \item View their sales dashboard (\textit{Page: "Sales Dashboard"}).
+            \item Access customer information (\textit{Page: "Customer Directory"}).
+            \item Generate a new quote (\textit{Page: "Quote Generator"}).
+        \end{itemize}
+\end{itemize}
+
+Each of these user needs translates directly into a \texttt{STWPage} within the "Sales" \texttt{STWArea}. The role-based visibility rules of \wbdl{} ensure that users only see the pages relevant to them.
+
+\section{Step 3: Build Pages with Content Blocks}
+\label{sec:build-with-content}
+
+The final step is to populate the pages with \textbf{Content (\texttt{STWContent})} blocks. These are the building blocks that display information and provide functionality. A single page will typically be composed of multiple content blocks.
+
+Let's design the public-facing \textbf{"Products"} page from the "Products \& Services" Area. This page needs to be informative and engaging for potential customers. It could be built with the following \texttt{STWContent} blocks:
+
+\begin{enumerate}
+    \item \textbf{A Hero Banner}: An eye-catching banner image with a marketing headline. This is a static content block.
+    \item \textbf{Product Categories Menu}: A navigation menu, perhaps implemented as tabs or an accordion, that allows users to filter products by category. This content block would use \wbpl{} to dynamically query the list of product categories from a database.
+    \item \textbf{Product Listing Grid}: A grid that displays the products. Each item in the grid would show a product image, name, and a short description. This is a highly dynamic content block, driven by a \wbpl{} query that fetches the product data based on the selected category.
+    \item \textbf{Featured Products Carousel}: A rotating carousel showcasing new or featured products. This could be driven by a separate, specialized query.
+    \item \textbf{Call to Action}: A block encouraging users to "Request a Quote" or "Contact Sales," linking to another page in the portal.
+\end{enumerate}
+
+By combining these static and dynamic content blocks, you can create a rich, interactive, and data-driven page that effectively serves the needs of its audience.
+
+\section{Looking Forward}
+\label{sec:portal-structure-forward}
+
+This chapter has provided a practical methodology for structuring a web portal. By mapping business functions to Areas, user journeys to Pages, and informational needs to Content blocks, you can design a portal that is both logical in its architecture and intuitive in its use.
+
+In the next chapter, we will examine the specific technology stack used in the reference implementation of the \webspinner{} engine, providing insight into how these declarative structures are translated into a running application.
