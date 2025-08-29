@@ -156,7 +156,7 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \begin{description}
 \item[\textbf{\_id}]: A unique identifier for the element (GUID).
 \item[\textbf{type}]: The specific type of the element. Can be one of 'Site', 'Area', 'Page', or 'Content'.
-\item[\textbf{name}]: A localizable name for the element. It is composed of one or more \texttt{text} elements, each with a \texttt{lang} attribute specifying the language (e.g., "en", "it-IT"). The text content is wrapped in \texttt{<![CDATA[...]]>} to prevent issues with special characters. Example: \texttt{<name><text lang="en"><![CDATA[R\&D]]></text><text lang="it"><![CDATA[R\&S]]></text></name>}
+\item[\textbf{name}]: A localizable name for the element. It is composed of one or more \texttt{text} elements, each with a \texttt{lang} attribute specifying the language (e.g., "en", "it-IT"). The text content is wrapped in \texttt{<![CDATA[...]]>} to prevent issues with special characters. Example: \lstinline{<name><text lang="en"><![CDATA[R&D]]></text><text lang="it"><![CDATA[R&S]]></text></name>}
 \item[\textbf{slug}]: A localizable, URL-friendly version of the name. It is initially derived from the \texttt{name} by converting it to lowercase and removing all characters except for letters (a-z, A-Z), numbers (0-9), and underscores (\_), but can be manually overridden. Follows the same structure as \texttt{name}.
 \item[\textbf{keywords}]: Localizable keywords for SEO. Follows the same structure as \texttt{name}.
 \item[\textbf{description}]: A localizable description of the element. Follows the same structure as \texttt{name}.
@@ -171,7 +171,7 @@ This section describes the specialized element types available in \wbdl{}.
 
 \subsection{STWSite}
 
-	exttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure. There must be exactly one \texttt{STWSite} element in any \wbdl{} document.
+	\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure. There must be exactly one \texttt{STWSite} element in any \wbdl{} document.
 
 \begin{lstlisting}[language=XML,caption={STWSite Type Definition}]
 <xs:complexType name="STWSite">
@@ -246,7 +246,7 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 \subsection{STWArea}
 
-	exttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
+	\texttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
 
 \begin{lstlisting}[language=XML,caption={STWArea Type Definition}]
 <xs:complexType name="STWArea">
@@ -268,7 +268,7 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 \subsection{STWPage}
 
-	exttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
+	\texttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
 
 \begin{lstlisting}[language=XML,caption={STWPage Type Definition}]
 <xs:complexType name="STWPage">
@@ -389,7 +389,7 @@ All content types explicitly declare or request the data they interact with, and
 
 \subsection{STWContentWithOptions}
 
-	exttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
+	\texttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
 
 \begin{lstlisting}[language=XML,caption={STWContentWithOptions Type Definition}]
 <xs:complexType name="STWContentWithOptions">
