@@ -2,6 +2,8 @@
 
 **Weaving Digital Portals**
 
+[**Read the Latest PDF Version**](SpinTheWeb.pdf)
+
 A comprehensive LaTeX technical book documenting the **Spin the Web** project -
 an framework for building dynamic enterprise web portals using WBDL
 (Webbase Definition Language), WBPL (Webbase Programming Language), and the Web
