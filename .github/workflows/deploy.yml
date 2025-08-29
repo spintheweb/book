@@ -29,7 +29,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up LaTeX
-        uses: xu-cheng/texlive-action/full@v2
+        uses: xu-cheng/texlive-action@v2
+        with:
+          scheme: full
       - name: Build LaTeX document
         run: |
           chmod +x build.sh
