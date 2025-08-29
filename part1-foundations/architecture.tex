@@ -8,10 +8,10 @@
 — Ralph Johnson
 \end{quote}
 
-Spin the Web is built upon a three-pillar architectural foundation that enables the creation of sophisticated enterprise web portals. Each pillar serves a distinct but complementary role in the overall ecosystem, working together to transform complex business requirements into unified, role-based digital experiences.
+Spin the Web is built upon a core architectural foundation that enables the creation of sophisticated enterprise web portals. This architecture is composed of three distinct but complementary components: the Blueprint, the Engine, and the Workshop. Together, they transform complex business requirements into unified, role-based digital experiences.
 
-\section{The Three Pillars}
-\label{sec:three-pillars}
+\section{The Core Components}
+\label{sec:core-components}
 
 The architecture consists of three core components:
 
@@ -21,8 +21,8 @@ The architecture consists of three core components:
 \item[\textbf{Spin the Web Studio}]: A specialized \webbaselet{} for creating, editing, and managing \webbase{} definitions with in-place editing capabilities
 \end{description}
 
-\section{Pillar I: Webbase Description Language (\wbdl{})}
-\label{sec:pillar-wbdl}
+\section{The Blueprint: Webbase Description Language (\wbdl{})}
+\label{sec:blueprint-wbdl}
 
 \wbdl{} forms the declarative foundation of the entire system. Unlike traditional approaches that mix structure, presentation, and logic, \wbdl{} provides a clean separation of concerns through a hierarchical, schema-based approach.
 
@@ -55,8 +55,8 @@ The architecture consists of three core components:
 	\item \textbf{Testability}: Declarative definitions are easier to validate and test than imperative code
 \end{itemize}
 
-\section{Pillar II: Web Spinner Engine}
-\label{sec:pillar-spinner}
+\section{The Engine: Web Spinner}
+\label{sec:engine-spinner}
 
 The Web Spinner Engine serves as the runtime foundation that brings \wbdl{} specifications to life. It handles the complex orchestration of data retrieval, security enforcement, and content delivery that makes dynamic portals possible.
 
@@ -91,8 +91,8 @@ The Web Spinner operates through several key subsystems:
 	\item \textbf{Horizontal Scaling}: Support for load-balanced, multi-instance deployments
 \end{itemize}
 
-\section{Pillar III: Spin the Web Studio}
-\label{sec:pillar-studio}
+\section{The Workshop: Spin the Web Studio}
+\label{sec:workshop-studio}
 
 The Spin the Web Studio is a specialized \webbaselet{} designed for editing and managing \webbase{} definitions. As a \webbaselet{}, it can be seamlessly integrated into any \webbase{} to provide in-place editing capabilities, enabling professional developers to create and maintain complex portal structures efficiently.
 
@@ -120,7 +120,7 @@ Unlike low-code/no-code platforms, the Studio is designed specifically for profe
 \section{Architectural Interactions}
 \label{sec:architectural-interactions}
 
-The three pillars work together through well-defined interfaces and protocols:
+The Blueprint, Engine, and Workshop work together through well-defined interfaces and protocols:
 
 \subsection{Design-Time to Runtime}
 
@@ -153,7 +153,7 @@ The three pillars work together through well-defined interfaces and protocols:
 \section{Architectural Benefits}
 \label{sec:architectural-benefits}
 
-This three-pillar approach provides several key advantages over traditional portal development methods:
+This architectural model provides several key advantages over traditional portal development methods:
 
 \subsection{Separation of Concerns}
 
@@ -185,7 +185,7 @@ This three-pillar approach provides several key advantages over traditional port
 \section{Implementation Patterns}
 \label{sec:implementation-patterns}
 
-Common implementation patterns emerge when working with the three-pillar architecture:
+Common implementation patterns emerge when working with this architecture:
 
 \subsection{Incremental Development}
 
