@@ -8,10 +8,10 @@ echo "Running bibtex..."
 bibtex build/main
 
 echo "Running makeindex..."
-bibtex build/main
+makeindex build/main
 
 echo "Running makeglossaries..."
-bibtex build/main
+makeglossaries build/main
 
 echo "Running second pdflatex pass..."
 pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
