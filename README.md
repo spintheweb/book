@@ -35,18 +35,21 @@ through declarative configuration and dynamic content management.
 ├── preamble/                  # LaTeX configuration
 │   ├── packages.tex           # Package imports
 │   ├── formatting.tex         # Style definitions
+│   ├── glossary.tex           # Glossary and acronyms
 │   └── commands.tex           # Custom commands
 ├── frontmatter/               # Book front matter
 │   ├── titlepage.tex          # Title and copyright pages
+│   ├── license.tex            # License page
+│   ├── dedication.tex         # Dedication page
 │   ├── abstract.tex           # Abstract with project figure
 │   └── preface.tex            # Preface with mathematical philosophy
-├── part1-foundations/         # Part I: Philosophy (Foundations and Concepts)
+├── part1-foundations/         # Part I: Foundations and Concepts
 │   ├── intro.tex              # Part introduction
 │   ├── genesis.tex            # Project history and genesis
 │   ├── introduction.tex       # Introduction to enterprise portals
 │   ├── virtualized.tex        # Virtualized portal framework
 │   └── architecture.tex       # Technical architecture
-├── part2-languages/           # Part II: Theory (Languages and Mechanics)
+├── part2-languages/           # Part II: Languages and Mechanics
 │   ├── intro.tex              # Part introduction
 │   ├── wbdl.tex               # Webbase Definition Language
 │   ├── wbpl.tex               # Webbase Placeholders Language
@@ -63,10 +66,11 @@ through declarative configuration and dynamic content management.
 │   ├── intro.tex              # Part introduction
 │   └── future-directions.tex  # Roadmap and evolution
 ├── figures/                   # Images and diagrams
-│   ├── logo.png               # Project logo (75x75)
+│   ├── logo.png               # Project logo
 │   └── spin-the-web.png       # Main project architecture diagram
 ├── bibliography/              # References and citations
-└── build/                     # Generated files and PDFs
+│   └── references.bib
+└── build/                     # Generated files (omitted for brevity)
 ```
 
 ## Implementation Technology (Reference Spinner)
