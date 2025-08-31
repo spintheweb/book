@@ -15,13 +15,13 @@ Engine.
 This book provides complete documentation for the Spin the Web ecosystem,
 covering everything from foundational concepts to advanced implementation
 techniques. The content is organized to first detail the construction of the
-framework (the "machine") and then to provide a practical guide on how to use it
+framework (the "platform") and then to provide a practical guide on how to use it
 to build sophisticated web portals.
 
 **Key Features:**
 
 - **117+ pages** of professional technical documentation
-- **Clear Separation of Concerns**: Part II details the framework's internal
+ **Clear Separation of Concerns**: Part II details the platform's internal
   mechanics, while Part III focuses on practical portal development.
 - Modular LaTeX structure for easy maintenance
 - Complete coverage of WBDL, WBPL, Web Spinner Engine, and the Spin the Web
@@ -53,7 +53,7 @@ to build sophisticated web portals.
 │   ├── introduction.tex       # Introduction to enterprise portals
 │   ├── virtualized.tex        # Virtualized portal framework
 │   └── architecture.tex       # Technical architecture
-├── part2-framework-mechanics/ # Part II: The Machine: Framework Specification and Mechanics
+├── part2-framework-mechanics/ # Part II: The Platform: Framework Specification and Mechanics
 │   ├── intro.tex              # Part introduction
 │   ├── wbdl.tex               # Webbase Definition Language (WBDL)
 │   ├── wbpl.tex               # Webbase Placeholders Language (WBPL)
@@ -130,7 +130,7 @@ cp build/main.pdf SpinTheWeb.pdf
 - Chapter 3: Virtualized Portal Framework — Conceptual architecture
 - Chapter 4: Technical Architecture and Mechanics — System design principles
 
-### Part II: The Machine (Chapters 5–11)
+### Part II: The Platform (Chapters 5–11)
 
 - Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
 - Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder management
