@@ -130,3 +130,20 @@
 
 % Glossary style
 \setglossarystyle{altlist}
+
+\lstset{
+    frame=single,                % Draw a box around listings
+    breaklines=true,             % Enable automatic line breaking
+    breakatwhitespace=true,      % Prefer breaking at whitespace
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}, % Mark wrapped lines
+    basicstyle=\ttfamily\small,  % Monospaced font, small size
+    backgroundcolor=\color{codebackground},
+    rulecolor=\color{codeborder},
+    showstringspaces=false,
+    tabsize=2,
+    xleftmargin=1em,
+    xrightmargin=1em,
+    aboveskip=1em,
+    belowskip=1em,
+    captionpos=b
+}

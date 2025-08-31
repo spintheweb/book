@@ -123,31 +123,29 @@ cp build/main.pdf SpinTheWeb.pdf
 
 ## Book Content Overview
 
-### Part I: Philosophy — Foundations and Concepts (Chapters 1–4)
+### Part I: The Philosophy (Chapters 1–4)
 
 - Chapter 1: Project Genesis — History and evolution of Spin the Web
-- Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain
-  analysis
+- Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain analysis
 - Chapter 3: Virtualized Portal Framework — Conceptual architecture
 - Chapter 4: Technical Architecture and Mechanics — System design principles
 
-### Part II: Theory — Languages and Mechanics (Chapters 5–10)
+### Part II: The Machine (Chapters 5–11)
 
 - Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
-- Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder managment
+- Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder management
 - Chapter 7: WBLL (Webbase Layout Language) — Component layout management
 - Chapter 8: Webbase and Webbaselets
 - Chapter 9: Web Spinner Engine Architecture and Mechanics
 - Chapter 10: Spin the Web Studio: An Integrated Development Environment
+- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL engine, WBPL, session/state, security, and deployment
 
-### Part III: Practice — Implementation (Chapters 11–13)
+### Part III: The Web Portal (Chapters 12–13)
 
-- Chapter 11: Structuring a Web Portal: A Practical Guide
-- Chapter 12: Learning from Implementation — Practical insights and methodology
-- Chapter 13: Technology Stack and Implementation Mechanics — Deno/TypeScript
-  runtime, WBLL engine, WBPL, session/state, security, and deployment
+- Chapter 12: Structuring a Web Portal: A Practical Guide
+- Chapter 13: The Portal Development Journey — Methodology, best practices, and learning patterns for portal developers
 
-### Part IV: Future (Chapter 14)
+### Part IV: The Future (Chapter 14)
 
 - Chapter 14: Future Directions — Roadmap, evolution, and next steps
 
