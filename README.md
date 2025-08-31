@@ -1,6 +1,6 @@
 # Spin the Web Book
 
-**Weaving Digital Portals**
+**Weaving Web Portals**
 
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)

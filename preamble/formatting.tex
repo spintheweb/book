@@ -71,8 +71,22 @@
             {•}{{\textbullet}}1
 }
 
-\lstdefinestyle{jsontstyle}{
-    language=JavaScript,
+% Define JSON language style for listings
+\lstdefinestyle{jsonstyle}{
+    language=JavaScript, % Use JavaScript as a base for syntax
+    morestring=[b]",
+    stringstyle=\color{stringcolor},
+    morekeywords={true,false,null,_id,type,name,slug,keywords,description,visibility,children,mainpage,langs,datasources,version,namespace,rules,role,visible,subtype,query,layout,options,connectionString,baseUrl},
+    keywordstyle=\color{keywordcolor},
+    showstringspaces=false,
+    basicstyle=\ttfamily\small,
+    upquote=true,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=true,
+    frame=single,
+    backgroundcolor=\color{codebackground},
+    rulecolor=\color{codeborder},
 }
 
 % Custom boxes for examples, notes, warnings
