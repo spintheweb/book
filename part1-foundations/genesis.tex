@@ -170,7 +170,7 @@ This philosophy recognizes that most enterprises have significant investments in
 
 \section{The Evolution of Webbase Concept}
 
-\subsection{From Relational Database to XML Schema}
+\subsection{From Relational Database to Schema-Defined Structures}
 
 The conceptual foundation of Spin the Web has its roots in a pioneering approach first developed in 1998. The initial breakthrough came with the introduction of the term \textbf{webbase}—a specialized relational database whose schema was specifically designed to define and manage web structures.
 
@@ -185,19 +185,18 @@ This original webbase encompassed all the essential aspects of web presence:
 \item[\textbf{Security}]: Access control and authorization frameworks
 \end{description}
 
-\subsection{The XML Revolution}
+\subsection{The Schema Revolution: XML and JSON}
 
-While the relational database approach proved effective, it presented challenges for portability and interoperability. To address these limitations, the webbase concept underwent a fundamental transformation—it was formalized into an XML-based language structure.
+While the relational database approach proved effective, it presented challenges for portability and interoperability. To address these limitations, the webbase concept underwent a fundamental transformation—it was formalized into a schema-based language structure.
 
-This evolution introduced two crucial concepts:
+Initially, this took the form of an XML-based language, which introduced two crucial concepts:
 
 \begin{description}
-\item[\textbf{Webbase Description Language (WBDL)}]: The XML schema that formally defines how web portals should be structured, replacing the relational database schema with a portable, standardized format.
-
-\item[\textbf{Webbaselet}]: A modular fragment of a webbase that can be independently developed, maintained, and integrated. Webbaselets enable the composition of complex portals from smaller, manageable components.
+\item[\textbf{Webbase Description Language (WBDL)}]: An XML schema that formally defined how web portals should be structured, replacing the relational database schema with a portable, standardized format.
+\item[\textbf{Webbaselet}]: A modular fragment of a webbase that could be independently developed, maintained, and integrated.
 \end{description}
 
-This transition from database schema to XML schema represented more than a technical migration—it enabled the democratization of portal development and laid the foundation for the modular, collaborative approach that characterizes Spin the Web today.
+As web technologies evolved, the project embraced \textbf{JSON Schema} as a more contemporary and lightweight alternative. This migration aligned \wbdl{} with modern development ecosystems, particularly those centered around JavaScript and TypeScript, while preserving the core principles of declarative structure and modularity. This transition from database schema to XML and finally to JSON Schema laid the foundation for the modular, collaborative approach that characterizes Spin the Web today.
 
 \subsection{Content Management System Integration}
 

@@ -10,7 +10,7 @@
 
 \wbdl{} is processed by a server-side engine called the \textbf{Web Spinner}. In a direct analogy to how a client-side web browser renders HTML into a user-facing webpage, the Web Spinner interprets \wbdl{} descriptions to generate and manage the web portal on the server. It is the runtime engine of the project, complemented by the \textbf{Spin the Web Studio}, which serves as the design-time tool for creating and modifying the \webbase{} itself. This architecture allows for dynamic, data-driven portal generation based on the \wbdl{} specification.
 
-When the Web Spinner starts, it loads the \webbase{} (whether in XML or JSON format) into memory. This \webbase{} is transformed into an optimized, in-memory object, allowing for fast access and manipulation of the portal's structure.
+When the Web Spinner starts, it loads the \webbase{} (in JSON format) into memory. This \webbase{} is transformed into an optimized, in-memory object, allowing for fast access and manipulation of the portal's structure.
 
 \section{Primary Roles and Responsibilities}
 \label{sec:primary-roles}
@@ -36,7 +36,7 @@ When the Web Spinner starts up, it performs several critical initialization step
 
 \subsection{Webbase Loading}
 
-The engine loads the complete \wbdl{} document (\webbase{}) from disk, whether stored in XML or JSON format. This document contains the entire portal structure, including all areas, pages, content definitions, and configuration data.
+The engine loads the complete \wbdl{} document (\webbase{}) from disk, stored in JSON format. This document contains the entire portal structure, including all areas, pages, content definitions, and configuration data.
 
 \subsection{In-Memory Optimization}
 

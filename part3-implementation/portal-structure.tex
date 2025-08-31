@@ -49,33 +49,25 @@ This approach provides several critical advantages for enterprise implementation
 
 Consider this example of an Area with embedded quality management documentation:
 
-\begin{lstlisting}[language=XML,caption={Area with Quality Management Documentation},label={lst:quality-area}]
-<area _id="qa_control" type="Area">
-    <name>
-        <text lang="en"><![CDATA[Quality Control]]></text>
-    </name>
-    <description>
-        <text lang="en"><![CDATA[
-        This area implements ISO 9001:2015 Section 8.5 - Production and Service Provision.
-        All processes documented here follow our Quality Manual QM-2024-Rev3.
-        Key Performance Indicators: Defect Rate < 0.1%, Customer Satisfaction > 95%.
-        
-        Emergency Procedures: In case of quality issues, immediately escalate to 
-        Quality Manager (ext. 4001) and follow NC-PROC-001.
-        
-        Last Updated: 2024-03-15 | Next Review: 2024-09-15
-        ]]></text>
-    </description>
-    <keywords>
-        <text lang="en"><![CDATA[ISO9001, quality control, defect tracking, KPI, emergency procedures, compliance, audit]]></text>
-    </keywords>
-</area>
+\begin{lstlisting}[language=JSON,caption={Area with Quality Management Documentation},label={lst:quality-area}]
+{
+  "_id": "qa_control",
+  "type": "Area",
+  "name": {
+    "en": "Quality Control"
+  },
+  "description": {
+    "en": "This area implements ISO 9001:2015 Section 8.5 - Production and Service Provision. All processes documented here follow our Quality Manual QM-2024-Rev3. Key Performance Indicators: Defect Rate < 0.1%, Customer Satisfaction > 95%."
+  },
+  "keywords": {
+    "en": "quality, ISO 9001, production, service, KPI, audit"
+  }
+}
 \end{lstlisting}
 
-This integration ensures that the portal becomes not just a functional interface, but the authoritative source for organizational procedures and quality standards.
+This embedded documentation makes the portal self-describing, turning it into a living quality management system.
 
-\section{Step 1: Define Top-Level Areas}
-\label{sec:define-areas}
+\subsection{Mapping Business Functions to Areas}
 
 The first step is to identify the primary functional divisions of the organization. These will become the top-level \textbf{Areas (\texttt{STWArea})} of your portal. Think of these as the main departments or directorates of the company.
 
@@ -95,37 +87,20 @@ Each of these would be defined as an \texttt{STWArea} element in your \wbdl{} fi
 
 Each Area definition should include comprehensive documentation that serves both operational and compliance purposes. For example, the Sales Area might include:
 
-\begin{lstlisting}[language=XML,caption={Sales Area with Documentation},label={lst:sales-area-docs}]
-<area _id="sales" type="Area">
-    <name>
-        <text lang="en"><![CDATA[Sales]]></text>
-    </name>
-    <description>
-        <text lang="en"><![CDATA[
-        Sales Department Operations Center
-        
-        This area supports the complete sales lifecycle from lead generation to order fulfillment.
-        All activities comply with our Customer Relationship Management Policy CRM-POL-001.
-        
-        Key Processes:
-        - Lead qualification (PROC-SALES-001)
-        - Quote generation (PROC-SALES-002)
-        - Order processing (PROC-SALES-003)
-        - Customer support escalation (PROC-SALES-004)
-        
-        Performance Targets: 
-        - Response time to quotes: <24 hours
-        - Customer satisfaction: >90%
-        - Lead conversion rate: >15%
-        
-        Department Manager: Jane Smith (ext. 2001)
-        Quality Representative: Mark Johnson (ext. 2005)
-        ]]></text>
-    </description>
-    <keywords>
-        <text lang="en"><![CDATA[sales, CRM, leads, quotes, orders, customer service, KPI, performance targets]]></text>
-    </keywords>
-</area>
+\begin{lstlisting}[language=JSON,caption={Sales Area with Documentation},label={lst:sales-area-docs}]
+{
+  "_id": "sales",
+  "type": "Area",
+  "name": {
+    "en": "Sales"
+  },
+  "description": {
+    "en": "Sales Department Operations Center. This area supports the complete sales lifecycle from lead generation to order fulfillment. All activities comply with our Customer Relationship Management Policy CRM-POL-001. Key Processes: Lead qualification (PROC-SALES-001), Quote generation (PROC-SALES-002), Order processing (PROC-SALES-003). Performance Targets: Response time to quotes: <24 hours, Customer satisfaction: >90%. Department Manager: Jane Smith (ext. 2001)."
+  },
+  "keywords": {
+    "en": "sales, CRM, leads, quotes, orders, customer service, KPI"
+  }
+}
 \end{lstlisting}
 
 This approach ensures that organizational knowledge, procedures, and quality standards are embedded directly within the portal structure, creating a living documentation system that evolves with the business.
@@ -158,37 +133,20 @@ Each of these user needs translates directly into a \texttt{STWPage} within the 
 
 Pages should document specific workflows and processes. For example, the "Quote Generator" page might include detailed process documentation:
 
-\begin{lstlisting}[language=XML,caption={Page with Process Documentation},label={lst:page-docs}]
-<page _id="quote_generator" type="Page">
-    <name>
-        <text lang="en"><![CDATA[Quote Generator]]></text>
-    </name>
-    <description>
-        <text lang="en"><![CDATA[
-        Quote Generation Process - PROC-SALES-002
-        
-        This page implements the standardized quote generation workflow as defined 
-        in our Sales Operations Manual section 4.2.
-        
-        Required Information:
-        1. Customer contact details (validated against CRM)
-        2. Product specifications and quantities
-        3. Delivery requirements and timeline
-        4. Special terms and conditions
-        
-        Approval Matrix:
-        - Quotes up to $10,000: Sales Rep approval
-        - Quotes $10,001-$50,000: Sales Manager approval
-        - Quotes above $50,000: Sales Director approval
-        
-        System Integration: Automatically syncs with SAP ERP Quote Module
-        Response Time SLA: Quote delivered within 24 hours of request
-        ]]></text>
-    </description>
-    <keywords>
-        <text lang="en"><![CDATA[quotes, pricing, approval matrix, SLA, SAP integration, sales process]]></text>
-    </keywords>
-</page>
+\begin{lstlisting}[language=JSON,caption={Page with Process Documentation},label={lst:process-page-docs}]
+{
+  "_id": "quote_generation_page",
+  "type": "Page",
+  "name": {
+    "en": "Generate New Quote"
+  },
+  "description": {
+    "en": "This page implements process PROC-SALES-002 for generating new customer quotes. The process requires completion of the customer information form and selection of products from the official catalog. All generated quotes must be approved by a sales manager before being sent to the customer. This process is audited quarterly under audit procedure AUD-Q-004."
+  },
+  "keywords": {
+    "en": "quote, sales process, PROC-SALES-002, audit, compliance"
+  }
+}
 \end{lstlisting}
 
 \section{Step 3: Build Pages with Content Blocks}
@@ -213,35 +171,21 @@ By combining these static and dynamic content blocks, you can create a rich, int
 
 Individual content blocks can contain specific field-level instructions and validation rules. For example, a customer information form might include:
 
-\begin{lstlisting}[language=XML,caption={Content with Field-Level Documentation},label={lst:content-docs}]
-<content _id="customer_info_form" type="Content">
-    <name>
-        <text lang="en"><![CDATA[Customer Information]]></text>
-    </name>
-    <description>
-        <text lang="en"><![CDATA[
-        Customer Data Collection Form - FORM-CRM-001
-        
-        This form collects essential customer information required for quote generation.
-        All fields marked with (*) are mandatory as per our Customer Data Policy CDP-001.
-        
-        Data Validation Rules:
-        - Company Name: Minimum 2 characters, maximum 100 characters
-        - Email: Must be valid business email format
-        - Phone: International format preferred (+country code)
-        - Industry: Select from predefined NAICS categories
-        
-        Data Protection Notice: 
-        Customer data is processed according to GDPR Article 6(1)(b) for contract performance.
-        Data retention period: 7 years from last business interaction.
-        
-        Quality Check: Sales Rep must verify company information against D&B database.
-        ]]></text>
-    </description>
-    <keywords>
-        <text lang="en"><![CDATA[customer data, GDPR, validation rules, data quality, mandatory fields, retention policy]]></text>
-    </keywords>
-</content>
+\begin{lstlisting}[language=JSON,caption={Content with Field-Level Documentation},label={lst:form-content-docs}]
+{
+  "_id": "customer_info_form",
+  "type": "Content",
+  "subtype": "Form",
+  "name": {
+    "en": "Customer Information"
+  },
+  "description": {
+    "en": "Customer Data Collection Form - FORM-CRM-001. This form collects essential customer information required for quote generation. All fields marked with (*) are mandatory as per our Customer Data Policy CDP-001. Data Validation Rules: Company Name (min 2, max 100 chars), Email (valid business format). Data Protection Notice: Customer data is processed according to GDPR Article 6(1)(b). Data retention period: 7 years."
+  },
+  "keywords": {
+    "en": "customer data, GDPR, validation rules, data quality, mandatory fields"
+  }
+}
 \end{lstlisting}
 
 This multi-level documentation approach ensures that quality management principles, compliance requirements, and operational procedures are seamlessly integrated throughout the portal structure, creating a comprehensive knowledge management system that supports both daily operations and audit requirements.
@@ -249,6 +193,6 @@ This multi-level documentation approach ensures that quality management principl
 \section{Looking Forward}
 \label{sec:portal-structure-forward}
 
-This chapter has provided a practical methodology for structuring a web portal. By mapping business functions to Areas, user journeys to Pages, and informational needs to Content blocks, you can design a portal that is both logical in its architecture and intuitive in its use.
+This chapter has provided a practical methodology for structuring a web portal by mapping business functions to Areas, user journeys to Pages, and informational needs to Content blocks. This "documentation through structure" approach ensures that the resulting portal is both logical and self-describing.
 
-In the next chapter, we will examine the specific technology stack used in the reference implementation of the \webspinner{} engine, providing insight into how these declarative structures are translated into a running application.
+However, building a successful portal requires more than just technical structure; it requires a specific mindset and an understanding of recurring patterns. The next chapter delves into the learning journey of a portal developer, exploring the key patterns and nomenclature that emerge from experience.

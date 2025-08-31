@@ -1,0 +1,34 @@
+% Part II: Languages and Mechanics
+
+\chapter*{Introduction to Part II}
+\addcontentsline{toc}{chapter}{Introduction to Part II}
+\label{part:framework-mechanics}
+
+\begin{quote}
+\textit{"The limits of my language mean the limits of my world."} \\
+— Ludwig Wittgenstein
+\end{quote}
+
+This part opens the hood of the Spin the Web framework to provide the complete technical specification for "the machine" itself. We will dissect the core components introduced in the architecture overview: the languages that serve as the machine's instruction set and the mechanics of the engine that brings it to life.
+
+Mastering these specifications is the first step toward understanding how to build, operate, and extend the framework. This section serves as the definitive engineering blueprint for the Spin the Web ecosystem.
+
+The Webbase Description Language (\wbdl{}) serves as the foundation for describing portal structures in a declarative, JSON-based format. The Webbase Placeholders Language (\wbpl{}) provides dynamic content injection capabilities. Webbaselets offer modular, reusable components that can be embedded within any webbase. Finally, the Web Spinner Engine orchestrates the entire system, transforming these specifications into live, interactive web portals.
+
+\begin{description}
+\item[\textbf{Chapter 5: The WBDL Language}] (\cref{chap:wbdl}) -- Provides a comprehensive introduction to the Webbase Description Language, including its JSON Schema definitions, element hierarchy, and practical usage patterns.
+
+\item[\textbf{Chapter 6: The WBPL Language}] (\cref{chap:wbpl}) -- Explores the Webbase Placeholders Language, which enables dynamic content injection and template-based portal generation.
+
+\item[\textbf{Chapter 7: The WBLL Language}] (\cref{chap:wbll}) -- Defines the Webbase Layout Language, presentation layer, tokens, helpers, and compilation model used to render data into accessible, responsive HTML.
+
+\item[\textbf{Chapter 8: Webbase and Webbaselets}] (\cref{chap:webbaselets}) -- Examines the modular component system that allows for reusable portal elements and cross-platform integration.
+
+\item[\textbf{Chapter 9: The Web Spinner Engine}] (\cref{chap:web-spinner-engine}) -- Details the runtime engine that processes WBDL specifications and generates dynamic web portals, including its architecture, processing pipeline, and performance characteristics.
+
+\item[\textbf{Chapter 10: The Spin the Web Studio}] (\cref{chap:studio}) -- Introduces the integrated development environment for building and managing webbases.
+
+\item[\textbf{Chapter 11: Reference Implementation}] (\cref{chap:implementation-tech}) -- Documents the concrete technology stack (Deno/TypeScript) of the reference Web Spinner, showing how the theoretical mechanics are realized in a working system.
+\end{description}
+
+Mastering these specifications is the first step toward building robust, enterprise-grade portals. This section serves as the definitive reference for the framework's "Blueprint," "Engine," and "Workshop."

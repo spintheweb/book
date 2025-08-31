@@ -2,23 +2,27 @@
 
 **Weaving Digital Portals**
 
-[**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) | [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
+[**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
+[**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
 A comprehensive LaTeX technical book documenting the **Spin the Web** project -
-an framework for building dynamic enterprise web portals using WBDL
-(Webbase Definition Language), WBPL (Webbase Programming Language), and the Web
-Spinner Engine.
+an framework for building dynamic enterprise web portals using WBDL (Webbase
+Definition Language), WBPL (Webbase Programming Language), and the Web Spinner
+Engine.
 
 ## About This Project
 
 This book provides complete documentation for the Spin the Web ecosystem,
 covering everything from foundational concepts to advanced implementation
-techniques. The project enables the creation of sophisticated web portals
-through declarative configuration and dynamic content management.
+techniques. The content is organized to first detail the construction of the
+framework (the "machine") and then to provide a practical guide on how to use it
+to build sophisticated web portals.
 
 **Key Features:**
 
-- **107+ pages** of professional technical documentation
+- **117+ pages** of professional technical documentation
+- **Clear Separation of Concerns**: Part II details the framework's internal
+  mechanics, while Part III focuses on practical portal development.
 - Modular LaTeX structure for easy maintenance
 - Complete coverage of WBDL, WBPL, Web Spinner Engine, and the Spin the Web
   Studio
@@ -49,20 +53,20 @@ through declarative configuration and dynamic content management.
 │   ├── introduction.tex       # Introduction to enterprise portals
 │   ├── virtualized.tex        # Virtualized portal framework
 │   └── architecture.tex       # Technical architecture
-├── part2-languages/           # Part II: Languages and Mechanics
+├── part2-framework-mechanics/ # Part II: The Machine: Framework Specification and Mechanics
 │   ├── intro.tex              # Part introduction
-│   ├── wbdl.tex               # Webbase Definition Language
-│   ├── wbpl.tex               # Webbase Placeholders Language
-│   ├── wbll.tex               # Webbase Layout Language
+│   ├── wbdl.tex               # Webbase Definition Language (WBDL)
+│   ├── wbpl.tex               # Webbase Placeholders Language (WBPL)
+│   ├── wbll.tex               # Webbase Layout Language (WBLL)
 │   ├── webbaselets.tex        # Webbaselets and components
-│   ├── web-spinner-engine.tex # Web Spinner Engine
-│   └── studio.tex             # Spin the Web Studio IDE
-├── part3-implementation/      # Part III: Practice (Implementation)
+│   ├── web-spinner-engine.tex # The Web Spinner Engine
+│   ├── studio.tex             # The Spin the Web Studio IDE
+│   └── technology-stack.tex   # Technology stack of the reference implementation
+├── part3-implementation/      # Part III: The Practice: Building a Web Portal
 │   ├── intro.tex              # Part introduction
 │   ├── portal-structure.tex   # Guide to structuring a web portal
-│   ├── learning.tex           # Practical insights and methodology
-│   └── technology-stack.tex   # Technology stack and implementation mechanics
-├── part4-future/              # Part IV: Future (Evolution)
+│   └── learning.tex           # The portal development journey
+├── part4-future/              # Part IV: Future Directions
 │   ├── intro.tex              # Part introduction
 │   └── future-directions.tex  # Roadmap and evolution
 ├── figures/                   # Images and diagrams

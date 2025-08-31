@@ -8,7 +8,7 @@
 — Ludwig Wittgenstein
 \end{quote}
 
-\wbdl{} is formally defined using the standard \textbf{XML Schema Definition (XSD)}.
+\wbdl{} is formally defined using the standard \textbf{JSON Schema}.
 
 \section{WBDL Ecosystem}
 \label{sec:wbdl-ecosystem}
@@ -78,77 +78,30 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \section{The STWElement Base}
 \label{sec:stwelement-base}
 
-\wbdl{} defines a base element, \texttt{STWElement}, from which all other elements inherit. Below is the XSD definition for this fundamental type.
+\wbdl{} defines a base element, \texttt{STWElement}, from which all other elements inherit. Below is the JSON Schema definition for this fundamental type.
 
-\begin{lstlisting}[language=XML,caption={STWElement Base Type Definition}]
-<xs:complexType name="STWElement">
-	<xs:sequence>
-		<xs:element name="name" type="STWLocalized" minOccurs="1" />
-		<xs:element name="slug" type="STWLocalized" minOccurs="1" />
-		<xs:element name="keywords" type="STWLocalized" minOccurs="0" />
-		<xs:element name="description" type="STWLocalized" minOccurs="0" />
-		<xs:element name="visibility" type="STWVisibility" minOccurs="0" />
-		<xs:element name="children" minOccurs="0">
-			<xs:complexType>
-				<xs:choice minOccurs="1" maxOccurs="unbounded">
-					<xs:element name="area" type="STWArea" />
-					<xs:element name="page" type="STWPage" />
-					<xs:element name="content" type="STWContent" />
-				</xs:choice>
-			</xs:complexType>
-		</xs:element>
-	</xs:sequence>
-	<xs:attribute name="_id" type="GUID" use="required" />
-	<xs:attribute name="type" type="STWElementType" use="required" />
-</xs:complexType>
-
-<xs:simpleType name="GUID">
-	<xs:restriction base="xs:string">
-		<xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
-	</xs:restriction>
-</xs:simpleType>
-
-<xs:simpleType name="STWElementType">
-	<xs:restriction base="xs:string">
-		<xs:enumeration value="Site"/>
-		<xs:enumeration value="Area"/>
-		<xs:enumeration value="Page"/>
-		<xs:enumeration value="Content"/>
-	</xs:restriction>
-</xs:simpleType>
-
-<xs:complexType name="STWLocalized">
-	<xs:sequence>
-		<xs:element name="text" minOccurs="1" maxOccurs="unbounded">
-			<xs:complexType>
-				<xs:simpleContent>
-					<xs:extension base="xs:string">
-						<xs:attribute name="lang" type="xs:language" use="required"/>
-					</xs:extension>
-				</xs:simpleContent>
-			</xs:complexType>
-		</xs:element>
-	</xs:sequence>
-	</xs:complexType>
-
-<xs:complexType name="STWVisibility">
-	<xs:sequence>
-		<xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
-			<xs:complexType>
-				<xs:attribute name="role" type="xs:string" use="required"/>
-				<xs:attribute name="visible" type="xs:boolean" use="required"/>
-			</xs:complexType>
-		</xs:element>
-	</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="STWLayout">
-	<xs:complexContent>
-		<xs:extension base="STWLocalized">
-			<!-- Content holds Webbase Layout Language text, to be defined later. -->
-		</xs:extension>
-	</xs:complexContent>
-</xs:complexType>
+\begin{lstlisting}[language=JSON,caption={STWElement Base Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWElement.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWElement",
+  "description": "The base element for all WBDL objects.",
+  "type": "object",
+  "properties": {
+    "_id": { "type": "string", "format": "uuid" },
+    "type": { "enum": ["Site", "Area", "Page", "Content"] },
+    "name": { "$ref": "STWLocalized.json" },
+    "slug": { "$ref": "STWLocalized.json" },
+    "keywords": { "$ref": "STWLocalized.json" },
+    "description": { "$ref": "STWLocalized.json" },
+    "visibility": { "$ref": "STWVisibility.json" },
+    "children": {
+      "type": "array",
+      "items": { "$ref": "#" }
+    }
+  },
+  "required": ["_id", "type", "name", "slug"]
+}
 \end{lstlisting}
 
 \subsection{Property Description}
@@ -156,8 +109,8 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \begin{description}
 \item[\textbf{\_id}]: A unique identifier for the element (GUID).
 \item[\textbf{type}]: The specific type of the element. Can be one of 'Site', 'Area', 'Page', or 'Content'.
-\item[\textbf{name}]: A localizable name for the element. It is composed of one or more \texttt{text} elements, each with a \texttt{lang} attribute specifying the language (e.g., "en", "it-IT"). The text content is wrapped in \texttt{<![CDATA[...]]>} to prevent issues with special characters. Example: \lstinline{<name><text lang="en"><![CDATA[R&D]]></text><text lang="it"><![CDATA[R&S]]></text></name>}
-\item[\textbf{slug}]: A localizable, URL-friendly version of the name. It is initially derived from the \texttt{name} by converting it to lowercase and removing all characters except for letters (a-z, A-Z), numbers (0-9), and underscores (\_), but can be manually overridden. Follows the same structure as \texttt{name}.
+\item[\textbf{name}]: A localizable name for the element. This is a JSON object where keys are language codes (e.g., "en", "it") and values are the translated strings. Example: \lstinline[language=JSON]{{"en": "Research & Development", "it": "Ricerca e Sviluppo"}}
+\item[\textbf{slug}]: A localizable, URL-friendly version of the name. It is a JSON object with the same structure as \texttt{name}. Slugs should contain only lowercase letters, numbers, and hyphens.
 \item[\textbf{keywords}]: Localizable keywords for SEO. Follows the same structure as \texttt{name}.
 \item[\textbf{description}]: A localizable description of the element. Follows the same structure as \texttt{name}.
 \item[\textbf{visibility}]: Defines the visibility rules for the element based on user roles. It contains a set of rules, where each rule assigns \texttt{true} (visible) or \texttt{false} (not visible) to a specific role. If a rule for a role is not defined (is \texttt{null}), the visibility is determined by checking the parent element's visibility rules. This hierarchical check continues up to the root element. If no rule is found, the element is not visible by default.
@@ -171,33 +124,32 @@ This section describes the specialized element types available in \wbdl{}.
 
 \subsection{STWSite}
 
-	\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure. There must be exactly one \texttt{STWSite} element in any \wbdl{} document.
+	\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure.
 
-\begin{lstlisting}[language=XML,caption={STWSite Type Definition}]
-<xs:complexType name="STWSite">
-	<xs:complexContent>
-		<xs:extension base="STWElement">
-			<xs:sequence>
-				<xs:element name="langs" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="lang" type="xs:language" maxOccurs="unbounded"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="datasources" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-			<xs:attribute name="mainpage" type="GUID"/>
-			<xs:attribute name="version" type="xs:string"/>
-		</xs:extension>
-	</xs:complexContent>
-</xs:complexType>
+\begin{lstlisting}[language=JSON,caption={STWSite Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWSite.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWSite",
+  "allOf": [{ "$ref": "STWElement.json" }],
+  "properties": {
+    "type": { "const": "Site" },
+    "mainpage": { "type": "string", "format": "uuid" },
+    "langs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "datasources": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "children": {
+      "type": "array",
+      "items": { "$ref": "STWArea.json" }
+    }
+  },
+  "required": ["mainpage"]
+}
 \end{lstlisting}
 
 \subsubsection{Property Description}
@@ -248,15 +200,18 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 	\texttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
 
-\begin{lstlisting}[language=XML,caption={STWArea Type Definition}]
-<xs:complexType name="STWArea">
-	<xs:complexContent>
-		<xs:extension base="STWElement">
-			<xs:attribute name="mainpage" type="GUID"/>
-			<xs:attribute name="version" type="xs:string"/>
-		</xs:extension>
-	</xs:complexContent>
-</xs:complexType>
+\begin{lstlisting}[language=JSON,caption={STWArea Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWArea.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWArea",
+  "allOf": [{ "$ref": "STWElement.json" }],
+  "properties": {
+    "type": { "const": "Area" },
+    "mainpage": { "type": "string", "format": "uuid" }
+  },
+  "required": ["mainpage"]
+}
 \end{lstlisting}
 
 \subsubsection{Property Description}
@@ -270,59 +225,46 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 	\texttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
 
-\begin{lstlisting}[language=XML,caption={STWPage Type Definition}]
-<xs:complexType name="STWPage">
-	<xs:complexContent>
-		<xs:restriction base="STWElement">
-			<xs:sequence>
-				<xs:element name="name" type="STWLocalized" minOccurs="1" />
-				<xs:element name="slug" type="STWLocalized" minOccurs="1" />
-				<xs:element name="keywords" type="STWLocalized" minOccurs="0" />
-				<xs:element name="description" type="STWLocalized" minOccurs="0" />
-				<xs:element name="visibility" type="STWVisibility" minOccurs="0" />
-				<xs:element name="children" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="content" type="STWContent" minOccurs="0" maxOccurs="unbounded"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-			<xs:attribute name="_id" type="GUID" use="required" />
-			<xs:attribute name="type" type="STWElementType" use="required" />
-		</xs:restriction>
-	</xs:complexContent>
-</xs:complexType>
+\begin{lstlisting}[language=JSON,caption={STWPage Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWPage.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWPage",
+  "allOf": [{ "$ref": "STWElement.json" }],
+  "properties": {
+    "type": { "const": "Page" },
+    "children": {
+      "type": "array",
+      "items": { "$ref": "STWContent.json" }
+    }
+  },
+  "required": ["children"]
+}
 \end{lstlisting}
 
 \subsection{STWContent}
 
 	\texttt{STWContent} represents a piece of content on a page. It extends the base \texttt{STWElement} but is not allowed to have any \texttt{children}. It adds several attributes for data binding and layout control.
 
-\begin{lstlisting}[language=XML,caption={STWContent Type Definition}]
-<xs:complexType name="STWContent">
-	<xs:complexContent>
-		<xs:restriction base="STWElement">
-			<xs:sequence>
-				<xs:element name="name" type="STWLocalized" minOccurs="1" />
-				<xs:element name="slug" type="STWLocalized" minOccurs="1" />
-				<xs:element name="keywords" type="STWLocalized" minOccurs="0" />
-				<xs:element name="description" type="STWLocalized" minOccurs="0" />
-				<xs:element name="visibility" type="STWVisibility" minOccurs="0" />
-				<xs:element name="layout" type="STWLayout" />
-			</xs:sequence>
-			<xs:attribute name="_id" type="GUID" use="required" />
-			<xs:attribute name="type" type="STWElementType" use="required" fixed="Content" />
-			<xs:attribute name="subtype" type="xs:string" />
-			<xs:attribute name="cssClass" type="xs:string" />
-			<xs:attribute name="section" type="xs:string" />
-			<xs:attribute name="sequence" type="xs:integer" />
-			<xs:attribute name="dsn" type="xs:string" />
-			<xs:attribute name="query" type="xs:string" />
-			<xs:attribute name="params" type="xs:string" />
-		</xs:restriction>
-	</xs:complexContent>
-</xs:complexType>
+\begin{lstlisting}[language=JSON,caption={STWContent Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWContent.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWContent",
+  "allOf": [{ "$ref": "STWElement.json" }],
+  "properties": {
+    "type": { "const": "Content" },
+    "subtype": { "type": "string" },
+    "cssClass": { "type": "string" },
+    "section": { "type": "string" },
+    "sequence": { "type": "integer" },
+    "dsn": { "type": "string" },
+    "query": { "type": "string" },
+    "params": { "type": "string" },
+    "layout": { "$ref": "STWLayout.json" }
+  },
+  "required": ["layout"]
+}
 \end{lstlisting}
 
 \subsubsection{Property Description}
@@ -391,35 +333,23 @@ All content types explicitly declare or request the data they interact with, and
 
 	\texttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
 
-\begin{lstlisting}[language=XML,caption={STWContentWithOptions Type Definition}]
-<xs:complexType name="STWContentWithOptions">
-	<xs:annotation>
-		<xs:documentation>A content element that holds a list of references (options) to other STWElements, instead of nested child elements. Useful for menus and tabs where content is sourced from elsewhere.</xs:documentation>
-	</xs:annotation>
-	<xs:complexContent>
-		<xs:extension base="STWElement">
-			<xs:sequence>
-				<xs:element name="options" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="option" type="GUID" minOccurs="0" maxOccurs="unbounded" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="layout" type="STWLayout" minOccurs="0" />
-			</xs:sequence>
-			<xs:attribute name="subtype" type="xs:string" use="optional" />
-			<xs:attribute name="override" type="xs:boolean" use="optional" />
-			<xs:attribute name="readonly" type="xs:boolean" use="optional" />
-			<xs:attribute name="cssClass" type="xs:string" use="optional" />
-			<xs:attribute name="section" type="xs:string" use="optional" />
-			<xs:attribute name="sequence" type="xs:integer" use="optional" />
-			<xs:attribute name="dsn" type="xs:string" use="optional" />
-			<xs:attribute name="query" type="xs:string" use="optional" />
-			<xs:attribute name="params" type="xs:string" use="optional" />
-		</xs:extension>
-	</xs:complexContent>
-</xs:complexType>
+\begin{lstlisting}[language=JSON,caption={STWContentWithOptions Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWContentWithOptions.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWContentWithOptions",
+  "allOf": [{ "$ref": "STWElement.json" }],
+  "properties": {
+    "type": { "const": "Content" },
+    "subtype": { "type": "string" },
+    "options": {
+      "type": "array",
+      "items": { "type": "string", "format": "uuid" }
+    },
+    "layout": { "$ref": "STWLayout.json" }
+  },
+  "required": ["options"]
+}
 \end{lstlisting}
 
 \subsubsection{Property Description}

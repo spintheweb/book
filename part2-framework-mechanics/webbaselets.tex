@@ -28,122 +28,63 @@ A \webbase{} represents a complete, self-contained web portal. It includes:
 
 \subsection{Webbase Example Structure}
 
-\begin{lstlisting}[language=XML,caption={Basic Webbase Structure}]
-<?xml version="1.0" encoding="UTF-8"?>
-<webbase xmlns="http://spintheweb.org/wbdl/1.0">
-	<site _id="12345678-1234-1234-1234-123456789012" type="Site" 
-		  mainpage="87654321-4321-4321-4321-210987654321" version="1.0">
-		<name>
-			<text lang="en"><![CDATA[Corporate Portal]]></text>
-		</name>
-		<slug>
-			<text lang="en"><![CDATA[portal]]></text>
-		</slug>
-        
-		<langs>
-			<lang>en</lang>
-			<lang>it</lang>
-			<lang>fr</lang>
-		</langs>
-        
-		<datasources>
-			<database name="main" type="postgresql" 
-					  connectionString="..." />
-			<api name="crm" type="rest" 
-				 baseUrl="https://api.crm.company.com" />
-		</datasources>
-        
-		<children>
-			<area _id="..." type="Area">
-				<!-- Area definition -->
-			</area>
-		</children>
-	</site>
-</webbase>
+\begin{lstlisting}[language=JSON,caption={Basic Webbase Structure in JSON}]
+{
+  "_id": "12345678-1234-1234-1234-123456789012",
+  "type": "Site",
+  "version": "1.0",
+  "mainpage": "87654321-4321-4321-4321-210987654321",
+  "name": { "en": "Corporate Portal" },
+  "slug": { "en": "portal" },
+  "langs": ["en", "it", "fr"],
+  "datasources": [
+    { "name": "main", "type": "postgresql", "connectionString": "..." }
+  ],
+  "children": [
+    {
+      "_id": "...",
+      "type": "Area"
+    }
+  ]
+}
 \end{lstlisting}
 
-\section{Webbaselet Structure}
-\label{sec:webbaselet-structure}
+\subsection{Webbaselet Definition}
 
-A \webbaselet{} is a modular component that can be integrated into multiple \webbase{s}. It provides:
+A \webbaselet{} is a valid \wbdl{} document whose root element is an \texttt{STWArea}.
 
-\begin{description}
-\item[\textbf{Focused Functionality}]: A specific set of related pages and content for a particular business function
-\item[\textbf{Reusability}]: The ability to include the same functionality across multiple portals
-\item[\textbf{Independent Development}]: Separate development and testing cycles for different functional areas
-\item[\textbf{Incremental Integration}]: Gradual rollout of new features without affecting the entire portal
-\end{description}
-
-\subsection{Webbaselet Example Structure}
-
-\begin{lstlisting}[language=XML,caption={Example Webbaselet Structure}]
-<?xml version="1.0" encoding="UTF-8"?>
-<webbaselet xmlns="http://spintheweb.org/wbdl/1.0">
-	<area _id="98765432-8765-8765-8765-987654321098" type="Area" 
-		  mainpage="11111111-1111-1111-1111-111111111111" version="2.1">
-		<name>
-			<text lang="en"><![CDATA[Customer Self-Service]]></text>
-		</name>
-		<slug>
-			<text lang="en"><![CDATA[customer-portal]]></text>
-		</slug>
-        
-		<visibility>
-			<rule role="customer" visible="true"/>
-			<rule role="guest" visible="false"/>
-		</visibility>
-        
-		<children>
-			<page _id="11111111-1111-1111-1111-111111111111" type="Page">
-				<name>
-					<text lang="en"><![CDATA[My Dashboard]]></text>
-				</name>
-				<slug>
-					<text lang="en"><![CDATA[dashboard]]></text>
-				</slug>
-                
-				<children>
-					<content _id="..." type="Content" subtype="Table">
-						<!-- Content definition -->
-					</content>
-				</children>
-			</page>
-		</children>
-	</area>
-</webbaselet>
+\begin{lstlisting}[language=JSON,caption={Example of a Webbaselet in JSON}]
+{
+  "_id": "hr-webbaselet-root",
+  "type": "Area",
+  "name": { "en": "Human Resources" },
+  "slug": { "en": "human-resources" },
+  "children": [
+    {
+      "_id": "hr-page-1",
+      "type": "Page",
+      "name": { "en": "Employee Directory" },
+      "slug": { "en": "directory" }
+    }
+  ]
+}
 \end{lstlisting}
-
-\section{Integration Patterns}
-\label{sec:integration-patterns}
-
-\webbaselet{s} can be integrated into \webbase{s} through several mechanisms:
-
-\subsection{Direct Inclusion}
-
-\webbaselet{s} can be directly embedded within a \webbase{} by including their XML content as child elements of the appropriate parent area.
-
-\subsection{Reference-Based Inclusion}
-
-\webbase{s} can reference external \webbaselet{} files, allowing for:
-\begin{itemize}
-\item Dynamic loading of \webbaselet{s} at runtime
-\item Version management and rollback capabilities
-\item Conditional inclusion based on licensing or feature flags
-\item Hot-swapping of functionality without portal restart
-\end{itemize}
 
 \subsection{Namespace Isolation}
 
-Each \webbaselet{} can define its own namespace to avoid conflicts when multiple \webbaselet{s} are integrated:
+Each \webbaselet{} can define its own namespace by adding a \texttt{namespace} property to the root \texttt{STWArea} element.
 
-\begin{lstlisting}[language=XML,caption={Webbaselet with Namespace}]
-<webbaselet xmlns="http://spintheweb.org/wbdl/1.0"
-			xmlns:hr="http://company.com/webbaselets/hr/1.0">
-	<area _id="..." type="Area" namespace="hr">
-		<!-- HR-specific functionality -->
-	</area>
-</webbaselet>
+\begin{lstlisting}[language=JSON,caption={Webbaselet with Namespace}]
+{
+  "_id": "hr-webbaselet-root",
+  "type": "Area",
+  "namespace": "hr",
+  "name": { "en": "Human Resources" },
+  "slug": { "en": "human-resources" }
+}
 \end{lstlisting}
+
+When this \webbaselet{} is integrated, the final URL for the page could be resolved to \texttt{/human-resources/directory}, with the engine managing any potential conflicts.
 
 \section{Development Workflow}
 \label{sec:development-workflow}
