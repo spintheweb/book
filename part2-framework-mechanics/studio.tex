@@ -24,7 +24,7 @@ This fragmented workflow is inefficient, error-prone, and a significant barrier 
 \section{Introducing the Spin the Web Studio}
 \label{sec:studio-intro}
 
-The Spin the Web Studio is a comprehensive, web-based Integrated Development Environment (IDE) designed specifically for building, testing, and managing \webbase{s}. It streamlines the entire development lifecycle, from initial design to final deployment, providing a single, coherent interface for all development tasks.
+The Spin the Web Studio is a web-based development environment designed specifically for building, testing, and managing \webbase{s}. It streamlines the entire development lifecycle, from initial design to final deployment, providing a single, coherent interface for all development tasks.
 
 Crucially, the Studio is not an external, standalone application. It is itself a \textbf{\webbaselet{}}, built using the very same technologies it helps to create. This has two profound implications:
 
@@ -33,16 +33,16 @@ Crucially, the Studio is not an external, standalone application. It is itself a
     \item \textbf{Part of the Virtualized Portal}: As a \webbaselet{}, the Studio can be seamlessly integrated into any \webbase{}. This allows developers with the appropriate permissions to access the development environment directly from within the live portal, making it a true part of the virtualized web portal.
 \end{enumerate}
 
-\section{IDE Architecture and Activation}
+\section{Studio Architecture and Activation}
 \label{sec:studio-architecture}
 
-The Studio operates as a specialized \webbaselet{} that is added to the portal \webbase{} and is accessible to users with developer permissions when they log in. The IDE remains hidden until activated by the developer using the keyboard shortcut \textbf{Alt+F12}.
+The Studio operates as a specialized \webbaselet{} that is added to the portal \webbase{} and is accessible to users with developer permissions when they log in. The studio remains hidden until activated by the developer using the keyboard shortcut \textbf{Alt+F12}.
 
 Upon activation, the Studio transforms the portal interface into a full-featured development environment with the following key components:
 
 \begin{description}
-    \item[Action Bar] Provides quick access to the IDE functions.
-    \item[Side Bar] Houses multiple views including interactive \webbase{} hierarchy, portal folder contents, search capabilities, debugging tools, source control integration, and IDE settings.
+    \item[Action Bar] Provides quick access to the Studio functions.
+    \item[Side Bar] Houses multiple views including interactive \webbase{} hierarchy, portal folder contents, search capabilities, debugging tools, source control integration, and Studio settings.
     \item[Status Bar] Displays development status information, compilation results, and system feedback.
     \item[Panel] Contains additional development tools, terminal access, and debugging output.
     \item[Main Section] Features a tabbed interface where the live portal is displayed in a persistent browser tab alongside other editors.
@@ -71,7 +71,7 @@ The Studio's side bar provides comprehensive navigation and development tools th
     \item[Search] Comprehensive search capabilities across both \webbase{} definitions and folder contents, supporting pattern matching and content searches.
     \item[Debugging] Integrated debugging tools for \wbpl{} queries, \webbaselet{} execution, and runtime diagnostics.
     \item[Source Control] Built-in version control integration for tracking changes to \webbase{} definitions and portal resources.
-    \item[IDE Settings] Customization options for the development environment, including themes, editor preferences, and workflow configurations.
+    \item[Studio Settings] Customization options for the development environment, including themes, editor preferences, and workflow configurations.
 \end{description}
 
 \section{Key Features of the Studio}

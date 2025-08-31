@@ -60,7 +60,7 @@ to build sophisticated web portals.
 │   ├── wbll.tex               # Webbase Layout Language (WBLL)
 │   ├── webbaselets.tex        # Webbaselets and components
 │   ├── web-spinner-engine.tex # The Web Spinner Engine
-│   ├── studio.tex             # The Spin the Web Studio IDE
+│   ├── studio.tex             # The Spin the Web Studio
 │   └── technology-stack.tex   # Technology stack of the reference implementation
 ├── part3-implementation/      # Part III: The Practice: Building a Web Portal
 │   ├── intro.tex              # Part introduction
