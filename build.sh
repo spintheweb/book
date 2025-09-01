@@ -1,3 +1,4 @@
+# Prerequisites: Requires pdflatex, bibtex, makeindex, and makeglossaries installed and in PATH
 #!/bin/bash
 echo "Building SpinTheWeb book..."
 

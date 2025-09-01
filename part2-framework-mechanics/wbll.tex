@@ -8,7 +8,16 @@
 — Leonardo da Vinci
 \end{quote}
 
-The Webbase Layout Language (\textbf{WBLL}) defines how content is presented. Where \wbdl{} describes \textit{what} exists (site, areas, pages, contents), WBLL describes \textit{how} it looks and behaves at render time.
+
+The Webbase Layout Language (\textbf{WBLL}) defines how a content is presented. Where \wbdl{} describes \textit{what} exists (site, areas, pages, contents), WBLL describes \textit{how} it looks and behaves at render time.
+
+\subsection{Data Context and Field Cursor}
+
+It is the responsibility of the \wbdl{} content definition to query data. The result is an ordered recordset, where both the field names and their sequence are important for rendering.
+
+The WBLL interpreter maintains a \textbf{field cursor} that tracks the current position within the recordset fields. Many tokens operate on the field at the current cursor position if no explicit field name is provided. After such a token is processed, the field cursor advances to the next field. If a token specifies a field name (e.g., \texttt{h('type;area')}), it uses the named field and does not move the cursor.
+
+Some tokens may behave differently depending on the subtype of the content being rendered. This will be detailed for each token as needed.
 
 A STWContent has a subtype, the subtype defines the content macroscopic appearance, e.g., a table, a calendar, WBLL digs deeper describing the content microscopically, i.e., how the queried data is rendered within the content. WBLL is a compact, token-based layout language interpreted by the Web Spinner. It compiles into an efficient render function that merges data (records, session values, placeholders) into HTML.
 
@@ -28,4 +37,7 @@ The rendering process involves two main stages:
     \item \textbf{Compilation and Rendering:} The resulting array of tokens is then compiled into a dynamic JavaScript render function. This function is specifically generated to produce HTML from the token sequence. When executed, it iterates through the tokens, merges data from records and session placeholders, and constructs the final HTML string. This just-in-time compilation allows for highly efficient rendering, as the logic is tailored precisely to the given layout.
 \end{enumerate}
 
-WBLL supports both an interactive and a display-only mode. In interactive mode, elements like text fields (\texttt{e}) and dropdowns (\texttt{d}) are rendered as standard HTML form controls. In display-only mode, these same elements are rendered as static text, showing the data value rather than the input control. This dual-mode capability allows the same layout definition to be used for both data entry forms and read-only views.
+
+\subsection{Token Reference}
+
+For the complete, uniform catalog of tokens (syntax, description, and examples), see Appendix \ref{app:wbll-tokens}.

@@ -71,9 +71,29 @@
             {•}{{\textbullet}}1
 }
 
+% Define JavaScript language if not provided by listings on this TeX distro
+% (Some MiKTeX setups lack JavaScript by default.)
+\lstdefinelanguage{JavaScript}{
+    morekeywords={break,case,catch,continue,debugger,default,delete,do,else,finally,for,function,if,in,instanceof,new,return,switch,this,throw,try,typeof,var,void,while,with,const,let,of,import,from,export,class,extends,super,static,yield,await,async,true,false,null,undefined},
+    sensitive=true,
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]",
+}
+
+% Define JSON language (based on JavaScript, strings highlighted)
+\lstdefinelanguage{JSON}{
+    basicstyle=\ttfamily\small,
+    showstringspaces=false,
+    morestring=[b]",
+    stringstyle=\color{stringcolor},
+    morecomment=[l]{//},
+}
+
 % Define JSON language style for listings
 \lstdefinestyle{jsonstyle}{
-    language=JavaScript, % Use JavaScript as a base for syntax
+        language=JavaScript, % Use JavaScript as a base for syntax
     morestring=[b]",
     stringstyle=\color{stringcolor},
     morekeywords={true,false,null,_id,type,name,slug,keywords,description,visibility,children,mainpage,langs,datasources,version,namespace,rules,role,visible,subtype,query,layout,options,connectionString,baseUrl},

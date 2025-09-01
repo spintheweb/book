@@ -74,7 +74,7 @@ to build sophisticated web portals.
 │   └── spin-the-web.png       # Main project architecture diagram
 ├── bibliography/              # References and citations
 │   └── references.bib
-└── build/                     # Generated files (omitted for brevity)
+└── build/                     # Generated files (auto-generated, can be safely cleaned)
 ```
 
 ## Implementation Technology (Reference Spinner)
@@ -91,7 +91,7 @@ Source: https://github.com/keyvisions/spintheweb
 
 ## Building the Book
 
-### Quick Build (Recommended)
+### Quick Build
 
 ```bash
 # Single command build
@@ -103,13 +103,6 @@ This will:
 1. Compile the LaTeX source using pdflatex
 2. Generate `SpinTheWeb.pdf` in the root directory
 3. Display build status and any warnings
-
-### Using VS Code (Alternative)
-
-1. Open the project in VS Code
-2. Open `main.tex`
-3. Use **Ctrl+Alt+B** (or **Cmd+Option+B** on macOS) to build
-4. Use **Ctrl+Alt+V** (or **Cmd+Option+V** on macOS) to view PDF
 
 ### Manual Build Commands
 

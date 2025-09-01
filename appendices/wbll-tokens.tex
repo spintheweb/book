@@ -1,0 +1,61 @@
+% Appendix: WBLL Token Reference
+
+\chapter{WBLL Token Reference}
+\label{app:wbll-tokens}
+
+This appendix provides a complete, uniform reference for WBLL tokens.
+
+General token syntax: \texttt{<token>('param1;param2;param3;...')}.
+
+To keep token docs uniform and readable, we use a two-column layout: labels on the left and content (with code and output) on the right.
+
+% t — text
+\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \textbf{t} \\
+\hline
+\textbf{Syntax} & \textbf{t}\texttt{('}\textit{text}\texttt{')} \\
+\hline
+\textbf{Description} & Inserts the given text string into the response flow at the current position. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+% Keep verbatim listings outside tabularx to prevent runaway arguments
+\vspace{0.3em}
+\lstset{language=JavaScript}
+\begin{lstlisting}
+t('Hello World!')
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=}
+\begin{lstlisting}
+Hello World!
+\end{lstlisting}
+\end{tcolorbox}
+
+% h — hidden input
+\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \textbf{h} \\
+\hline
+\textbf{Syntax} & \textbf{h}\texttt{()} \textit{or} \textbf{h}\texttt{('}\textit{name}\texttt{;}\textit{value}\texttt{')} \\
+\hline
+\textbf{Description} & Inserts an HTML input element of type hidden. If called without parameters (just \textbf{h}), it uses the active field name and value at the field cursor and then advances the cursor. If parameters are provided, they are used and the field cursor is not advanced. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=JavaScript}
+\begin{lstlisting}
+h
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=}
+\begin{lstlisting}
+<input type="hidden" name="<active field name>" value="<active field value>">
+\end{lstlisting}
+\end{tcolorbox}
