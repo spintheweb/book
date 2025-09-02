@@ -6,7 +6,7 @@
 [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
 A comprehensive LaTeX technical book documenting the **Spin the Web** project -
-an framework for building dynamic enterprise web portals using WBDL (Webbase
+a framework for building dynamic enterprise web portals using WBDL (Webbase
 Definition Language), WBPL (Webbase Programming Language), and the Web Spinner
 Engine.
 
@@ -21,7 +21,7 @@ to build sophisticated web portals.
 **Key Features:**
 
 - **117+ pages** of professional technical documentation
- **Clear Separation of Concerns**: Part II details the platform's internal
+- **Clear Separation of Concerns**: Part II details the platform's internal
   mechanics, while Part III focuses on practical portal development.
 - Modular LaTeX structure for easy maintenance
 - Complete coverage of WBDL, WBPL, Web Spinner Engine, and the Spin the Web

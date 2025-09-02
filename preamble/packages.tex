@@ -33,8 +33,6 @@
 
 % Code listings and syntax highlighting
 \usepackage{listings}
-\usepackage{minted}
-\usepackage{fancyvrb}
 
 % Math and symbols
 \usepackage{amsmath}
@@ -42,7 +40,11 @@
 \usepackage{amsfonts}
 
 % Cross-references and links
-\usepackage{hyperref}
+\usepackage[pdfusetitle]{hyperref}
+\hypersetup{
+  pdfsubject={Morphic Edition — Living document (Work in progress)},
+  pdfkeywords={Spin the Web, WBDL, Webbase, web portal, Morphic Edition, Work in progress}
+}
 \usepackage{cleveref}
 \usepackage{url}
 
@@ -84,4 +86,3 @@
 
 % Package configurations
 \tcbuselibrary{most}
-\usemintedstyle{default}
