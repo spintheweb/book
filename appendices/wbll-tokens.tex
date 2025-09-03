@@ -27,8 +27,11 @@ If you need to skip a middle argument, use an empty segment: e.g., \wballsyn{e('
 
 To keep token docs uniform and readable, we use a two-column layout: labels on the left and content (with code and output) on the right.
 
+% Consistent spacing and styling for token boxes
+\cbset{tokenbox/.style={interior hidden,colframe=black!15,boxrule=0.5pt,arc=2pt,before skip=2\baselineskip,after skip=2\baselineskip}}
+
 % Example recordset used in examples
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
+\begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \textbf{Example recordset} (fields in order): \texttt{price}, \texttt{username}, \texttt{city}.
 
@@ -49,297 +52,11 @@ To keep token docs uniform and readable, we use a two-column layout: labels on t
 }
 \end{tcolorbox}
 
-% t — text
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{t} \\
-\hline
-\textbf{Syntax} & \wballsyn{t('text')} \\
-\hline
-\textbf{Description} & Inserts the given text string into the response flow at the current position. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-% Keep verbatim listings outside tabularx to prevent runaway arguments
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-t('Hello World!')
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-Hello World!
-\end{lstlisting}
-\end{tcolorbox}
-
-% h — hidden input
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{h} \\
-\hline
-\textbf{Syntax} & \wballsyn{h('name[;value]')} \\
-\hline
-\textbf{Description} & Inserts an HTML input element of type hidden. Arguments are \emph{positional but optional}. Defaults when omitted: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified (e.g., just \textbf{h}); if \textit{name} is provided, the cursor does not advance. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-h
-h('kind;area')
-h('id')
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<input type="hidden" name="price" value="1234.5"><input type="hidden" name="kind" value="area"><input type="hidden" name="id" value="alice">
-\end{lstlisting}
-\end{tcolorbox}
-
-% e — text input
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{e} \\
-\hline
-\textbf{Syntax} & \wballsyn{e('format[;name][;value]')} \\
-\hline
-\textbf{Description} & Renders a text input element: \texttt{<input type="text" name="<name>" value="<formatted value>">}. Arguments are \emph{positional but optional}. Defaults: \textit{format} = identity, \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified (e.g., just \textbf{e}); if \textit{name} is provided, the cursor does not advance (even if \textit{value} is omitted). \textbf{Formatting:} \textit{format} applies only to numeric values. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-e('€ #,##0.00;price;1234.5') // All args explicit: no cursor advance; numeric format applied
-e // Use active field name and value: advances
->e(';username') // Move to username, explicit name: no cursor advance
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<input type="text" name="price" value="€ 1,234.50"><input type="text" name="price" value="1234.5"><input type="text" name="city" value="Milan">
-\end{lstlisting}
-\end{tcolorbox}
-
-% f — formatted field value
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{f} \\
-\hline
-\textbf{Syntax} & \wballsyn{f('format')} \\
-\hline
-\textbf{Description} & Renders the active field value at the cursor, optionally applying a numeric \textit{format}. The \textit{format} argument is positional but optional (default: identity). \textbf{Cursor rule (non-editing):} advances because it consumes the active field value. \textbf{Formatting:} applies only to numeric values. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-f('€ #,##0.00')\r // Currency formatting of active numeric field
-f // No format (identity)
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-€ 1,234.50<br>1234.5
-\end{lstlisting}
-\end{tcolorbox}
-
-% > — advance field cursor
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{>} \\
-\hline
-\textbf{Syntax} & \wballsyn{>} \\
-\hline
-\textbf{Description} & Advances the field cursor by one position. Produces no output. If the cursor is already at the last field, this operation is a no-op. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
->f
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-alice
-\end{lstlisting}
-\end{tcolorbox}
-
-% < — move field cursor backward
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{<} \\
-\hline
-\textbf{Syntax} & \wballsyn{<} \\
-\hline
-\textbf{Description} & Moves the field cursor back by one position. Produces no output. If the cursor is already at the first field, this operation is a no-op. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
->>><f
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-Milan
-\end{lstlisting}
-\end{tcolorbox}
-
-% w — password input
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{w} \\
-\hline
-\textbf{Syntax} & \wballsyn{w('name[;value]')} \\
-\hline
-\textbf{Description} & Renders a password input element: \texttt{<input type="password" name="<name>" value="<value>">}. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance. \textit{Note:} some browsers ignore preset password values. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-w('pwd;secret')\rw\rw(';password')
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<input type="password" name="pwd" value="secret"><br><input type="password" name="price" value="1234.5"><input type="password" name="name" value="password">
-\end{lstlisting}
-\end{tcolorbox}
-
-% l — active field name (no cursor advance)
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{l} \\
-\hline
-\textbf{Syntax} & \wballsyn{l} \\
-\hline
-\textbf{Description} & Renders the \emph{name} of the active field at the cursor. Produces no value output and \textbf{does not} advance the cursor. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-lf\rlf
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<label>price</label>1234.5<br><label>username</label>alice
-\end{lstlisting}
-\end{tcolorbox}
-
-% m — multiline text area
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{m} \\
-\hline
-\textbf{Syntax} & \wballsyn{m('name[;value]')} \\
-\hline
-\textbf{Description} & Renders a multiline text area: \texttt{<textarea name="<name>"><value></textarea>}. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-m('comments;Hello, world!')mm(';New York')
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<textarea name="comments">Hello, world!</textarea><textarea name="price">1234.5</textarea><textarea name="comments">New York</textarea>
-\end{lstlisting}
-\end{tcolorbox}
-
-% \r — line break (non-editing)
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{\textbackslash r} \\
-\hline
-\textbf{Syntax} & \wballsyn{\\r} \\
-\hline
-\textbf{Description} & Inserts a line break: \texttt{<br>}. Non-editing; produces no value output and does \textbf{not} advance the field cursor. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-f\rf
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-1234.5<br>alice
-\end{lstlisting}
-\end{tcolorbox}
-
-% // — line comment (non-editing)
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
-{\small\setstretch{1.05}%
-\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{//} \\
-\hline
-\textbf{Syntax} & \wballsyn{// comment text} \\
-\hline
-\textbf{Description} & Line comment. The interpreter ignores everything from \textbf{//} to the end of the line. Produces no output and does \textbf{not} move the field cursor. \\
-\hline
-\textbf{Example} & Code and output below. \\
-\end{tabularx}}
-
-\vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-t('Hello') // inline comment after code
-\r
-// full-line comment
-t('World')
-\end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-Hello<br>World
-\end{lstlisting}
-\end{tcolorbox}
-
 % /* */ — multiline comment (non-editing)
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
+\begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{/* */} \\
-\hline
-\textbf{Syntax} & \wballsyn{/* comment text */} \\
+\textbf{Token} & \wballsyn{/* comment text */} \\
 \hline
 \textbf{Description} & Multiline comment. The interpreter ignores everything between \texttt{/*} and \texttt{*/}. Can span multiple lines. Produces no output and does \textbf{not} move the field cursor. \\
 \hline
@@ -361,15 +78,13 @@ lf /* comment
 \end{lstlisting}
 \end{tcolorbox}
 
-% \a — attributes for current element (non-editing)
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
+% // — line comment (non-editing)
+\begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{\textbackslash a} \\
+\textbf{Token} & \wballsyn{// comment text} \\
 \hline
-\textbf{Syntax} & \wballsyn{\\a('attributes')} \\
-\hline
-\textbf{Description} & Assigns HTML attributes to the most recently emitted element. Use immediately after a token that creates an element (e.g., \texttt{e}, \texttt{w}, \texttt{m}, \texttt{h}). Attributes are appended/merged; later attributes override earlier ones when duplicated. Non-editing; produces no output and does \textbf{not} move the field cursor. \\
+\textbf{Description} & Line comment. The interpreter ignores everything from \textbf{//} to the end of the line. Produces no output and does \textbf{not} move the field cursor. \\
 \hline
 \textbf{Example} & Code and output below. \\
 \end{tabularx}}
@@ -377,23 +92,69 @@ lf /* comment
 \vspace{0.3em}
 \lstset{language=WBLL}
 \begin{lstlisting}
-e\a('required style="color:red"')
->e(';username')\a('maxlength="20"')
+t('Hello') // inline comment after code
+\r
+// full-line comment
+t('World')
 \end{lstlisting}
 \textit{Renders:}
 \lstset{language=HTML}
 \begin{lstlisting}
-<input type="text" name="price" value="1234.5" required style="color:red"><input type="text" name="username" value="alice" maxlength="20">
+Hello<br>World
+\end{lstlisting}
+\end{tcolorbox}
+
+% < — move field cursor backward
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{<} \\
+\hline
+\textbf{Description} & Moves the field cursor back by one position. Produces no output. If the cursor is already at the first field, this operation is a no-op. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+>>><f
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+Milan
+\end{lstlisting}
+\end{tcolorbox}
+
+% > — advance field cursor
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{>} \\
+\hline
+\textbf{Description} & Advances the field cursor by one position. Produces no output. If the cursor is already at the last field, this operation is a no-op. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+>f
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+alice
 \end{lstlisting}
 \end{tcolorbox}
 
 % \A — attributes for parent <tr> or <li> (non-editing)
-\begin{tcolorbox}[colback=white!0,colframe=black!15,boxrule=0.5pt,arc=2pt]
+\begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \textbf{\textbackslash A} \\
-\hline
-\textbf{Syntax} & \wballsyn{\\A('attributes')} \\
+\textbf{Token} & \wballsyn{\\A('attributes')} \\
 \hline
 \textbf{Description} & Like \textbf{\textbackslash a}, but applies attributes to the \emph{parent} structural element: the nearest enclosing \texttt{<tr>} (in table contexts) or \texttt{<li>} (in list contexts). Non-editing; produces no output and does \textbf{not} move the field cursor. Has effect only when inside a table row or list item context. \\
 \hline
@@ -414,5 +175,253 @@ e\a('required style="color:red"')
 \begin{lstlisting}
 <tr class="highlight">... <input type="text" name="price" value="1234.5"> ...</tr>
 <li data-role="user">... <input type="text" name="username" value="alice"> ...</li>
+\end{lstlisting}
+\end{tcolorbox}
+
+% \a — attributes for current element (non-editing)
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{\\a('attributes')} \\
+\hline
+\textbf{Description} & Assigns HTML attributes to the most recently emitted element. Use immediately after a token that creates an element (e.g., \texttt{e}, \texttt{w}, \texttt{m}, \texttt{h}). Attributes are appended/merged; later attributes override earlier ones when duplicated. Non-editing; produces no output and does \textbf{not} move the field cursor. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+e\a('required style="color:red"')
+>e(';username')\a('maxlength="20"')
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<input type="text" name="price" value="1234.5" required style="color:red"><input type="text" name="username" value="alice" maxlength="20">
+\end{lstlisting}
+\end{tcolorbox}
+
+% \\r — line break (non-editing)
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{\\r} \\
+\hline
+\textbf{Description} & Inserts a line break: \texttt{<br>}. Non-editing; produces no value output and does \textbf{not} advance the field cursor. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+f\rf
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+1234.5<br>alice
+\end{lstlisting}
+\end{tcolorbox}
+
+% e — text input
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{e('format[;name][;value]')} \\
+\hline
+\textbf{Description} & Renders a text input element: \texttt{<input type="text" name="<name>" value="<formatted value>">}. Arguments are \emph{positional but optional}. Defaults: \textit{format} = identity, \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified (e.g., just \textbf{e}); if \textit{name} is provided, the cursor does not advance (even if \textit{value} is omitted). \textbf{Formatting:} \textit{format} applies only to numeric values. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+e('€ #,##0.00;price;1234.5') // All args explicit: no cursor advance; numeric format applied
+e // Use active field name and value: advances
+>e(';username') // Move to username, explicit name: no cursor advance
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<input type="text" name="price" value="€ 1,234.50"><input type="text" name="price" value="1234.5"><input type="text" name="city" value="Milan">
+\end{lstlisting}
+\end{tcolorbox}
+
+% f — formatted field value
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{f('format')} \\
+\hline
+\textbf{Description} & Renders the active field value at the cursor, optionally applying a numeric \textit{format}. The \textit{format} argument is positional but optional (default: identity). \textbf{Cursor rule (non-editing):} advances because it consumes the active field value. \textbf{Formatting:} applies only to numeric values. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+f('€ #,##0.00')\r // Currency formatting of active numeric field
+f // No format (identity)
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+€ 1,234.50<br>1234.5
+\end{lstlisting}
+\end{tcolorbox}
+
+% h — hidden input
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{h('name[;value]')} \\
+\hline
+\textbf{Description} & Inserts an HTML input element of type hidden. Arguments are \emph{positional but optional}. Defaults when omitted: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified (e.g., just \textbf{h}); if \textit{name} is provided, the cursor does not advance. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+h
+h('kind;area')
+h('id')
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<input type="hidden" name="price" value="1234.5"><input type="hidden" name="kind" value="area"><input type="hidden" name="id" value="alice">
+\end{lstlisting}
+\end{tcolorbox}
+
+% l — active field name (no cursor advance)
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{l('label')} \\
+\hline
+\textbf{Description} & Renders a label for the active field's \emph{name}. If a string argument is provided as \wballsyn{'label'}, it overrides the current field name. Produces no field value output and \textbf{does not} advance the cursor. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+lf
+\rl('User Name')f
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<label>price</label>1234.5<br><label>User Name</label>alice
+\end{lstlisting}
+\end{tcolorbox}
+
+% m — multiline text area
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{m('name[;value]')} \\
+\hline
+\textbf{Description} & Renders a multiline text area: \texttt{<textarea name="<name>"><value></textarea>}. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+m('comments;Hello, world!')m>m(';New York')
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<textarea name="comments">Hello, world!</textarea><textarea name="price">1234.5</textarea><textarea name="city">New York</textarea>
+\end{lstlisting}
+\end{tcolorbox}
+
+% \\s — set content attributes (non-editing)
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{\\s('attr="value" [attr="value"] ...')} \\
+\hline
+\textbf{Description} & Sets attributes on the current \emph{content} object (for example, a content with subtype \textit{table}, \textit{list}, or \textit{form}). Recognized keys: \texttt{caption}, \texttt{header}, \texttt{footer}, \texttt{key}, \texttt{visible}, \texttt{enabled}, \texttt{disabled}, \texttt{nodata}. Attributes accumulate; later calls override earlier values for the same key. Non-editing; produces no direct output and does \textbf{not} move the field cursor. The visual effect depends on the active content subtype. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+% Keep verbatim listings outside tabularx to prevent runaway arguments
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+// In a table content (subtype: table)
+\s('caption="Users" header="Found: @@rows" key="fId"')
+lflflf
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<div class="content-header">Found: 3</div>
+<table data-key="fId">
+  <caption>Users</caption>
+  <tr>
+    <th>price</th><td>1234.5</td><th>username</th><td>alice</td><th>city</th><td>Milan</td>
+  </tr>
+  <!-- other rows... -->
+</table>
+\end{lstlisting}
+\end{tcolorbox}
+
+% t — text
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{t('text')} \\
+\hline
+\textbf{Description} & Inserts the given text string into the response flow at the current position. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+% Keep verbatim listings outside tabularx to prevent runaway arguments
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+t('Hello World!')
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+Hello World!
+\end{lstlisting}
+\end{tcolorbox}
+
+% w — password input
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{w('name[;value]')} \\
+\hline
+\textbf{Description} & Renders a password input element: \texttt{<input type="password" name="<name>" value="<value>">}. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance. \textit{Note:} some browsers ignore preset password values. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\lstset{language=WBLL}
+\begin{lstlisting}
+w('pwd;secret')\rw\rw(';password')
+\end{lstlisting}
+\textit{Renders:}
+\lstset{language=HTML}
+\begin{lstlisting}
+<input type="password" name="pwd" value="secret"><br><input type="password" name="price" value="1234.5"><input type="password" name="name" value="password">
 \end{lstlisting}
 \end{tcolorbox}
