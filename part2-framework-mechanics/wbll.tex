@@ -8,22 +8,30 @@
 — Leonardo da Vinci
 \end{quote}
 
-
-The Webbase Layout Language (\textbf{WBLL}) defines how a content is presented. Where \wbdl{} describes \textit{what} exists (site, areas, pages, contents), WBLL describes \textit{how} it looks and behaves at render time.
+% Macroscopic (WBDL) vs microscopic (WBLL)
+In \wbdl{}, the portal is specified \textit{macroscopically}: from \emph{Site} to \emph{Area} to \emph{Page}, and for each Page the set of \emph{Contents}. For every Content, \wbdl{} declares its \emph{subtype} (for example: table, calendar, tree, menu, form), the \emph{datasource}, and the \emph{query} to run. WBLL operates \textit{microscopically}, describing how the queried data should be rendered within that Content’s shape.
 
 \subsection{Data Context and Field Cursor}
 
 It is the responsibility of the \wbdl{} content definition to query data. The result is an ordered recordset, where both the field names and their sequence are important for rendering.
 
-The WBLL interpreter maintains a \textbf{field cursor} that tracks the current position within the recordset fields. Many tokens operate on the field at the current cursor position if no explicit field name is provided. After such a token is processed, the field cursor advances to the next field. If a token specifies a field name (e.g., \texttt{h('type;area')}), it uses the named field and does not move the cursor.
+The WBLL interpreter maintains a \textbf{field cursor} that tracks the current position within the recordset fields. Many tokens operate on the field at the current cursor position if no explicit field name is provided; tokens that specify a field name use that field without moving the cursor. Some tokens may also vary their behavior based on the content subtype; this is documented with each token where relevant.
 
-Some tokens may behave differently depending on the subtype of the content being rendered. This will be detailed for each token as needed.
+\paragraph{Cursor movement rule}
+By convention, the field cursor advances if and only if a token implicitly consumes the active field (i.e., it reads a field value without naming a field explicitly). Tokens that only render constants, or that reference a field by name, do not move the cursor.
 
-A STWContent has a subtype, the subtype defines the content macroscopic appearance, e.g., a table, a calendar, WBLL digs deeper describing the content microscopically, i.e., how the queried data is rendered within the content. WBLL is a compact, token-based layout language interpreted by the Web Spinner. It compiles into an efficient render function that merges data (records, session values, placeholders) into HTML.
+\begin{itemize}
+  \item Cursor-advancing (implicit field): a token used without a field name consumes the active field and advances the cursor.\\
+  Example: \texttt{h} renders \texttt{<input type="hidden" name="<active>" value="<value>">} and advances.
+  \item Non-advancing (explicit field): a token that names a field uses that field but leaves the cursor unchanged.\\
+  Example: \texttt{h('type;area')} renders \texttt{<input type="hidden" name="type" value="area">} and does not advance.
+  \item Non-consuming: tokens that render only literals or structural markup do not touch the cursor.\\
+  Example: \texttt{t('Hello World!')} does not advance.
+\end{itemize}
 
+Implementations typically mark a token as having consumed the active field only if it bound to it implicitly; explicit bindings and literal-only tokens leave the cursor position intact.
 
-
-This chapter establishes the presentation layer contracts. In the next chapters we detail modular composition (\cref{chap:webbaselets}) and the runtime engine (\cref{chap:web-spinner}).
+This chapter establishes the presentation-layer contracts. In the next chapters we detail modular composition (\cref{chap:webbaselets}) and the runtime engine (\cref{chap:web-spinner}).
 
 \subsection{Language Internals}
 

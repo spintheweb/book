@@ -109,6 +109,24 @@
     rulecolor=\color{codeborder},
 }
 
+% Define WBLL language for listings (custom DSL used in this book)
+% Highlights tokens (single-letter mnemonics), supports comments and single-quoted strings
+\lstdefinelanguage{WBLL}{
+    morekeywords={t,e,f,r,l,w,m,h},
+    sensitive=true,
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+}
+
+% Optional: a compact style for inline WBLL code blocks
+\lstdefinestyle{wball}{
+    language=WBLL,
+    basicstyle=\ttfamily\small,
+    showstringspaces=false,
+    upquote=true,
+}
+
 % Custom boxes for examples, notes, warnings
 \newtcolorbox{examplebox}[1][]{
     colback=blue!5!white,
@@ -150,6 +168,17 @@
 
 % Glossary style
 \setglossarystyle{altlist}
+
+\usepackage{upquote}
+
+\lstset{
+  upquote=true,
+  showstringspaces=false,
+  keepspaces=true,
+  columns=fullflexible,
+  % normalize curly quotes to straight quotes in listings
+    literate={’}{{'}}1 {‘}{{'}}1 {“}{{"}}1 {”}{{"}}1 {€}{{\texteuro}}1
+}
 
 \lstset{
     frame=single,                % Draw a box around listings
