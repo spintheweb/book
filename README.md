@@ -5,30 +5,17 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
-A comprehensive LaTeX technical book documenting the **Spin the Web** project -
-a framework for building dynamic enterprise web portals using WBDL (Webbase
-Definition Language), WBPL (Webbase Programming Language), and the Web Spinner
-Engine.
+A LaTeX book documenting the **Spin the Web** project -
+a framework for building enterprise web portals using WBDL (Webbase
+Definition Language), a Web Spinner, and Spin the Web Studio.
 
 ## About This Project
 
-This book provides complete documentation for the Spin the Web ecosystem,
-covering everything from foundational concepts to advanced implementation
+This book provides documentation for the Spin the Web ecosystem,
+covering from foundational concepts to implementation
 techniques. The content is organized to first detail the construction of the
 framework (the "platform") and then to provide a practical guide on how to use it
-to build sophisticated web portals.
-
-**Key Features:**
-
-- **117+ pages** of professional technical documentation
-- **Clear Separation of Concerns**: Part II details the platform's internal
-  mechanics, while Part III focuses on practical portal development.
-- Modular LaTeX structure for easy maintenance
-- Complete coverage of WBDL, WBPL, Web Spinner Engine, and the Spin the Web
-  Studio
-- Real-world implementation examples and best practices
-- Future roadmap and development directions
-- NEW: Implementation chapter covering the technology stack and mechanics
+to build web portals.
 
 ## Project Structure
 
@@ -77,14 +64,11 @@ to build sophisticated web portals.
 └── build/                     # Generated files (auto-generated, can be safely cleaned)
 ```
 
-## Implementation Technology (Reference Spinner)
+## Implementation Technology
 
-The current reference implementation of the spinner is built with:
+The current Web Spinner is built with:
 
-- Deno runtime (TypeScript) for server-side mechanics and tasks
-- In-memory WBDL tree built from `STWSite`, `STWArea`, `STWPage`, `STWContent`
-- WBLL layout engine with token handlers generating specialized render functions
-- WBPL expression parsing for dynamic values and logic
+- Deno runtime (TypeScript)
 - Docker multi-stage build for deployment
 
 Source: https://github.com/keyvisions/spintheweb
@@ -146,4 +130,3 @@ cp build/main.pdf SpinTheWeb.pdf
 
 ✅ Project status: Active and content-expanding
 
-- New implementation chapter added to bridge theory and practice
