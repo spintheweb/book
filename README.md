@@ -5,17 +5,11 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
-A LaTeX book documenting the **Spin the Web** project -
-a framework for building enterprise web portals using WBDL (Webbase
-Definition Language), a Web Spinner, and Spin the Web Studio.
+A book that documents the **Spin the Web** project, a framework for building enterprise web portals.
 
 ## About This Project
 
-This book provides documentation for the Spin the Web ecosystem,
-covering from foundational concepts to implementation
-techniques. The content is organized to first detail the construction of the
-framework (the "platform") and then to provide a practical guide on how to use it
-to build web portals.
+This book provides documentation for the Spin the Web ecosystem, covering from foundational concepts to implementation techniques. The content is organized to first detail the construction of the framework (the "platform")-WBDL, Web Spinner, and Spin the Web Studio-and then to provide a practical guide on how to use it to build web portals.
 
 ## Project Structure
 
@@ -66,19 +60,11 @@ to build web portals.
 
 ## Implementation Technology
 
-The current Web Spinner is built with:
-
-- Deno runtime (TypeScript)
-- Docker multi-stage build for deployment
-
-Source: https://github.com/keyvisions/spintheweb
+The WBDL (Webbase Description Language) is JSON schema based while the Web Spinner is built with Deno (TypeScript) and deployed as a Docker container. See [https://github.com/keyvisions/spintheweb](https://github.com/keyvisions/spintheweb)
 
 ## Building the Book
 
-### Quick Build
-
 ```bash
-# Single command build
 ./build.sh
 ```
 
@@ -87,16 +73,6 @@ This will:
 1. Compile the LaTeX source using pdflatex
 2. Generate `SpinTheWeb.pdf` in the root directory
 3. Display build status and any warnings
-
-### Manual Build Commands
-
-```bash
-# Basic build
-pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
-
-# Copy and rename PDF
-cp build/main.pdf SpinTheWeb.pdf
-```
 
 ## Book Content Overview
 
