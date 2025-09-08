@@ -5,11 +5,7 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
-A book that documents the **Spin the Web** project, a framework for building enterprise web portals.
-
-## About This Project
-
-This book provides documentation for the Spin the Web ecosystem, covering from foundational concepts to implementation techniques. The content is organized to first detail the construction of the framework (the "platform")-WBDL, Web Spinner, and Spin the Web Studio-and then to provide a practical guide on how to use it to build web portals.
+This book documentats the Spin the Web project, covering from foundational concepts to implementation techniques. The content first details the construction of the framework--WBDL, Web Spinner, and Spin the Web Studio--and then provides a practical guide on how to use it to build web portals.
 
 ## Project Structure
 
@@ -60,7 +56,7 @@ This book provides documentation for the Spin the Web ecosystem, covering from f
 
 ## Implementation Technology
 
-The WBDL (Webbase Description Language) is JSON schema based while the Web Spinner is built with Deno (TypeScript) and deployed as a Docker container. See [https://github.com/keyvisions/spintheweb](https://github.com/keyvisions/spintheweb)
+See [https://github.com/keyvisions/spintheweb](https://github.com/keyvisions/spintheweb)
 
 ## Building the Book
 
