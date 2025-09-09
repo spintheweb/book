@@ -7,14 +7,51 @@
 — Alexandra V. Agranovsky
 \end{quote}
 
-\section{From Business to Portal Structure}
-\label{sec:business-to-portal}
+\section{Step 1: Map Business Functions to Areas}
+\label{sec:step1-areas}
 
 A company's partial or total structure can be projected in a web portal: the lobby, human resources, sales, marketing, production, logistics, administration, service, support… you name it. Each of these areas serves functionalities that address specific needs. Some functionalities satisfy cross-company needs, some are public while others are private, and some expose everything while others only a part based on authorization.
 
 The preceding chapters have detailed the languages and mechanics of the Spin the Web framework. This chapter provides a practical guide on how to translate an organization's business structure and user needs into a coherent and effective web portal using the core \wbdl{} elements: \texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent}.
 
-The key to a successful portal is a structure that feels intuitive to its users. This is achieved by mirroring the familiar functions of the business itself.
+The key to a successful portal is a structure that feels intuitive to its users. This is achieved by mirroring the familiar functions of the business itself. We apply a three-step approach: (1) map business functions to Areas, (2) design Pages for user journeys, and (3) build Pages with Content blocks.
+
+\subsection{Mapping Business Functions to Areas}
+The first step is to identify the primary functional divisions of the organization. These will become the top-level \textbf{Areas (\texttt{STWArea})} of your portal. Think of these as the main departments or directorates of the company.
+
+A typical manufacturing company might have the following top-level Areas:
+\begin{itemize}
+    \item \textbf{Sales}: For customers, sales representatives, and channel partners.
+    \item \textbf{Administration}: For finance, HR, and internal services.
+    \item \textbf{Backoffice}: For logistics, procurement, and supplier management.
+    \item \textbf{Technical Office}: For engineering, R\&D, and product support.
+    \item \textbf{Products \& Services}: A publicly accessible area showcasing the company's offerings.
+\end{itemize}
+
+Each of these would be defined as an \texttt{STWArea} element in your \wbdl{} file, forming the main navigation structure of your portal.
+
+\subsection{Documentation at the Area Level}
+\label{sec:area-documentation}
+
+Each Area definition should include comprehensive documentation that serves both operational and compliance purposes. For example, the Sales Area might include:
+
+\begin{lstlisting}[language=JSON,caption={Sales Area with Documentation},label={lst:sales-area-docs}]
+{
+  "_id": "sales",
+  "type": "Area",
+  "name": {
+    "en": "Sales"
+  },
+  "description": {
+    "en": "Sales Department Operations Center. This area supports the complete sales lifecycle from lead generation to order fulfillment. All activities comply with our Customer Relationship Management Policy CRM-POL-001. Key Processes: Lead qualification (PROC-SALES-001), Quote generation (PROC-SALES-002), Order processing (PROC-SALES-003). Performance Targets: Response time to quotes: <24 hours, Customer satisfaction: >90%. Department Manager: Jane Smith (ext. 2001)."
+  },
+  "keywords": {
+    "en": "sales, CRM, leads, quotes, orders, customer service, KPI"
+  }
+}
+\end{lstlisting}
+
+This approach ensures that organizational knowledge, procedures, and quality standards are embedded directly within the portal structure, creating a living documentation system that evolves with the business.
 
 \section{Documentation Through Structure}
 \label{sec:documentation-structure}
@@ -67,43 +104,24 @@ Consider this example of an Area with embedded quality management documentation:
 
 This embedded documentation makes the portal self-describing, turning it into a living quality management system.
 
-\subsection{Mapping Business Functions to Areas}
+\section{Core Page Archetypes and Navigation}
+\label{sec:page-archetypes}
 
-The first step is to identify the primary functional divisions of the organization. These will become the top-level \textbf{Areas (\texttt{STWArea})} of your portal. Think of these as the main departments or directorates of the company.
+\paragraph{Structure vs. Branding}
+This chapter focuses on structural semantics: \texttt{STWArea}, \texttt{STWPage}, \texttt{STWContent}, and page archetypes. Visual identity is brand-specific and orthogonal to structure—whatever the styling, a table remains a table and a form remains a form. Keep navigation and information architecture stable; apply branding through themes, CSS, components, and iconography without changing the underlying structure.
 
-A typical manufacturing company might have the following top-level Areas:
+Navigation is task-driven and often crosses Area boundaries. A representative flow is:
+start from a customers list, search/select a customer, view their orders, open a specific order, jump to a purchased item, and inspect its manufacturing history, commissioning, maintenance, spare parts, and last sales prices. These flows should be implemented as explicit links and contextual actions between \texttt{STWPage}s so users can traverse the business graph naturally.
+
+Navigation is provided through \textbf{main menus}, \textbf{side menus}, \textbf{breadcrumbs}, \textbf{inline hyperlinks}, \textbf{interactive maps}, and \textbf{iconographic menus} (cards/tiles). Use maps when location is a primary dimension; use iconography for rapid recognition and \textbf{mobile-friendly navigation}.
+
+\subsection{Three Fundamental Page Types}
+Regardless of domain, effective portals typically rely on three page archetypes:
 \begin{itemize}
-    \item \textbf{Sales}: For customers, sales representatives, and channel partners.
-    \item \textbf{Administration}: For finance, HR, and internal services.
-    \item \textbf{Backoffice}: For logistics, procurement, and supplier management.
-    \item \textbf{Technical Office}: For engineering, R\&D, and product support.
-    \item \textbf{Products \& Services}: A publicly accessible area showcasing the company's offerings.
+  \item \textbf{Dashboards} — summaries, KPIs, and shortcuts for quick situational awareness.
+  \item \textbf{Tabular Data} — searchable/filterable tables or lists for browsing and selection; can be regular tables, drillable pivot tables, or geomaps when data is spatial.
+  \item \textbf{Details} — focused views for inspecting or editing a single entity.
 \end{itemize}
-
-Each of these would be defined as an \texttt{STWArea} element in your \wbdl{} file, forming the main navigation structure of your portal.
-
-\subsection{Documentation at the Area Level}
-\label{sec:area-documentation}
-
-Each Area definition should include comprehensive documentation that serves both operational and compliance purposes. For example, the Sales Area might include:
-
-\begin{lstlisting}[language=JSON,caption={Sales Area with Documentation},label={lst:sales-area-docs}]
-{
-  "_id": "sales",
-  "type": "Area",
-  "name": {
-    "en": "Sales"
-  },
-  "description": {
-    "en": "Sales Department Operations Center. This area supports the complete sales lifecycle from lead generation to order fulfillment. All activities comply with our Customer Relationship Management Policy CRM-POL-001. Key Processes: Lead qualification (PROC-SALES-001), Quote generation (PROC-SALES-002), Order processing (PROC-SALES-003). Performance Targets: Response time to quotes: <24 hours, Customer satisfaction: >90%. Department Manager: Jane Smith (ext. 2001)."
-  },
-  "keywords": {
-    "en": "sales, CRM, leads, quotes, orders, customer service, KPI"
-  }
-}
-\end{lstlisting}
-
-This approach ensures that organizational knowledge, procedures, and quality standards are embedded directly within the portal structure, creating a living documentation system that evolves with the business.
 
 \section{Step 2: Design Pages for User Journeys}
 \label{sec:design-pages}

@@ -5,7 +5,29 @@
 
 This appendix provides a complete reference for WBLL tokens.
 
-% Inline WBLL syntax helper for use inside tables and running text
+% Consistent spacing and styling for token boxes (transparent background)
+\tcbset{
+  tokenbox/.style={
+    enhanced,
+    colframe=black!10,
+    boxrule=0.5pt,
+    arc=2pt,
+    before skip=2\baselineskip,
+    after skip=2\baselineskip
+  }
+}
+
+% Listings style for this appendix: no frame, wrap, NO background
+\lstdefinestyle{wbll-appendix}{
+  basicstyle=\ttfamily\small,
+  upquote=true,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  frame=none
+}
+
+% Inline WBLL syntax helper for use inside tables
 \newcommand{\wballsyn}[1]{\lstinline[language=WBLL,basicstyle=\ttfamily\small]!#1!}
 
 % General token syntax and notation
@@ -21,14 +43,9 @@ This appendix provides a complete reference for WBLL tokens.
 If you need to skip a middle argument, use an empty segment: e.g., \wballsyn{e(';username')} omits \textit{format}.
 
 \par\smallskip
-\textit{Formatting note:} the \textit{format} argument is a numeric pattern when the value is numeric (e.g., \texttt{€ \#,\#\#0.00}, \texttt{\#,\#\#0}, \texttt{0}). For non numeric values the argument format can be any of the HTML input types, it defaults to text.
+\textit{Formatting note:} the \textit{format} argument applies only to numeric output in \texttt{e} and \texttt{f} (e.g., \texttt{€ \#,\#\#0.00}, \texttt{\#,\#\#0}, \texttt{0}). For non‑numeric values it is ignored; inputs default to \texttt{text}.
 \par\smallskip
 \textit{Cursor movement policy:} \textbf{editing tokens} (form controls such as \texttt{h}, \texttt{e}, \texttt{w}, \texttt{m}) advance the field cursor when the \emph{name} is not specified; \textbf{non-editing tokens} advance only when they implicitly consume the active field \emph{value}.
-
-To keep token docs uniform and readable, we use a two-column layout: labels on the left and content (with code and output) on the right.
-
-% Consistent spacing and styling for token boxes
-\cbset{tokenbox/.style={interior hidden,colframe=black!15,boxrule=0.5pt,arc=2pt,before skip=2\baselineskip,after skip=2\baselineskip}}
 
 % Example recordset used in examples
 \begin{tcolorbox}[tokenbox]
@@ -64,16 +81,14 @@ To keep token docs uniform and readable, we use a two-column layout: labels on t
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 lf /* comment
    spanning
    lines */
 \rl('UserName')f
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <label>price</label>1234.5<br><label>UserName</label>alice
 \end{lstlisting}
 \end{tcolorbox}
@@ -90,16 +105,14 @@ lf /* comment
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 t('Hello') // inline comment after code
 \r
 // full-line comment
 t('World')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 Hello<br>World
 \end{lstlisting}
 \end{tcolorbox}
@@ -116,13 +129,11 @@ Hello<br>World
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 >>><f
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 Milan
 \end{lstlisting}
 \end{tcolorbox}
@@ -139,13 +150,11 @@ Milan
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 >f
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 alice
 \end{lstlisting}
 \end{tcolorbox}
@@ -154,16 +163,15 @@ alice
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{\\A('attributes')} \\
+\textbf{Token} & \wballsyn{\\A('attr="value" ...')} \\
 \hline
-\textbf{Description} & Like \textbf{\textbackslash a}, but applies attributes to the \emph{parent} structural element: the nearest enclosing \texttt{<tr>} (in table contexts) or \texttt{<li>} (in list contexts). Non-editing; produces no output and does \textbf{not} move the field cursor. Has effect only when inside a table row or list item context. \\
+\textbf{Description} & Like \textbf{\textbackslash a}, but applies attributes to the \emph{parent} structural element: the nearest enclosing \texttt{<tr>} (in table contexts) or \texttt{<li>} (in list contexts). Non-editing; produces no output and does \textbf{not} move the field cursor. Has effect only when inside a table row or list item context. The attributes are processed by the WBPL interpreter. \\
 \hline
 \textbf{Example} & Code and output below. \\
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 // In a table row context (created by the table subtype)
 \A('class="highlight"')e
 
@@ -171,8 +179,7 @@ alice
 \A('data-role="user"')>e(';username')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <tr class="highlight">... <input type="text" name="price" value="1234.5"> ...</tr>
 <li data-role="user">... <input type="text" name="username" value="alice"> ...</li>
 \end{lstlisting}
@@ -182,22 +189,20 @@ alice
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{\\a('attributes')} \\
+\textbf{Token} & \wballsyn{\\a('attr="value" ...')} \\
 \hline
-\textbf{Description} & Assigns HTML attributes to the most recently emitted element. Use immediately after a token that creates an element (e.g., \texttt{e}, \texttt{w}, \texttt{m}, \texttt{h}). Attributes are appended/merged; later attributes override earlier ones when duplicated. Non-editing; produces no output and does \textbf{not} move the field cursor. \\
+\textbf{Description} & Assigns HTML attributes to the most recently emitted element. Use immediately after a token that creates an element (e.g., \texttt{e}, \texttt{w}, \texttt{m}, \texttt{h}). Attributes are appended/merged; later attributes override earlier ones when duplicated. Non-editing; produces no output and does \textbf{not} move the field cursor. The attributes are processed by the WBPL interpreter. \\
 \hline
 \textbf{Example} & Code and output below. \\
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 e\a('required style="color:red"')
 >e(';username')\a('maxlength="20"')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <input type="text" name="price" value="1234.5" required style="color:red"><input type="text" name="username" value="alice" maxlength="20">
 \end{lstlisting}
 \end{tcolorbox}
@@ -214,13 +219,11 @@ e\a('required style="color:red"')
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 f\rf
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 1234.5<br>alice
 \end{lstlisting}
 \end{tcolorbox}
@@ -231,22 +234,20 @@ f\rf
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
 \textbf{Token} & \wballsyn{e('format[;name][;value]')} \\
 \hline
-\textbf{Description} & Renders a text input element: \texttt{<input type="text" name="<name>" value="<formatted value>">}. Arguments are \emph{positional but optional}. Defaults: \textit{format} = identity, \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified (e.g., just \textbf{e}); if \textit{name} is provided, the cursor does not advance (even if \textit{value} is omitted). \textbf{Formatting:} \textit{format} applies only to numeric values. \\
+\textbf{Description} & Renders a input element. Arguments are \emph{positional but optional}. Defaults: \textit{format} = identity, \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified; if \textit{name} is provided, the cursor does not advance (even if \textit{value} is omitted). \textbf{Formatting:} \textit{format} applies only to numeric values. \\
 \hline
 \textbf{Example} & Code and output below. \\
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 e('€ #,##0.00;price;1234.5') // All args explicit: no cursor advance; numeric format applied
 e // Use active field name and value: advances
->e(';username') // Move to username, explicit name: no cursor advance
+e(';username') // Explicit name; uses active field value (username); no cursor advance
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<input type="text" name="price" value="€ 1,234.50"><input type="text" name="price" value="1234.5"><input type="text" name="city" value="Milan">
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
+<input type="number" name="price" value="€ 1,234.50"><input type="number" name="price" value="1234.5"><input type="text" name="city" value="Milan">
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -262,15 +263,13 @@ e // Use active field name and value: advances
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 f('€ #,##0.00')\r // Currency formatting of active numeric field
 f // No format (identity)
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-€ 1,234.50<br>1234.5
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
+€ 1,234.50<br>alice
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -286,16 +285,56 @@ f // No format (identity)
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 h
 h('kind;area')
 h('id')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <input type="hidden" name="price" value="1234.5"><input type="hidden" name="kind" value="area"><input type="hidden" name="id" value="alice">
+\end{lstlisting}
+\end{tcolorbox}
+
+% j — JavaScript code block (non-editing)
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{j('code')} \\
+\hline
+\textbf{Description} & Injects a script element. The WBPL engine processes \textit{code} first (placeholders, expressions), then WBLL emits \texttt{<script>}code\texttt{</script>}. Non-editing; does \textbf{not} move the field cursor. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
+j('console.log("Rows:", @@rows)')
+\end{lstlisting}
+\textit{Renders:}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
+<script>console.log("Rows:", 3)</script>
+\end{lstlisting}
+\end{tcolorbox}
+
+% k — session variable (non-editing)
+\begin{tcolorbox}[tokenbox]
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\textbf{Token} & \wballsyn{k('name[;value]')} \\
+\hline
+\textbf{Description} & Sets a session variable. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. Produces no output. \textbf{Cursor rule (non-editing):} advances only when it implicitly uses the active field \emph{value} (i.e., when \textit{value} is omitted). If \textit{value} is provided, the cursor does not advance. \\
+\hline
+\textbf{Example} & Code and output below. \\
+\end{tabularx}}
+
+\vspace{0.3em}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
+k('role;admin')
+k
+\end{lstlisting}
+\textit{Renders:}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -311,14 +350,12 @@ h('id')
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 lf
 \rl('User Name')f
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <label>price</label>1234.5<br><label>User Name</label>alice
 \end{lstlisting}
 \end{tcolorbox}
@@ -335,46 +372,43 @@ lf
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 m('comments;Hello, world!')m>m(';New York')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <textarea name="comments">Hello, world!</textarea><textarea name="price">1234.5</textarea><textarea name="city">New York</textarea>
 \end{lstlisting}
 \end{tcolorbox}
 
-% \\s — set content attributes (non-editing)
+% \s — content attributes
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{\\s('attr="value" [attr="value"] ...')} \\
+\textbf{Token} & \wballsyn{\\s('attr="value" ...')} \\
 \hline
-\textbf{Description} & Sets attributes on the current \emph{content} object (for example, a content with subtype \textit{table}, \textit{list}, or \textit{form}). Recognized keys: \texttt{caption}, \texttt{header}, \texttt{footer}, \texttt{key}, \texttt{visible}, \texttt{enabled}, \texttt{disabled}, \texttt{nodata}. Attributes accumulate; later calls override earlier values for the same key. Non-editing; produces no direct output and does \textbf{not} move the field cursor. The visual effect depends on the active content subtype. \\
+\textbf{Description} & Sets content-level attributes: \texttt{caption}, \texttt{header}, \texttt{footer}, \texttt{key}, \texttt{visible}, \texttt{enabled}, \texttt{disabled}, \texttt{nodata}. Non-editing; does not move the field cursor. Multiple calls accumulate; later values override earlier ones for the same key. \\
 \hline
 \textbf{Example} & Code and output below. \\
 \end{tabularx}}
 
-% Keep verbatim listings outside tabularx to prevent runaway arguments
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
-// In a table content (subtype: table)
-\s('caption="Users" header="Found: @@rows" key="fId"')
-lflflf
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
+\s('caption="Users" header="Found: @@rows" key="fId"') l f l f l f
 \end{lstlisting}
-\textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<div class="content-header">Found: 3</div>
+\textit{Renders (table subtype):}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 <table data-key="fId">
   <caption>Users</caption>
-  <tr>
-    <th>price</th><td>1234.5</td><th>username</th><td>alice</td><th>city</th><td>Milan</td>
-  </tr>
-  <!-- other rows... -->
+  <thead>Found: 3</thead>
+  <tbody>
+    <tr>
+      <th>price</th><td>1234.5</td>
+      <th>username</th><td>alice</td>
+      <th>city</th><td>Milan</td>
+    </tr>
+    ...
+  </tbody>
 </table>
 \end{lstlisting}
 \end{tcolorbox}
@@ -385,20 +419,18 @@ lflflf
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
 \textbf{Token} & \wballsyn{t('text')} \\
 \hline
-\textbf{Description} & Inserts the given text string into the response flow at the current position. \\
+\textbf{Description} & Inserts the given text string into the response flow at the current position. Non-editing; does not move the field cursor. \\
 \hline
 \textbf{Example} & Code and output below. \\
 \end{tabularx}}
 
 % Keep verbatim listings outside tabularx to prevent runaway arguments
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 t('Hello World!')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
 Hello World!
 \end{lstlisting}
 \end{tcolorbox}
@@ -415,13 +447,12 @@ Hello World!
 \end{tabularx}}
 
 \vspace{0.3em}
-\lstset{language=WBLL}
-\begin{lstlisting}
+\begin{lstlisting}[style=wbll-appendix, language=WBLL]
 w('pwd;secret')\rw\rw(';password')
 \end{lstlisting}
 \textit{Renders:}
-\lstset{language=HTML}
-\begin{lstlisting}
-<input type="password" name="pwd" value="secret"><br><input type="password" name="price" value="1234.5"><input type="password" name="name" value="password">
+\begin{lstlisting}[style=wbll-appendix, language=HTML]
+<input type="password" name="pwd" value="secret"><br><input type="password" name="price" value="1234.5"><br><input type="password" name="username" value="password">
 \end{lstlisting}
 \end{tcolorbox}
+
