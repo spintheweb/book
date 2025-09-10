@@ -17,7 +17,7 @@ The preceding chapters have detailed the languages and mechanics of the Spin the
 The key to a successful portal is a structure that feels intuitive to its users. This is achieved by mirroring the familiar functions of the business itself. We apply a three-step approach: (1) map business functions to Areas, (2) design Pages for user journeys, and (3) build Pages with Content blocks.
 
 \subsection{Mapping Business Functions to Areas}
-The first step is to identify the primary functional divisions of the organization. These will become the top-level \textbf{Areas (\texttt{STWArea})} of your portal. Think of these as the main departments or directorates of the company.
+The first step is to identify the primary functional divisions of the organization. These will become the top-level \textbf{Areas (\texttt{STWArea})} of your portal. Think of these as the main departments or directorates of the company. The organization's official organizational chart is often a practical starting point for this mapping, providing a clear, agreed structure that can be refined for digital navigation needs.
 
 A typical manufacturing company might have the following top-level Areas:
 \begin{itemize}
@@ -33,7 +33,7 @@ Each of these would be defined as an \texttt{STWArea} element in your \wbdl{} fi
 \subsection{Documentation at the Area Level}
 \label{sec:area-documentation}
 
-Each Area definition should include comprehensive documentation that serves both operational and compliance purposes. For example, the Sales Area might include:
+Each Area definition should include documentation that serves both operational and compliance purposes. For example, the Sales Area might include:
 
 \begin{lstlisting}[language=JSON,caption={Sales Area with Documentation},label={lst:sales-area-docs}]
 {
@@ -115,8 +115,8 @@ start from a customers list, search/select a customer, view their orders, open a
 
 Navigation is provided through \textbf{main menus}, \textbf{side menus}, \textbf{breadcrumbs}, \textbf{inline hyperlinks}, \textbf{interactive maps}, and \textbf{iconographic menus} (cards/tiles). Use maps when location is a primary dimension; use iconography for rapid recognition and \textbf{mobile-friendly navigation}.
 
-\subsection{Three Fundamental Page Types}
-Regardless of domain, effective portals typically rely on three page archetypes:
+\subsection{Three Fundamental Main Content Archetypes}
+Regardless of domain, the main body of most pages is built from three fundamental archetypes:
 \begin{itemize}
   \item \textbf{Dashboards} — summaries, KPIs, and shortcuts for quick situational awareness.
   \item \textbf{Tabular Data} — searchable/filterable tables or lists for browsing and selection; can be regular tables, drillable pivot tables, or geomaps when data is spatial.
@@ -124,27 +124,26 @@ Regardless of domain, effective portals typically rely on three page archetypes:
 \end{itemize}
 
 \section{Step 2: Design Pages for User Journeys}
-\label{sec:design-pages}
+\label{sec:step2-pages}
 
-With the main Areas defined, the next step is to create the \textbf{Pages (\texttt{STWPage})} within each Area. The design of these pages should be driven by the specific tasks and journeys of your user personas.
+Once Areas are defined, the next step is to design the \textbf{Pages (\texttt{STWPage})} that will live within them. Each Page should correspond to a specific user task or "journey." For example, within the Sales Area, you might have Pages for "New Lead Entry," "Quote Management," and "Customer Dashboard."
 
-Consider the \textbf{Sales Area}. What do different users need to accomplish here?
-\begin{itemize}
-    \item \textbf{A Customer} might need to:
-        \begin{itemize}
-            \item View their order history (\textit{Page: "My Orders"}).
-            \item Track a shipment (\textit{Page: "Order Tracking"}).
-            \item Contact support (\textit{Page: "Support Center"}).
-        \end{itemize}
-    \item \textbf{A Sales Representative} might need to:
-        \begin{itemize}
-            \item View their sales dashboard (\textit{Page: "Sales Dashboard"}).
-            \item Access customer information (\textit{Page: "Customer Directory"}).
-            \item Generate a new quote (\textit{Page: "Quote Generator"}).
-        \end{itemize}
-\end{itemize}
+Pages are divided into sections: header, sidebars, main body, and footer. Each of these sections may hold zero or more contents. For example, the header provides transversal navigation, search, assistance, ticketing, profile management, and cultural preferences. The sidebars offer specific navigation, filtering, legends, attachments, info, and summaries. The main body can contain anything from dashboards to tables, forms, lists, and calendars. The footer typically includes contacts and feedback options.
 
-Each of these user needs translates directly into a \texttt{STWPage} within the "Sales" \texttt{STWArea}. The role-based visibility rules of \wbdl{} ensure that users only see the pages relevant to them.
+\begin{figure}[h]
+    \centering
+    % Replaced external SVG with a TikZ placeholder box to avoid graphics extension issues
+    \begin{tikzpicture}
+      \node[draw=gray, line width=0.4pt, fill=gray!15,
+            minimum width=0.8\textwidth, minimum height=0.45\textwidth,
+            inner sep=0pt] (box) {};
+      \node at (box) {\large Page Structure Placeholder};
+    \end{tikzpicture}
+    \caption{Standard Page Structure}
+    \label{fig:page-structure}
+\end{figure}
+
+This modular structure allows for consistent yet flexible page layouts across the portal.
 
 \subsection{Documentation at the Page Level}
 \label{sec:page-documentation}
@@ -166,6 +165,49 @@ Pages should document specific workflows and processes. For example, the "Quote 
   }
 }
 \end{lstlisting}
+
+\subsection{Integrated Ticketing and Feedback}
+\label{sec:ticketing}
+
+A professional portal must include a \textbf{ticketing system} that captures and tracks requests beyond products or services. Tickets should also address the \emph{portal structure and behavior} itself (navigation, layout, performance, accessibility, localization), as well as data quality, access/permissions, and feature requests.
+
+Recommended capabilities:
+\begin{itemize}
+  \item \textbf{Entry points}: a global action in the header (Help/Support), and an \emph{in-context} action near the main content (e.g., “Report an issue with this page”).
+  \item \textbf{Automatic context}: include URL, Area/Page/Content identifiers, user locale, device, and current filters/scope when applicable.
+  \item \textbf{Classification}: category (product/service, portal structure, portal behavior/UX, data issue, access/permissions, feature request), severity/impact, attachments, and tags.
+  \item \textbf{Workflow}: triage, assignment, SLA targets, status, and audit trail. Integrate with quality management and release notes.
+  \item \textbf{Discoverability}: use localized \texttt{keywords} and \texttt{description} to improve internal SEO for ticket templates and knowledge-base links.
+\end{itemize}
+
+Example of a ticket payload embedding structural context:
+\begin{lstlisting}[language=JSON,caption={Ticket with Structural Context},label={lst:ticket-structure}]
+{
+  "_id": "tick-2025-09-09-1234",
+  "type": "Ticket",
+  "category": "portal_structure",
+  "summary": { "en": "Sidebar filters hidden at 1280px" },
+  "description": { "en": "On Customers page, the left filter panel collapses unexpectedly at 1280px width." },
+  "scope": {
+    "site": "stw_site",
+    "area": "sales",
+    "page": "customers_list",
+    "content": "customers_table"
+  },
+  "context": {
+    "url": "/sales/customers",
+    "locale": "en",
+    "viewport": "1280x720",
+    "filters": { "status": "active" }
+  },
+  "severity": "medium",
+  "status": "new",
+  "attachments": [],
+  "keywords": { "en": "ux, layout, sidebar, filters" }
+}
+\end{lstlisting}
+
+This approach ensures issues are actionable and traceable, while keeping the feedback loop close to where users work.
 
 \section{Step 3: Build Pages with Content Blocks}
 \label{sec:build-with-content}
@@ -207,6 +249,19 @@ Individual content blocks can contain specific field-level instructions and vali
 \end{lstlisting}
 
 This multi-level documentation approach ensures that quality management principles, compliance requirements, and operational procedures are seamlessly integrated throughout the portal structure, creating a comprehensive knowledge management system that supports both daily operations and audit requirements.
+
+\subsection{Search Modes and SEO}
+\label{sec:search-and-seo}
+
+The localized \texttt{keywords} and \texttt{description} fields on every \wbdl{} element are not just documentation—they power internal SEO within the portal. They improve discoverability in menus and sitemap views, drive search ranking and snippets in \studio{}, and help generate meaningful breadcrumbs and suggestions.
+
+There are two complementary search experiences:
+\begin{description}
+  \item[Site-wide Search] traverses Areas, Pages, and Content using localized metadata (\texttt{name}, \texttt{keywords}, \texttt{description}) and usage signals. It is typically exposed in the page header and returns cross-area results.
+  \item[In-context Search] operates within the active page. It narrows scope to the main body: filtering rows in tables/lists, quick find in forms, text search in rich content, and local help/glossary. Place it near the primary content (e.g., table toolbar or section header) for immediate focus.
+\end{description}
+
+Design guidance: keep global search persistent in the header; keep in-context search adjacent to the content it filters. Ensure accessibility (labels, ARIA, keyboard shortcuts like / to focus, Esc to clear) and support localization for both search modes.
 
 \section{Looking Forward}
 \label{sec:portal-structure-forward}
