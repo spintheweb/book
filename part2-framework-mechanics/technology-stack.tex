@@ -7,11 +7,52 @@ This chapter documents the concrete technologies used to implement the web spinn
 \section{Runtime and Languages}
 The reference implementation is written in TypeScript and runs on the Deno runtime:
 \begin{itemize}
-	\item Deno 2.x runtime and TypeScript for server-side logic
+	\item Deno runtime and TypeScript for server-side logic
 	\item Standard Web APIs (URL, URLSearchParams, Fetch, Crypto) leveraged directly in server code
 	\item No Node.js dependency; tasks and scripts are run via Deno (e.g., CSS/JS minification)
 	\item Containerization via a multi-stage Dockerfile based on denoland/deno:alpine
 \end{itemize}
+
+\subsection{Why Deno for the \webspinner?}
+Choosing Deno aligns the engine with the platform’s web-first design and keeps the implementation close to the browser runtime:
+\begin{itemize}
+	\item \textbf{TypeScript end-to-end:} one language for the spinner, utilities, and any shared logic with client code.
+	\item \textbf{Web APIs in the server:} standard \texttt{URL}, \texttt{Request/Response}, \texttt{Fetch}, and \texttt{Crypto} lower cognitive load and reduce bespoke abstractions.
+	\item \textbf{Secure-by-default:} explicit permissions (fs, net, env) encourage disciplined deployment.
+	\item \textbf{Batteries included:} built-in formatter, test runner, task runner, and linting simplify tooling.
+	\item \textbf{Simple deploys:} reproducible Docker images and a single binary runtime keep operations light.
+	\item \textbf{ESM-first:} native modules and top-level \texttt{await} fit the compilation model used by \wbll and \wbpl tooling.
+\end{itemize}
+
+Alternatives such as Node.js or Python were considered. Node.js provides a larger ecosystem, but Deno’s standard Web API surface and permission model matched the \webspinner’s goals better and reduced dependencies.
+
+\subsection{What about Python?}
+Python is a viable alternative for implementing the spinner. A reference implementation could be built with FastAPI or Starlette for HTTP, Jinja2 for small templating needs (separate from \wbll), and Pydantic for schemas. Trade-offs:
+\begin{itemize}
+	\item \textbf{Pros:} mature ecosystem, superb async frameworks (ASGI), rich libraries for parsing, i18n, and data access; strong typing with Pydantic and type hints.
+	\item \textbf{Cons:} diverges from TypeScript used elsewhere; requires re-implementing the \wbll tokenizer and \wbpl evaluator; less direct parity with browser APIs.
+\end{itemize}
+
+\paragraph{Key components in a Python port}
+\begin{itemize}
+	\item \textbf{Core model:} classes for \stwsitedash, \stwarea, \stwpage, \stwcontent with localization and visibility semantics.
+	\item \textbf{\wbll engine:} tokenizer, validator, and a renderer that emits HTML fragments; map tokens to handlers (inputs, links, lists, media, actions).
+	\item \textbf{\wbpl evaluator:} safe expression parser with interpolation, conditionals, and function library; strict escaping rules.
+	\item \textbf{Session and security:} role-based visibility, locale resolution, placeholder hydration; CSRF and auth integration.
+	\item \textbf{Data adapters:} pluggable sources (SQL/NoSQL/HTTP) with uniform cursor/record interfaces.
+	\item \textbf{Streaming/partials:} endpoints returning fragments and optional batched REST calls; optional WebSocket fan-out.
+\end{itemize}
+
+\paragraph{Porting checklist}
+\begin{enumerate}
+	\item Define domain classes and serialization compatible with \wbdl.
+	\item Implement \wbll tokenization, validation, and rendering with test coverage.
+	\item Implement \wbpl expression parsing/evaluation with escaping tests.
+	\item Build the request pipeline: session, lookup, data fetch, placeholder merge, render.
+	\item Add role/i18n resolution and visibility propagation.
+	\item Provide fragment endpoints, caching, and optional WebSocket orchestration.
+	\item Package and deploy (ASGI server, container image, health checks).
+\end{enumerate}
 
 \section{High-Level Architecture}
 The spinner is a server that understands WBDL. On each request it:\footnote{See also the ``Paradigm'' section in the implementation README}
@@ -22,7 +63,7 @@ The spinner is a server that understands WBDL. On each request it:\footnote{See 
 	\item Renders contents on demand using WBLL-driven layouts and returns HTML fragments/resources
 \end{enumerate}
 
-\section{Core Elements and Site Tree}
+\section{Core Elements and Site T\ree}
 The in-memory model mirrors the WBDL structure:
 \begin{itemize}
 	\item \textbf{STWSite} (singleton root), \textbf{STWArea}, \textbf{STWPage}, \textbf{STWContent}

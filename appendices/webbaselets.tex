@@ -1,0 +1,304 @@
+% Appendix B: Webbaselets — BPMS, PLM, Ticketing
+
+\chapter{Webbaselets: BPMS, PLM, and Ticketing}
+\label{app:webbaselets}
+
+This appendix summarizes three foundational webbaselets that commonly ship with a Spin the Web deployment. Each is delivered as a standalone webbaselet (root STWArea) that can be imported into any Webbase, sharing common conventions for navigation, security, and data.
+
+\begin{itemize}
+  \item Business Process Management System (BPMS)
+  \item Presence and Leave Management (PLM)
+  \item Ticketing (Service Desk)
+\end{itemize}
+
+All three follow the same patterns:
+\begin{enumerate}
+  \item Pages expose task-oriented UI
+  \item A clear data model with well-known keys and relations
+  \item Role-based visibility and action authorization
+  \item Events and workflows that integrate across webbaselets
+\end{enumerate}
+
+\section{Common Design}
+\label{sec:app-webbaselets-common}
+
+	extbf{Navigation.} Each webbaselet registers under its own Area (e.g., slugs \texttt{bpms}, \texttt{plm}, \texttt{tickets}); pages include Dashboard, Browse/Detail, and Administration.
+
+\textbf{Security.} Every action checks roles and ownership. Typical roles include: reader, contributor, approver, manager, and admin. Actions are logged.
+
+\textbf{Search and SEO.} Content uses \texttt{keywords} and \texttt{description} attributes for in-context search. Lists expose filters and faceted navigation.
+
+\textbf{Auditability.} All state transitions are captured with who/when/what; attachments preserved with versions.
+
+\textbf{Interoperability.} Events are published as notifications that other webbaselets can subscribe to (e.g., Ticket created -> BPMS starts a triage workflow; Leave approved -> Ticket auto-closes).
+
+\subsection{Minimal Area Stub}
+A minimal root for each webbaselet as an STWArea:
+\begin{lstlisting}[language=JSON,caption={Minimal Webbaselet Root (Area)}]
+{
+  "_id": "area-bpms-root",
+  "type": "Area",
+  "namespace": "bpms",
+  "name": { "en": "BPMS" },
+  "slug": { "en": "bpms" },
+  "children": []
+}
+\end{lstlisting}
+
+\section{Structured Classification for Webbaselets}
+\label{sec:app-webbaselets-classification}
+
+To make webbaselets discoverable and governable across the ecosystem, the root \texttt{STWArea} of each webbaselet SHOULD declare a compact, structured \emph{classification}. We recommend a dedicated \texttt{class} object on the Area to avoid collisions with core keys; engines MAY also surface these as indexed metadata for search.
+
+\subsection{Classification keys}
+Recommended fields and value ranges:
+
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+  	extbf{Field} & \textbf{Type} & \textbf{Purpose / Examples} \\
+\hline
+  	exttt{purpose} & enum & Primary intent: \texttt{bpms}, \texttt{plm}, \texttt{ticketing}, \texttt{cms}, \texttt{directory}, \texttt{reporting}, \texttt{integration}, \texttt{admin}. \\
+  	exttt{domain} & enum & Business area: \texttt{hr}, \texttt{it}, \texttt{finance}, \texttt{sales}, \texttt{marketing}, \texttt{ops}, \texttt{legal}, \texttt{support}, \texttt{general}. \\
+  	exttt{capability} & string[] & Features: \texttt{workflow}, \texttt{approvals}, \texttt{forms}, \texttt{queueing}, \texttt{sla}, \texttt{search}, \texttt{analytics}, \texttt{files}, \texttt{notifications}, \texttt{calendar}. \\
+  	exttt{layer} & enum & Architectural layer: \texttt{ui}, \texttt{service}, \texttt{integration}, \texttt{data}. \\
+  	exttt{audience} & string[] & Users: \texttt{employees}, \texttt{managers}, \texttt{admins}, \texttt{agents}, \texttt{external}. \\
+  	exttt{criticality} & enum & \texttt{low}, \texttt{medium}, \texttt{high}, \texttt{critical}. \\
+  	exttt{maturity} & enum & \texttt{experimental}, \texttt{beta}, \texttt{stable}, \texttt{deprecated}. \\
+  	exttt{visibility} & enum & \texttt{public}, \texttt{authenticated}, \texttt{role-restricted}. \\
+  	exttt{compliance} & string[] & \texttt{gdpr}, \texttt{hipaa}, \texttt{sox}, \texttt{pci}, \texttt{iso27001}, etc. \\
+  	exttt{dataSensitivity} & enum & \texttt{public}, \texttt{internal}, \texttt{confidential}, \texttt{pii}, \texttt{phi}. \\
+  	exttt{i18n} & string[] & Supported locales (BCP\,47): e.g., \texttt{["en","it"]}. \\
+  	exttt{engine} & object & Runtime bounds: \texttt{{"min": "1.3.0", "max": "<2.0.0"}}. \\
+  	exttt{dependsOn} & string[] & Other webbaselets by namespace and range, e.g., \texttt{["directory>=1.2", "notifications"]}. \\
+  	exttt{imports} & string[] & Subscribed events/exports (namespaced), e.g., \texttt{["bpms.task.completed"]}. \\
+  	exttt{exports} & string[] & Emitted events/components, e.g., \texttt{["tickets.created", "ui.widget:calendar"]}. \\
+  	exttt{tags} & string[] & Free-form keywords for discovery. \\
+\end{tabularx}
+
+\subsection{Example}
+BPMS classification on its root Area:
+\begin{lstlisting}[language=JSON,caption={STWArea with classification}]
+{
+  "_id": "area-bpms-root",
+  "type": "Area",
+  "namespace": "bpms",
+  "name": { "en": "BPMS" },
+  "slug": { "en": "bpms" },
+  "class": {
+    "purpose": "bpms",
+    "domain": "hr",
+    "capability": ["workflow","approvals","forms","sla"],
+    "layer": "ui",
+    "audience": ["employees","managers","admins"],
+    "criticality": "high",
+    "maturity": "stable",
+    "visibility": "authenticated",
+    "compliance": ["gdpr"],
+    "dataSensitivity": "pii",
+    "i18n": ["en","it"],
+    "engine": { "min": "1.3.0" },
+    "dependsOn": ["directory>=1.1", "notifications"],
+    "imports": ["tickets.created"],
+    "exports": ["bpms.task.created","bpms.task.completed"],
+    "tags": ["process","tasks","orchestration"]
+  },
+  "children": []
+}
+\end{lstlisting}
+
+\paragraph{Notes}
+\begin{itemize}
+  \item Engines should index \texttt{class.*} for search and dependency checks.
+  \item Recommending enums keeps catalogs consistent; use \texttt{tags} for additional nuance.
+  \item Version ranges follow semantic versioning; omit \texttt{max} for open-ended support.
+\end{itemize}
+
+\section{Ecosystem Webbaselet (Community Catalog)}
+\label{sec:app-ecosystem}
+
+The Spin the Web Portal (see \cref{part:implementation}) includes an \emph{Ecosystem} webbaselet that catalogs community-created webbaselets. Its purpose is to classify, make discoverable, and enable quality signals (rating/reviews) for webbaselets across the ecosystem. It builds directly on the structured classification in \cref{sec:app-webbaselets-classification} and extends it with an opinionated, organization-based taxonomy.
+
+\subsection{Organization-based taxonomy}
+Classification aligns to common enterprise departments to aid discovery by function:
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+  	extbf{Domain} & \textbf{Examples} \\
+\hline
+hr & onboarding, leave, compensation, training \\
+it & service desk, change, assets, access management \\
+finance & expenses, invoicing, budgeting, approvals \\
+sales & leads, opportunities, quotes, forecasts \\
+marketing & campaigns, content hub, events, assets \\
+ops & facilities, fleet, logistics, maintenance \\
+legal & contracts, policies, compliance \\
+procurement & vendors, sourcing, purchase requests \\
+support & knowledge base, ticket deflection, CSAT \\
+rnd & requirements, roadmaps, experiments \\
+product & releases, feature flags, feedback \\
+security & incidents, awareness, audits \\
+admin & directory, identity, governance \\
+general & dashboards, search, navigation, utilities \\
+\end{tabularx}
+
+These values map to \texttt{class.domain} and inform facets in catalog pages.
+
+\subsection{Data model}
+Key entities managed by the Ecosystem webbaselet:
+\begin{lstlisting}[language=JSON,caption={Ecosystem entities}]
+{
+  "catalogItem": {
+    "_id": "eco-wbl-hr-directory",
+    "namespace": "hr-directory",
+    "name": {"en":"HR People Directory"},
+    "summary": {"en": "Org-wide searchable people directory"},
+    "class": {
+      "purpose": "directory",
+      "domain": "hr",
+      "capability": ["search","profiles"],
+      "tags": ["people","org","contact"]
+    },
+    "version": "1.2.0",
+    "author": {"name":"Community Team","url":"https://spintheweb.org"},
+    "links": {"repo":"https://...","docs":"https://...","demo":"https://..."},
+    "status": "published"
+  },
+  "review": {
+    "_id": "rev-123",
+    "item": "eco-wbl-hr-directory",
+    "user": "u:alice",
+    "stars": 5,
+    "comment": "Great starter for HR portals",
+    "createdAt": "2025-09-12T10:00:00Z"
+  },
+  "rating": { "item": "eco-wbl-hr-directory", "average": 4.6, "count": 28 }
+}
+\end{lstlisting}
+
+\subsection{Workflows}
+\begin{itemize}
+  \item Submission: contributor provides metadata, classification, and links; item enters \emph{submitted} state.
+  \item Review/Moderation: approvers validate classification, security notes, and licensing; states: \emph{approved}, \emph{rejected}, \emph{changes-requested}.
+  \item Publish/Deprecate: approved items are listed; subsequent versions can supersede; deprecated items remain searchable with badges.
+  \item Rating/Reporting: authenticated users rate (1--5) and review; abuse reports trigger moderation.
+\end{itemize}
+
+\subsection{Representative pages}
+\begin{itemize}
+  \item Catalog: faceted browse by \texttt{domain}, \texttt{purpose}, \texttt{capability}, and tags; sort by rating and freshness.
+  \item Item Detail: metadata, installation notes, screenshots, version history, ratings, related items.
+  \item Submit/Manage: guided submission, preview, and moderation queue (admin).
+\end{itemize}
+
+\subsection{Ratings and quality signals}
+\begin{itemize}
+  \item 1--5 star ratings with weighted average; first-party installs may carry a \emph{verified} badge.
+  \item Anti-spam: one rating per account per version; optional cool-down windows; abuse reporting.
+  \item Signals: popularity (installs), freshness (recent updates), completeness (docs, tests), compliance tags.
+\end{itemize}
+
+\subsection{Integration}
+\begin{itemize}
+  \item Events: \texttt{ecosystem.item.published}, \texttt{ecosystem.item.updated}, \texttt{ecosystem.review.created}.
+  \item Dependencies: Directory (profiles), Notifications, Search/Index.
+  \item Portal linkage: featured items and curated collections surfaced on spintheweb.org (see \cref{part:implementation}).
+\end{itemize}
+
+\section{BPMS Webbaselet}
+\label{sec:app-bpms}
+
+Purpose: model, execute, and monitor business processes with tasks, SLAs, and approvals.
+
+\subsection{Core Concepts}
+\begin{description}
+  \item[Process] Named workflow definition with versioning
+  \item[Instance] Runtime execution of a Process
+  \item[Task] Unit of work assigned to a role/user
+  \item[Event] Signal that triggers transitions or external actions
+\end{description}
+
+\subsection{Data Model}
+\begin{lstlisting}[language=JSON,caption={BPMS entities}]
+{
+  "process": { "_id": "proc-id", "name": {"en": "Onboarding"}, "version": 3, "stages": ["init","docs","it","done"] },
+  "instance": { "_id": "pi-123", "process": "proc-id", "stage": "docs", "state": "active", "assignees": ["hr:manager"], "due": "2025-09-30" },
+  "task": { "_id": "task-789", "instance": "pi-123", "type": "approve", "owner": "hr:manager", "status": "open", "slaHours": 48 },
+  "event": { "kind": "task.completed", "ref": "task-789", "by": "hr:manager", "at": "2025-09-12T08:30:00Z" }
+}
+\end{lstlisting}
+
+\subsection{Representative Pages}
+\begin{itemize}
+  \item Dashboard: My Tasks, Overdue, SLA breaches
+  \item Process Designer: stage/transition editor (admin)
+  \item Instance Detail: timeline, attachments, comments
+\end{itemize}
+
+\subsection{WBLL Snippet}
+\begin{lstlisting}[language=WBLL,caption={My Tasks list (sketch)}]
+\s('caption="My Tasks" key="taskId"')
+lf l f l f // id, type, status
+\end{lstlisting}
+
+\section{PLM Webbaselet}
+\label{sec:app-plm}
+
+Purpose: track presence, leave requests, balances, holidays, and approvals.
+
+\subsection{Data Model}
+\begin{lstlisting}[language=JSON,caption={PLM entities}]
+{
+  "calendar": { "year": 2025, "holidays": ["2025-01-01","2025-12-25"] },
+  "balance": { "user": "u:alice", "year": 2025, "vacation": 15, "sick": 5 },
+  "leave": { "_id": "lv-42", "user": "u:alice", "from": "2025-09-15", "to": "2025-09-20", "type": "vacation", "status": "pending", "approver": "mgr:bob" }
+}
+\end{lstlisting}
+
+\subsection{Representative Pages}
+\begin{itemize}
+  \item My Calendar: presence, requests, approvals
+  \item Team Calendar: manager view, conflicts
+  \item Balances: accrual, consumption, carryover
+\end{itemize}
+
+\subsection{Events}
+Examples: \texttt{leave.requested}, \texttt{leave.approved}, \texttt{leave.rejected}. Ticketing can subscribe to create handover tickets; BPMS can trigger onboarding/offboarding.
+
+\section{Ticketing Webbaselet}
+\label{sec:app-ticketing}
+
+Purpose: log, track, and resolve issues/requests with queues, priorities, and SLAs.
+
+\subsection{Data Model}
+\begin{lstlisting}[language=JSON,caption={Ticket entities}]
+{
+  "ticket": { "_id": "t-1001", "queue": "it", "kind": "incident", "priority": "high", "status": "open", "subject": "Laptop fan noisy", "requester": "u:carol", "assignee": "it:agent01" },
+  "comment": { "_id": "c-1", "ticket": "t-1001", "by": "u:carol", "when": "2025-09-12T09:00:00Z", "text": "Happens after 10min" },
+  "sla": { "queue": "it", "kind": "incident", "responseHours": 4, "resolutionHours": 48 }
+}
+\end{lstlisting}
+
+\subsection{Representative Pages}
+\begin{itemize}
+  \item Submit Ticket: form with WBLL inputs, attachments
+  \item My Tickets: list, filters, bulk actions
+  \item Agent Console: triage, assign, merge, close, macros
+\end{itemize}
+
+\subsection{Cross-Webbaselet Integrations}
+\begin{itemize}
+  \item BPMS: auto-create approval tasks for change requests
+  \item PLM: auto-snooze tickets when requester is on leave
+  \item Directory: enrich requester profile and permissions
+\end{itemize}
+
+\section{Roles and Permissions}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\textbf{Role} & \textbf{Capabilities} \\
+\hline
+reader & browse lists and details \\
+contributor & create/update own domain entities \\
+approver & review/approve pending items \\
+manager & oversee queues/teams, reports \\
+admin & configure processes, queues, calendars \\
+\end{tabularx}
+
+\section{Notes on Deployment}
+Each webbaselet can be versioned and deployed independently. Use namespace scoping, feature flags, and migration scripts for data evolution. Provide sample datasets for demos and QA.
