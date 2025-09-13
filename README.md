@@ -5,9 +5,9 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://spintheweb.github.io/book/)
 
-This book documents the Spin the Web project, from foundational concepts to implementation techniques. The content first details the framework — WBDL, Web Spinner, and Spin the Web Studio — and then provides a guide on how to use it to build web portals.
+This book documents Spin the Web, from foundational concepts to implementation techniques. The content first details the framework — WBDL, Web Spinner, and Spin the Web Studio — and then provides a guide on how to use it to build web portals.
 
-## Project Structure
+## Book Structure
 
 ```
 ├── main.tex                   # Main document file
@@ -22,11 +22,11 @@ This book documents the Spin the Web project, from foundational concepts to impl
 │   ├── titlepage.tex          # Title and copyright pages
 │   ├── license.tex            # License page
 │   ├── dedication.tex         # Dedication page
-│   ├── abstract.tex           # Abstract with project figure
+│   ├── abstract.tex           # Abstract
 │   └── preface.tex            # Preface with mathematical philosophy
 ├── part1-foundations/         # Part I: Foundations and Concepts
 │   ├── intro.tex              # Part introduction
-│   ├── genesis.tex            # Project history and genesis
+│   ├── genesis.tex            # History and genesis
 │   ├── introduction.tex       # Introduction to enterprise portals
 │   ├── virtualized.tex        # Virtualized portal framework
 │   └── architecture.tex       # Technical architecture
@@ -47,8 +47,8 @@ This book documents the Spin the Web project, from foundational concepts to impl
 │   ├── intro.tex              # Part introduction
 │   └── future-directions.tex  # Roadmap and evolution
 ├── figures/                   # Images and diagrams
-│   ├── logo.png               # Project logo
-│   └── spin-the-web.png       # Main project architecture diagram
+│   ├── logo.png               # Logo
+│   └── spin-the-web.png       # Architecture diagram
 ├── bibliography/              # References and citations
 │   └── references.bib
 ├── appendices/                # Appendices
@@ -77,7 +77,7 @@ This will:
 
 ### Part I: The Philosophy (Chapters 1–4)
 
-- Chapter 1: Project Genesis — History and evolution of Spin the Web
+- Chapter 1: Genesis — History and evolution of Spin the Web
 - Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain analysis
 - Chapter 3: Virtualized Portal Framework — Conceptual architecture
 - Chapter 4: Technical Architecture and Mechanics — System design principles
@@ -106,7 +106,7 @@ This will:
 - Appendix A: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
 - Appendix B: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
 
-## Project Status
+## Status
 
 ✅ Active and content-expanding
 
