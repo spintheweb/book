@@ -3,7 +3,7 @@
 **Weaving Web Portals**
 
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
-[**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
+[**View the Live Site**](https://spintheweb.github.io/book/)
 
 This book documents the Spin the Web project, from foundational concepts to implementation techniques. The content first details the framework — WBDL, Web Spinner, and Spin the Web Studio — and then provides a guide on how to use it to build web portals.
 
@@ -59,7 +59,7 @@ This book documents the Spin the Web project, from foundational concepts to impl
 
 ## Implementation Technology
 
-See [https://github.com/keyvisions/spintheweb](https://github.com/keyvisions/spintheweb)
+See [https://github.com/spintheweb](https://github.com/spintheweb)
 
 ## Building the Book
 
