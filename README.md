@@ -5,7 +5,7 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://keyvisions.github.io/spintheweb-book/)
 
-This book documentats the Spin the Web project, covering from foundational concepts to implementation techniques. The content first details the framework--WBDL, Web Spinner, and Spin the Web Studio--and then provides a guide on how to use it to build web portals.
+This book documents the Spin the Web project, from foundational concepts to implementation techniques. The content first details the framework — WBDL, Web Spinner, and Spin the Web Studio — and then provides a guide on how to use it to build web portals.
 
 ## Project Structure
 
@@ -51,6 +51,9 @@ This book documentats the Spin the Web project, covering from foundational conce
 │   └── spin-the-web.png       # Main project architecture diagram
 ├── bibliography/              # References and citations
 │   └── references.bib
+├── appendices/                # Appendices
+│   ├── wbll-tokens.tex        # WBLL token reference
+│   └── webbaselets.tex        # Webbaselets appendix
 └── build/                     # Generated files (auto-generated, can be safely cleaned)
 ```
 
@@ -97,6 +100,11 @@ This will:
 ### Part IV: The Future (Chapter 14)
 
 - Chapter 14: Future Directions — Roadmap, evolution, and next steps
+
+### Appendices
+
+- Appendix A: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
+- Appendix B: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
 
 ## Project Status
 

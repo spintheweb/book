@@ -32,8 +32,21 @@
 % Chapter and section formatting
 \usepackage{titlesec}
 \titleformat{\chapter}[display]
-  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+    {\sffamily\bfseries\huge}{\chaptertitlename\ \thechapter}{18pt}{\sffamily\bfseries\Huge}
+% Tighter chapter spacing: before=36pt, after=24pt
+\titlespacing*{\chapter}{0pt}{36pt}{24pt}
+
+% Sans-serif for section levels
+\titleformat{\section}
+    {\Needspace{4\baselineskip}\sffamily\bfseries\Large}{\thesection~}{0pt}{}
+% Tighter spacing around section headings
+\titlespacing*{\section}{0pt}{1.5ex plus .5ex minus .2ex}{1.0ex plus .2ex}
+\titleformat{\subsection}
+    {\Needspace{3\baselineskip}\sffamily\bfseries\large}{\thesubsection~}{0pt}{}
+\titlespacing*{\subsection}{0pt}{1.25ex plus .5ex minus .2ex}{0.8ex plus .2ex}
+\titleformat{\subsubsection}
+    {\Needspace{3\baselineskip}\sffamily\bfseries\normalsize}{\thesubsubsection~}{0pt}{}
+\titlespacing*{\subsubsection}{0pt}{1.0ex plus .3ex minus .2ex}{0.6ex plus .1ex}
 
 % Line spacing
 \onehalfspacing
@@ -41,6 +54,33 @@
 % Paragraph formatting
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
+
+% Avoid widows and orphans (single lines at page breaks)
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+% Also disallow page breaks that would leave only 1–2 lines
+% at the top (clubs) or bottom (widows) of a page (e-TeX primitives)
+\clubpenalties 2 10000 10000
+\widowpenalties 2 10000 10000
+
+% Allow more flexibility in line breaking and page height to reduce sparse pages
+\raggedbottom
+\tolerance=2000
+\setlength{\emergencystretch}{3em}
+
+% Ensure microtype features that help compaction are active
+\microtypesetup{protrusion=true,expansion=true}
+
+% Float placement tuning to better fill pages
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
 
 % List formatting
 \setlist{nosep}
