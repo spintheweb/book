@@ -22,7 +22,7 @@ All three follow the same patterns:
 \section{Common Design}
 \label{sec:app-webbaselets-common}
 
-	extbf{Navigation.} Each webbaselet registers under its own Area (e.g., slugs \texttt{bpms}, \texttt{plm}, \texttt{tickets}); pages include Dashboard, Browse/Detail, and Administration.
+\textbf{Navigation.} Each webbaselet registers under its own Area (e.g., slugs \texttt{bpms}, \texttt{plm}, \texttt{tickets}); pages include Dashboard, Browse/Detail, and Administration.
 
 \textbf{Security.} Every action checks roles and ownership. Typical roles include: reader, contributor, approver, manager, and admin. Actions are logged.
 
@@ -54,24 +54,24 @@ To make webbaselets discoverable and governable across the ecosystem, the root \
 Recommended fields and value ranges:
 
 \begin{tabularx}{\linewidth}{@{}l l X@{}}
-  	extbf{Field} & \textbf{Type} & \textbf{Purpose / Examples} \\
+  \textbf{Field} & \textbf{Type} & \textbf{Purpose / Examples} \\
 \hline
-  	exttt{purpose} & enum & Primary intent: \texttt{bpms}, \texttt{plm}, \texttt{ticketing}, \texttt{cms}, \texttt{directory}, \texttt{reporting}, \texttt{integration}, \texttt{admin}. \\
-  	exttt{domain} & enum & Business area: \texttt{hr}, \texttt{it}, \texttt{finance}, \texttt{sales}, \texttt{marketing}, \texttt{ops}, \texttt{legal}, \texttt{support}, \texttt{general}. \\
-  	exttt{capability} & string[] & Features: \texttt{workflow}, \texttt{approvals}, \texttt{forms}, \texttt{queueing}, \texttt{sla}, \texttt{search}, \texttt{analytics}, \texttt{files}, \texttt{notifications}, \texttt{calendar}. \\
-  	exttt{layer} & enum & Architectural layer: \texttt{ui}, \texttt{service}, \texttt{integration}, \texttt{data}. \\
-  	exttt{audience} & string[] & Users: \texttt{employees}, \texttt{managers}, \texttt{admins}, \texttt{agents}, \texttt{external}. \\
-  	exttt{criticality} & enum & \texttt{low}, \texttt{medium}, \texttt{high}, \texttt{critical}. \\
-  	exttt{maturity} & enum & \texttt{experimental}, \texttt{beta}, \texttt{stable}, \texttt{deprecated}. \\
-  	exttt{visibility} & enum & \texttt{public}, \texttt{authenticated}, \texttt{role-restricted}. \\
-  	exttt{compliance} & string[] & \texttt{gdpr}, \texttt{hipaa}, \texttt{sox}, \texttt{pci}, \texttt{iso27001}, etc. \\
-  	exttt{dataSensitivity} & enum & \texttt{public}, \texttt{internal}, \texttt{confidential}, \texttt{pii}, \texttt{phi}. \\
-  	exttt{i18n} & string[] & Supported locales (BCP\,47): e.g., \texttt{["en","it"]}. \\
-  	exttt{engine} & object & Runtime bounds: \texttt{{"min": "1.3.0", "max": "<2.0.0"}}. \\
-  	exttt{dependsOn} & string[] & Other webbaselets by namespace and range, e.g., \texttt{["directory>=1.2", "notifications"]}. \\
-  	exttt{imports} & string[] & Subscribed events/exports (namespaced), e.g., \texttt{["bpms.task.completed"]}. \\
-  	exttt{exports} & string[] & Emitted events/components, e.g., \texttt{["tickets.created", "ui.widget:calendar"]}. \\
-  	exttt{tags} & string[] & Free-form keywords for discovery. \\
+  \texttt{purpose} & enum & Primary intent: \texttt{bpms}, \texttt{plm}, \texttt{ticketing}, \texttt{cms}, \texttt{directory}, \texttt{reporting}, \texttt{integration}, \texttt{admin}. \\
+  \texttt{domain} & enum & Business area: \texttt{hr}, \texttt{it}, \texttt{finance}, \texttt{sales}, \texttt{marketing}, \texttt{ops}, \texttt{legal}, \texttt{support}, \texttt{general}. \\
+  \texttt{capability} & string[] & Features: \texttt{workflow}, \texttt{approvals}, \texttt{forms}, \texttt{queueing}, \texttt{sla}, \texttt{search}, \texttt{analytics}, \texttt{files}, \texttt{notifications}, \texttt{calendar}. \\
+  \texttt{layer} & enum & Architectural layer: \texttt{ui}, \texttt{service}, \texttt{integration}, \texttt{data}. \\
+  \texttt{audience} & string[] & Users: \texttt{employees}, \texttt{managers}, \texttt{admins}, \texttt{agents}, \texttt{external}. \\
+  \texttt{criticality} & enum & \texttt{low}, \texttt{medium}, \texttt{high}, \texttt{critical}. \\
+  \texttt{maturity} & enum & \texttt{experimental}, \texttt{beta}, \texttt{stable}, \texttt{deprecated}. \\
+  \texttt{visibility} & enum & \texttt{public}, \texttt{authenticated}, \texttt{role-restricted}. \\
+  \texttt{compliance} & string[] & \texttt{gdpr}, \texttt{hipaa}, \texttt{sox}, \texttt{pci}, \texttt{iso27001}, etc. \\
+  \texttt{dataSensitivity} & enum & \texttt{public}, \texttt{internal}, \texttt{confidential}, \texttt{pii}, \texttt{phi}. \\
+  \texttt{i18n} & string[] & Supported locales (BCP\,47): e.g., \texttt{["en","it"]}. \\
+  \texttt{engine} & object & Runtime bounds: \texttt{{"min": "1.3.0", "max": "<2.0.0"}}. \\
+  \texttt{dependsOn} & string[] & Other webbaselets by namespace and range, e.g., \texttt{["directory>=1.2", "notifications"]}. \\
+  \texttt{imports} & string[] & Subscribed events/exports (namespaced), e.g., \texttt{["bpms.task.completed"]}. \\
+  \texttt{exports} & string[] & Emitted events/components, e.g., \texttt{["tickets.created", "ui.widget:calendar"]}. \\
+  \texttt{tags} & string[] & Free-form keywords for discovery. \\
 \end{tabularx}
 
 \subsection{Example}
@@ -120,7 +120,7 @@ The Spin the Web Portal (see \cref{part:implementation}) includes an \emph{Ecosy
 \subsection{Organization-based taxonomy}
 Classification aligns to common enterprise departments to aid discovery by function:
 \begin{tabularx}{\linewidth}{@{}l X@{}}
-  	extbf{Domain} & \textbf{Examples} \\
+  \textbf{Domain} & \textbf{Examples} \\
 \hline
 hr & onboarding, leave, compensation, training \\
 it & service desk, change, assets, access management \\

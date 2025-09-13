@@ -35,7 +35,7 @@ Python is a viable alternative for implementing the spinner. A reference impleme
 
 \paragraph{Key components in a Python port}
 \begin{itemize}
-	\item \textbf{Core model:} classes for \stwsitedash, \stwarea, \stwpage, \stwcontent with localization and visibility semantics.
+	\item \textbf{Core model:} classes for \stwsite, \stwarea, \stwpage, \stwcontent with localization and visibility semantics.
 	\item \textbf{\wbll engine:} tokenizer, validator, and a renderer that emits HTML fragments; map tokens to handlers (inputs, links, lists, media, actions).
 	\item \textbf{\wbpl evaluator:} safe expression parser with interpolation, conditionals, and function library; strict escaping rules.
 	\item \textbf{Session and security:} role-based visibility, locale resolution, placeholder hydration; CSRF and auth integration.
@@ -63,7 +63,7 @@ The spinner is a server that understands WBDL. On each request it:\footnote{See 
 	\item Renders contents on demand using WBLL-driven layouts and returns HTML fragments/resources
 \end{enumerate}
 
-\section{Core Elements and Site T\ree}
+\section{Core Elements and Site Tree}
 The in-memory model mirrors the WBDL structure:
 \begin{itemize}
 	\item \textbf{STWSite} (singleton root), \textbf{STWArea}, \textbf{STWPage}, \textbf{STWContent}
