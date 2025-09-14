@@ -107,8 +107,3 @@ This will:
 
 - Appendix A: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
 - Appendix B: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
-
-## Status
-
-✅ Active and content-expanding
-
