@@ -1,3 +1,5 @@
+![status: work in progress](https://img.shields.io/badge/status-WIP-yellow)
+
 # Spin the Web Book
 
 **Weaving Web Portals**
