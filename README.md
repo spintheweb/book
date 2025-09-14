@@ -54,6 +54,7 @@ This book documents Spin the Web, from foundational concepts to implementation t
 ├── bibliography/              # References and citations
 │   └── references.bib
 ├── appendices/                # Appendices
+│   ├── wbdl-json-schema.tex   # WBDL JSON Schema reference
 │   ├── wbll-tokens.tex        # WBLL token reference
 │   └── webbaselets.tex        # Webbaselets appendix
 └── build/                     # Generated files (auto-generated, can be safely cleaned)
@@ -105,5 +106,6 @@ This will:
 
 ### Appendices
 
-- Appendix A: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
-- Appendix B: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
+- Appendix A: WBDL JSON Schema Reference — Formal JSON Schema definitions for WBDL element types (Site, Area, Page, Content, etc.)
+- Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
+- Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples

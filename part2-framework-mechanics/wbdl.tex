@@ -1,6 +1,6 @@
-% Chapter 5: WBDL Language
+% Chapter 5: Webbase Description Language (WBDL)
 
-\chapter{WBDL Language}
+\chapter{Webbase Description Language (WBDL)}
 \label{chap:wbdl}
 
 \begin{quote}
@@ -78,31 +78,7 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \section{The STWElement Base}
 \label{sec:stwelement-base}
 
-\wbdl{} defines a base element, \texttt{STWElement}, from which all other elements inherit. Below is the JSON Schema definition for this fundamental type.
-
-\begin{lstlisting}[language=JSON,caption={STWElement Base Schema Definition}]
-{
-  "$id": "https://spintheweb.org/schemas/STWElement.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "STWElement",
-  "description": "The base element for all WBDL objects.",
-  "type": "object",
-  "properties": {
-    "_id": { "type": "string", "format": "uuid" },
-    "type": { "enum": ["Site", "Area", "Page", "Content"] },
-    "name": { "$ref": "STWLocalized.json" },
-    "slug": { "$ref": "STWLocalized.json" },
-    "keywords": { "$ref": "STWLocalized.json" },
-    "description": { "$ref": "STWLocalized.json" },
-    "visibility": { "$ref": "STWVisibility.json" },
-    "children": {
-      "type": "array",
-      "items": { "$ref": "#" }
-    }
-  },
-  "required": ["_id", "type", "name", "slug"]
-}
-\end{lstlisting}
+\wbdl{} defines a base element, \texttt{STWElement}, from which all other elements inherit. JSON Schema definitions for \wbdl{} elements are in \Cref{app:wbdl-json-schema} (see Appendix: WBDL JSON Schema Reference).
 
 \subsection{Property Description}
 
@@ -124,33 +100,7 @@ This section describes the specialized element types available in \wbdl{}.
 
 \subsection{STWSite}
 
-	\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure.
-
-\begin{lstlisting}[language=JSON,caption={STWSite Schema Definition}]
-{
-  "$id": "https://spintheweb.org/schemas/STWSite.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "STWSite",
-  "allOf": [{ "$ref": "STWElement.json" }],
-  "properties": {
-    "type": { "const": "Site" },
-    "mainpage": { "type": "string", "format": "uuid" },
-    "langs": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "datasources": {
-      "type": "array",
-      "items": { "type": "object" }
-    },
-    "children": {
-      "type": "array",
-      "items": { "$ref": "STWArea.json" }
-    }
-  },
-  "required": ["mainpage"]
-}
-\end{lstlisting}
+\texttt{STWSite} is a singleton element that represents the entire web portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure.
 
 \subsubsection{Property Description}
 
@@ -198,21 +148,7 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 \subsection{STWArea}
 
-	\texttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
-
-\begin{lstlisting}[language=JSON,caption={STWArea Schema Definition}]
-{
-  "$id": "https://spintheweb.org/schemas/STWArea.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "STWArea",
-  "allOf": [{ "$ref": "STWElement.json" }],
-  "properties": {
-    "type": { "const": "Area" },
-    "mainpage": { "type": "string", "format": "uuid" }
-  },
-  "required": ["mainpage"]
-}
-\end{lstlisting}
+\texttt{STWArea} represents a logical grouping of pages, analogous to a chapter in a book. It extends the base \texttt{STWElement}.
 
 \subsubsection{Property Description}
 
@@ -223,49 +159,11 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 
 \subsection{STWPage}
 
-	\texttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
-
-\begin{lstlisting}[language=JSON,caption={STWPage Schema Definition}]
-{
-  "$id": "https://spintheweb.org/schemas/STWPage.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "STWPage",
-  "allOf": [{ "$ref": "STWElement.json" }],
-  "properties": {
-    "type": { "const": "Page" },
-    "children": {
-      "type": "array",
-      "items": { "$ref": "STWContent.json" }
-    }
-  },
-  "required": ["children"]
-}
-\end{lstlisting}
+\texttt{STWPage} represents a single page in the portal. It extends the base \texttt{STWElement} but restricts its \texttt{children} to only \texttt{STWContent} elements.
 
 \subsection{STWContent}
 
-	\texttt{STWContent} represents a piece of content on a page. It extends the base \texttt{STWElement} but is not allowed to have any \texttt{children}. It adds several attributes for data binding and layout control.
-
-\begin{lstlisting}[language=JSON,caption={STWContent Schema Definition}]
-{
-  "$id": "https://spintheweb.org/schemas/STWContent.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "STWContent",
-  "allOf": [{ "$ref": "STWElement.json" }],
-  "properties": {
-    "type": { "const": "Content" },
-    "subtype": { "type": "string" },
-    "cssClass": { "type": "string" },
-    "section": { "type": "string" },
-    "sequence": { "type": "integer" },
-    "dsn": { "type": "string" },
-    "query": { "type": "string" },
-    "params": { "type": "string" },
-    "layout": { "$ref": "STWLayout.json" }
-  },
-  "required": ["layout"]
-}
-\end{lstlisting}
+\texttt{STWContent} represents a piece of content on a page. It extends the base \texttt{STWElement} but is not allowed to have any \texttt{children}. It adds several attributes for data binding and layout control.
 
 \subsubsection{Property Description}
 
@@ -331,26 +229,7 @@ All content types explicitly declare or request the data they interact with, and
 
 \subsection{STWContentWithOptions}
 
-	\texttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
-
-\begin{lstlisting}[language=JSON,caption={STWContentWithOptions Schema Definition}]
-{
-  "$id": "https://spintheweb.org/schemas/STWContentWithOptions.json",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "STWContentWithOptions",
-  "allOf": [{ "$ref": "STWElement.json" }],
-  "properties": {
-    "type": { "const": "Content" },
-    "subtype": { "type": "string" },
-    "options": {
-      "type": "array",
-      "items": { "type": "string", "format": "uuid" }
-    },
-    "layout": { "$ref": "STWLayout.json" }
-  },
-  "required": ["options"]
-}
-\end{lstlisting}
+\texttt{STWContentWithOptions} is similar to \texttt{STWContent}, it contains a list of \texttt{option} elements (GUIDs). This type is useful for scenarios like menus and tabs where the content is sourced from other elements.
 
 \subsubsection{Property Description}
 
