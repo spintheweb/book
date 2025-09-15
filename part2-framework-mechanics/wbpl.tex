@@ -39,7 +39,7 @@ Text inside curly braces is included \textbf{only if} at least one placeholder w
 
 \subsubsection{Square Brackets [\texttt{...}]}
 
-This block behaves similarly to curly braces, but with an added feature for cleaning up query syntax. If the block is removed because its placeholders are empty, the engine will also intelligently remove a single adjacent keyword (like \texttt{AND}, \texttt{OR}, \texttt{WHERE}). This is designed to handle optional conditional clauses in SQL.
+This block behaves similarly to curly braces, but with an added feature for cleaning up command syntax. If the block is removed because its placeholders are empty, the engine will also intelligently remove a single adjacent keyword (like \texttt{AND}, \texttt{OR}, \texttt{WHERE}). This is designed to handle optional conditional clauses in SQL.
 
 For example, in \texttt{SELECT * FROM users WHERE 1=1 [AND user\_id = @id]}, the \texttt{AND} keyword and the entire bracketed expression will be removed if \texttt{@id} has no value.
 
@@ -76,7 +76,7 @@ With placeholder \texttt{username = "john\_doe"}, this becomes:
 SELECT * FROM users WHERE username = 'john_doe'
 \end{lstlisting}
 
-\subsection{Conditional Query Clauses}
+\subsection{Conditional Command Clauses}
 
 \begin{lstlisting}[language=SQL,caption={WBPL Conditional Blocks}]
 SELECT * FROM products 
@@ -107,12 +107,12 @@ SELECT * FROM orders WHERE status IN ('pending','shipped','delivered')
 \section{Integration with WBDL}
 \label{sec:wbpl-integration}
 
-\wbpl{} is primarily used within \texttt{STWContent} elements in \wbdl{} documents. The \texttt{query} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified datasource.
+\wbpl{} is primarily used within \texttt{STWContent} elements in \wbdl{} documents. The \texttt{command} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified datasource.
 
 The placeholder values are sourced from multiple locations in order of precedence:
 \begin{enumerate}
 \item The \texttt{params} attribute of the \texttt{STWContent} element
-\item URL query string parameters
+\item URL querystring parameters
 \item Session variables (user context, roles, preferences)
 \item Global variables (site configuration, system settings)
 \item HTTP headers (for device type, language preferences, etc.)
@@ -126,7 +126,7 @@ The \wbpl{} processor is optimized for high-performance scenarios:
 \begin{itemize}
 \item Template parsing is cached to avoid repeated compilation
 \item Placeholder resolution is optimized for minimal overhead
-\item Query plans may be cached when placeholder patterns are stable
+\item Command plans may be cached when placeholder patterns are stable
 \item Security validation is performed efficiently without sacrificing safety
 \end{itemize}
 

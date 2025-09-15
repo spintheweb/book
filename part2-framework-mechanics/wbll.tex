@@ -9,11 +9,11 @@
 \end{quote}
 
 % Macroscopic (WBDL) vs microscopic (WBLL)
-In \wbdl{}, the portal is specified \textit{macroscopically}: from \emph{Site} to \emph{Area} to \emph{Page}, and for each Page the set of \emph{Contents}. For every Content, \wbdl{} declares its \emph{subtype} (for example: table, calendar, tree, menu, form), the \emph{datasource}, and the \emph{query} to run. WBLL operates \textit{microscopically}, describing how the queried data should be rendered within that Content’s shape.
+In \wbdl{}, the portal is specified \textit{macroscopically}: from \emph{Site} to \emph{Area} to \emph{Page}, and for each Page the set of \emph{Contents}. For every Content, \wbdl{} declares its \emph{subtype} (for example: table, calendar, tree, menu, form), the \emph{datasource}, and the \emph{command} to run. WBLL operates \textit{microscopically}, describing how the queried data should be rendered within that Content’s shape.
 
 \subsection{Data Context and Field Cursor}
 
-It is the responsibility of the \wbdl{} content definition to query data. The result is an ordered recordset, where both the field names and their sequence are important for rendering.
+It is the responsibility of the \wbdl{} content definition to command data. The result is an ordered recordset, where both the field names and their sequence are important for rendering.
 
 The WBLL interpreter maintains a \textbf{field cursor} that tracks the current position within the recordset fields. Many tokens operate on the field at the current cursor position if no explicit field name is provided; tokens that specify a field name use that field without moving the cursor. Some tokens may also vary their behavior based on the content subtype; this is documented with each token where relevant.
 

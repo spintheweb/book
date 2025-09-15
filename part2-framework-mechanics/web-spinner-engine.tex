@@ -81,7 +81,7 @@ The session maintains:
 	\item User identity and roles
 	\item Current language preference
 	\item Navigation history
-	\item Cached query results (when appropriate)
+	\item Cached command results (when appropriate)
 	\item Active datasource connections
 \end{itemize}
 
@@ -160,14 +160,14 @@ The client then requests individual content elements:
 For each content request, the Web Spinner:
 \begin{enumerate}
 	\item Validates user authorization for the specific content element
-	\item Resolves the associated datasource and query
-	\item Processes the query through the \wbpl{} (Webbase Placeholders Language) engine
-	\item Executes the processed query against the datasource
+	\item Resolves the associated datasource and command
+	\item Processes the command through the \wbpl{} (Webbase Placeholders Language) engine
+	\item Executes the processed command against the datasource
 	\item Applies the content layout transformation
 	\item Returns the rendered content or raw data (depending on the request type)
 \end{enumerate}
 
-\section{Datasource Connection and Query Management}
+\section{Datasource Connection and Command Management}
 \label{sec:datasource-management}
 
 The Web Spinner maintains a sophisticated datasource management system:
@@ -176,14 +176,14 @@ The Web Spinner maintains a sophisticated datasource management system:
 
 Database and API connections are pooled and reused across requests to optimize performance and resource utilization.
 
-\subsection{Query Processing}
+\subsection{Command Processing}
 
 Raw queries defined in \texttt{STWContent} elements undergo several processing steps:
 
 \begin{description}
 	\item[\textbf{\wbpl{} Processing}]: Placeholders are resolved using session data, URL parameters, and global variables
 	\item[\textbf{Security Validation}]: Processed queries are validated to prevent injection attacks
-	\item[\textbf{Optimization}]: Query plans may be cached for frequently-executed queries
+	\item[\textbf{Optimization}]: Command plans may be cached for frequently-executed queries
 \end{description}
 
 \subsection{Multi-Datasource Support}
@@ -193,7 +193,7 @@ The system supports heterogeneous datasources:
 \begin{description}
 	\item[\textbf{Relational Databases}]: SQL queries with full \wbpl{} placeholder support
 	\item[\textbf{\rest{} APIs}]: HTTP requests with parameter substitution and response transformation
-	\item[\textbf{NoSQL Databases}]: Native query languages (MongoDB, Elasticsearch, etc.)
+	\item[\textbf{NoSQL Databases}]: Native command languages (MongoDB, Elasticsearch, etc.)
 	\item[\textbf{File Systems}]: Direct file access and processing
 \end{description}
 
@@ -202,7 +202,7 @@ The system supports heterogeneous datasources:
 Datasource errors are gracefully handled:
 \begin{itemize}
 	\item Connection failures trigger automatic retry logic
-	\item Query errors are logged and appropriate error responses are returned
+	\item Command errors are logged and appropriate error responses are returned
 	\item Partial failures in multi-content pages don't affect other content elements
 \end{itemize}
 
@@ -216,7 +216,7 @@ The Web Spinner implements several performance and reliability features:
 Each content element has configurable timeout settings:
 
 \begin{description}
-	\item[\textbf{Query Timeout}]: Maximum time allowed for datasource queries
+	\item[\textbf{Command Timeout}]: Maximum time allowed for datasource queries
 	\item[\textbf{Layout Timeout}]: Maximum time for layout compilation and rendering
 	\item[\textbf{Total Request Timeout}]: Overall timeout for content delivery
 \end{description}
@@ -226,7 +226,7 @@ Each content element has configurable timeout settings:
 Multiple levels of caching improve performance:
 
 \begin{description}
-	\item[\textbf{Query Result Caching}]: Datasource results are cached based on query signatures
+	\item[\textbf{Command Result Caching}]: Datasource results are cached based on command signatures
 	\item[\textbf{Layout Caching}]: Compiled layouts are cached until templates change
 	\item[\textbf{Response Caching}]: Complete HTTP responses may be cached for static content
 \end{description}

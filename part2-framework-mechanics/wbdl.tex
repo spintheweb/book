@@ -42,7 +42,7 @@ The \wbdl{} text preprocessor is a powerful engine that processes textual conten
 \item Markdown and other markup language processing
 \end{itemize}
 
-This preprocessor is particularly crucial for the \texttt{query} attributes in \texttt{STWContent} elements, where it replaces placeholders with actual values from various sources before query execution.
+This preprocessor is particularly crucial for the \texttt{command} attributes in \texttt{STWContent} elements, where it replaces placeholders with actual values from various sources before command execution.
 
 \subsection{Visual Component Library (VCL)}
 \label{sec:vcl}
@@ -117,7 +117,7 @@ This section describes the specialized element types available in \wbdl{}.
 The \texttt{datasources} element within \texttt{STWSite} provides a flexible framework for defining how the portal connects to and manages external data systems. Beyond simple connection definitions, \wbdl{} supports advanced data organization concepts:
 
 \begin{description}
-\item[\textbf{Data Source Configuration}]: Each data source can be configured with specific connection parameters, authentication credentials, and query optimization settings. Supported data source types include:
+\item[\textbf{Data Source Configuration}]: Each data source can be configured with specific connection parameters, authentication credentials, and command optimization settings. Supported data source types include:
 \begin{itemize}
 \item Relational databases (SQL-based)
 \item NoSQL databases (document, key-value, graph)
@@ -139,7 +139,7 @@ The \texttt{datasources} element within \texttt{STWSite} provides a flexible fra
 \begin{itemize}
 \item Metadata enrichment for screen readers and assistive technologies
 \item Alternative data representations for different accessibility needs
-\item Query result formatting that supports accessibility standards
+\item Command result formatting that supports accessibility standards
 \item Integration with accessibility frameworks and tools
 \end{itemize}
 \end{description}
@@ -174,8 +174,8 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 \item[\textbf{section}]: The name of the page section where this content should be rendered (e.g., "header", "main", "sidebar").
 \item[\textbf{sequence}]: A number that determines the order of content within a section.
 \item[\textbf{dsn}]: The "data source name," which identifies a specific data source configured in the \texttt{STWSite} element.
-\item[\textbf{query}]: The query to be executed against the specified data source. Before execution, the query text is processed by the \textbf{Webbase Placeholders Language (\wbpl{})} processor. This processor replaces placeholders within the query with values sourced from several locations: the \texttt{params} attribute, the URL querystring, session variables, global variables, and HTTP headers. After this substitution, the resulting query is executed by the data source using its native language (e.g., SQL for a relational database, or JSONata if the data source is a JSON-based API).
-\item[\textbf{params}]: A string containing parameters for the query, formatted as a standard query string (e.g., \texttt{key1=value1\&key2=value2}).
+\item[\textbf{command}]: The command to be executed against the specified data source. Before execution, the command text is processed by the \textbf{Webbase Placeholders Language (\wbpl{})} processor. This processor replaces placeholders within the command with values sourced from several locations: the \texttt{params} attribute, the URL querystring, session variables, global variables, and HTTP headers. After this substitution, the resulting command is executed by the data source using its native language (e.g., SQL for a relational database, or JSONata if the data source is a JSON-based API).
+\item[\textbf{params}]: A string containing parameters for the command, formatted as a standard querystring (e.g., \texttt{key1=value1\&key2=value2}).
 \item[\textbf{layout}]: The \texttt{STWLayout} element that defines how the fetched data should be rendered.
 \end{description}
 
