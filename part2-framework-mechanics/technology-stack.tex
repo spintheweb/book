@@ -24,35 +24,7 @@ Choosing Deno aligns the engine with the platform’s web-first design and keeps
 	\item \textbf{ESM-first:} native modules and top-level \texttt{await} fit the compilation model used by \wbll and \wbpl tooling.
 \end{itemize}
 
-Alternatives such as Node.js or Python were considered. Node.js provides a larger ecosystem, but Deno’s standard Web API surface and permission model matched the \webspinner’s goals better and reduced dependencies.
-
-\subsection{What about Python?}
-Python is a viable alternative for implementing the spinner. A reference implementation could be built with FastAPI or Starlette for HTTP, Jinja2 for small templating needs (separate from \wbll), and Pydantic for schemas. Trade-offs:
-\begin{itemize}
-	\item \textbf{Pros:} mature ecosystem, superb async frameworks (ASGI), rich libraries for parsing, i18n, and data access; strong typing with Pydantic and type hints.
-	\item \textbf{Cons:} diverges from TypeScript used elsewhere; requires re-implementing the \wbll tokenizer and \wbpl evaluator; less direct parity with browser APIs.
-\end{itemize}
-
-\paragraph{Key components in a Python port}
-\begin{itemize}
-	\item \textbf{Core model:} classes for \stwsite, \stwarea, \stwpage, \stwcontent with localization and visibility semantics.
-	\item \textbf{\wbll engine:} tokenizer, validator, and a renderer that emits HTML fragments; map tokens to handlers (inputs, links, lists, media, actions).
-	\item \textbf{\wbpl evaluator:} safe expression parser with interpolation, conditionals, and function library; strict escaping rules.
-	\item \textbf{Session and security:} role-based visibility, locale resolution, placeholder hydration; CSRF and auth integration.
-	\item \textbf{Data adapters:} pluggable sources (SQL/NoSQL/HTTP) with uniform cursor/record interfaces.
-	\item \textbf{Streaming/partials:} endpoints returning fragments and optional batched REST calls; optional WebSocket fan-out.
-\end{itemize}
-
-\paragraph{Porting checklist}
-\begin{enumerate}
-	\item Define domain classes and serialization compatible with \wbdl.
-	\item Implement \wbll tokenization, validation, and rendering with test coverage.
-	\item Implement \wbpl expression parsing/evaluation with escaping tests.
-	\item Build the request pipeline: session, lookup, data fetch, placeholder merge, render.
-	\item Add role/i18n resolution and visibility propagation.
-	\item Provide fragment endpoints, caching, and optional WebSocket orchestration.
-	\item Package and deploy (ASGI server, container image, health checks).
-\end{enumerate}
+Other implementations are welcomed, provided they adhere to the specifications and interoperability guidelines set forth by the \organization{}.
 
 \section{High-Level Architecture}
 The spinner is a server that understands WBDL. On each request it:\footnote{See also the ``Paradigm'' section in the implementation README}
