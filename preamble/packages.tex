@@ -43,11 +43,18 @@
 \usepackage{amsfonts}
 
 % Cross-references and links
-\usepackage[pdfusetitle]{hyperref}
-\hypersetup{
-  pdfsubject={Morphic Edition — Living document WIP},
-  pdfkeywords={Spin the Web, WBDL, Webbase, web portal, Morphic Edition, WIP}
-}
+% Consolidated hyperref options here; metadata is set in formatting.tex
+\usepackage[
+  pdfusetitle,
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=magenta,
+  urlcolor=cyan,
+  citecolor=green,
+  bookmarks=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=2
+]{hyperref}
 \usepackage{cleveref}
 \usepackage{url}
 
