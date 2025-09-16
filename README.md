@@ -7,7 +7,7 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://spintheweb.github.io/book/)
 
-This book presents Spin the Web, from foundational concepts to implementation techniques. The content details the framework--WBDL, Web Spinner, and Spin the Web Studio--and then provides a guide on how to use it to build web portals.
+This book presents the Spin the Web framework, from foundational concepts to implementation techniques. The content details WBDL, Web Spinner, and Spin the Web Studio, and then provides a guide on how to use it to build web portals.
 
 ## Book Content
 
