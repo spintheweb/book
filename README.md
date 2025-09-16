@@ -66,7 +66,7 @@ This book presents Spin the Web, from foundational concepts to implementation te
 │   ├── introduction.tex       # Introduction to enterprise portals
 │   ├── virtualized.tex        # Virtualized portal framework
 │   └── architecture.tex       # Technical architecture
-├── part2-framework-mechanics/ # Part II: Framework Specification and Mechanics
+├── part2-framework/           # Part II: Framework Specification and Mechanics
 │   ├── intro.tex              # Part introduction
 │   ├── wbdl.tex               # Webbase Definition Language (WBDL)
 │   ├── wbpl.tex               # Webbase Placeholders Language (WBPL)
