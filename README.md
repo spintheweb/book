@@ -7,7 +7,41 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://spintheweb.github.io/book/)
 
-This book documents Spin the Web, from foundational concepts to implementation techniques. The content first details the framework — WBDL, Web Spinner, and Spin the Web Studio — and then provides a guide on how to use it to build web portals.
+This book presents Spin the Web, from foundational concepts to implementation techniques. The content details the framework--WBDL, Web Spinner, and Spin the Web Studio--and then provides a guide on how to use it to build web portals.
+
+## Book Content
+
+### Part I: The Philosophy (Chapters 1–4)
+
+- Chapter 1: Genesis — History and evolution of Spin the Web
+- Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain analysis
+- Chapter 3: Virtualized Portal Framework — Conceptual architecture
+- Chapter 4: Technical Architecture and Mechanics — System design principles
+
+### Part II: The Framework (Chapters 5–11)
+
+- Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
+- Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder management
+- Chapter 7: WBLL (Webbase Layout Language) — Component layout management
+- Chapter 8: Webbase and Webbaselets
+- Chapter 9: Web Spinner Engine Architecture and Mechanics
+- Chapter 10: Spin the Web Studio: An Integrated Development Environment
+- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL engine, WBPL, session/state, security, and deployment
+
+### Part III: The Web Portal (Chapters 12–13)
+
+- Chapter 12: Structuring a Web Portal: A Practical Guide
+- Chapter 13: The Portal Development Journey — Methodology, best practices, and learning patterns for portal developers
+
+### Part IV: The Roadmap (Chapter 14)
+
+- Chapter 14: The Roadmap
+
+### Appendices
+
+- Appendix A: WBDL JSON Schema Reference — Formal JSON Schema definitions for WBDL element types (Site, Area, Page, Content, etc.)
+- Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
+- Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
 
 ## Book Structure
 
@@ -32,7 +66,7 @@ This book documents Spin the Web, from foundational concepts to implementation t
 │   ├── introduction.tex       # Introduction to enterprise portals
 │   ├── virtualized.tex        # Virtualized portal framework
 │   └── architecture.tex       # Technical architecture
-├── part2-framework-mechanics/ # Part II: The Platform: Framework Specification and Mechanics
+├── part2-framework-mechanics/ # Part II: Framework Specification and Mechanics
 │   ├── intro.tex              # Part introduction
 │   ├── wbdl.tex               # Webbase Definition Language (WBDL)
 │   ├── wbpl.tex               # Webbase Placeholders Language (WBPL)
@@ -45,9 +79,9 @@ This book documents Spin the Web, from foundational concepts to implementation t
 │   ├── intro.tex              # Part introduction
 │   ├── portal-structure.tex   # Guide to structuring a web portal
 │   └── learning.tex           # The portal development journey
-├── part4-future/              # Part IV: Future Directions
+├── part4-roadmap/             # Part IV: The Roadmap
 │   ├── intro.tex              # Part introduction
-│   └── future-directions.tex  # Roadmap and evolution
+│   └── directions.tex         # Roadmap and evolution
 ├── figures/                   # Images and diagrams
 │   ├── logo.png               # Logo
 │   └── spin-the-web.png       # Architecture diagram
@@ -60,10 +94,6 @@ This book documents Spin the Web, from foundational concepts to implementation t
 └── build/                     # Generated files (auto-generated, can be safely cleaned)
 ```
 
-## Implementation Technology
-
-See [https://github.com/spintheweb](https://github.com/spintheweb)
-
 ## Building the Book
 
 ```bash
@@ -75,37 +105,3 @@ This will:
 1. Compile the LaTeX source using pdflatex
 2. Generate `SpinTheWeb.pdf` in the root directory
 3. Display build status and any warnings
-
-## Book Content Overview
-
-### Part I: The Philosophy (Chapters 1–4)
-
-- Chapter 1: Genesis — History and evolution of Spin the Web
-- Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain analysis
-- Chapter 3: Virtualized Portal Framework — Conceptual architecture
-- Chapter 4: Technical Architecture and Mechanics — System design principles
-
-### Part II: The Platform (Chapters 5–11)
-
-- Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
-- Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder management
-- Chapter 7: WBLL (Webbase Layout Language) — Component layout management
-- Chapter 8: Webbase and Webbaselets
-- Chapter 9: Web Spinner Engine Architecture and Mechanics
-- Chapter 10: Spin the Web Studio: An Integrated Development Environment
-- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL engine, WBPL, session/state, security, and deployment
-
-### Part III: The Web Portal (Chapters 12–13)
-
-- Chapter 12: Structuring a Web Portal: A Practical Guide
-- Chapter 13: The Portal Development Journey — Methodology, best practices, and learning patterns for portal developers
-
-### Part IV: The Future (Chapter 14)
-
-- Chapter 14: Future Directions — Roadmap, evolution, and next steps
-
-### Appendices
-
-- Appendix A: WBDL JSON Schema Reference — Formal JSON Schema definitions for WBDL element types (Site, Area, Page, Content, etc.)
-- Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
-- Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
