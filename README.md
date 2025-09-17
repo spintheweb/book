@@ -7,7 +7,7 @@
 [**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
 [**View the Live Site**](https://spintheweb.github.io/book/)
 
-This book presents the Spin the Web framework, from foundational concepts to implementation techniques. The content details WBDL, Web Spinner, and Spin the Web Studio, and then provides a guide on how to use it to build web portals.
+This book presents the Spin the Web framework, from foundational concepts to implementation techniques. The content details the Webbase Description Language (WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on how to use it to build web portals. The framework and this book are stewarded by the eponymous open-source **Spin the Web Foundation**.
 
 ## Book Content
 
@@ -30,8 +30,8 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 
 ### Part III: The Web Portal (Chapters 12–13)
 
-- Chapter 12: Structuring a Web Portal: A Practical Guide
-- Chapter 13: The Portal Development Journey — Methodology, best practices, and learning patterns for portal developers
+- Chapter 12: Implementing Portal Contents — Structure, semantics, information architecture, documentation, search, and evolution
+- Chapter 13: Implementing Portal Visuals — Layout, navigation systems, interaction, accessibility, theming, and performance
 
 ### Part IV: The Roadmap (Chapter 14)
 
@@ -75,10 +75,10 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 │   ├── web-spinner.tex        # The Web Spinner Engine
 │   ├── studio.tex             # The Spin the Web Studio
 │   └── technology.tex         # Technology stack of the reference implementation
-├── part3-implementation/      # Part III: The Practice: Building a Web Portal
+├── part3-implementation/      # Part III: Implementation (Contents & Visuals)
 │   ├── intro.tex              # Part introduction
-│   ├── portal-structure.tex   # Guide to structuring a web portal
-│   └── learning.tex           # The portal development journey
+│   ├── contents.tex           # Implementing portal contents (structure, semantics, IA)
+│   └── visuals.tex            # Implementing portal visuals (layout, interaction, branding)
 ├── part4-roadmap/             # Part IV: The Roadmap
 │   ├── intro.tex              # Part introduction
 │   └── directions.tex         # Roadmap and evolution
