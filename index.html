@@ -3,31 +3,87 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Redirecting to Spin the Web PDF</title>
+  <title>Spin the Web Foundation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=SpinTheWeb.pdf">
-  <link rel="canonical" href="SpinTheWeb.pdf">
+  <meta name="description" content="The Spin the Web Foundation stewards an open-source framework for building enterprise web portals, unifying heterogeneous systems into a single digital channel for eBranding.">
+  <meta name="keywords" content="Spin the Web, eBranding, web portals, enterprise portals, open source framework, systems integration, Spin the Web Foundation, STW, webbase, webbaselets">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
     }
-    h1, h2, p {
+
+    header {
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 0.5em 1em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    main {
+      padding: 2em;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
       text-align: center;
+    }
+
+    .note {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 1em;
+      margin-bottom: 2em;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .description {
+      text-align: justify; 
+      margin-bottom: 2em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
 
 <body>
-  <h1>Spin the Web</h1>
-  <h2>Weaving Web Portals</h2>
-  <p><img src="./figures/spin-the-web.png" alt="Spin the Web"></p>
-  <p>If you are not redirected automatically, follow this <a href="SpinTheWeb.pdf">link to the PDF</a>.</p>
+  <header>
+    <div style="display: flex; align-items: center;">
+      <img src="./figures/logo.png" alt="Logo" style="height: 50px; margin-right: 1em;">
+      <div>
+        <span style="font-size: 1.5em; font-weight: bold;">Spin the Web Foundation</span><br>
+        <span style="font-size: 1em; color: #555;">Weaving Web Portals</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1em;">
+      <i class="fa-brands fa-github"></i><a href="https://github.com/spintheweb" target="_blank" title="GitHub">https://github.com/spintheweb</a>
+      <i class="fa-solid fa-envelope"></i><a href="mailto:info@spintheweb.org">info@spintheweb.org</a>
+    </div>
+  </header>
+  <main>
+    <div class="content">
+      <div class="note">
+        <strong>Notice:</strong> The Spin the Web Foundation, this website, and the Spin the Web book are all works in
+        progress.<br>
+        In the meantime, you can consult <i class="fa-solid fa-book-open"></i> <a href="SpinTheWeb.pdf">Spin the Web (PDF)</a>.
+      </div>
+      <p class="description">
+        The Spin the Web Foundation stewards the open-source <strong>Spin the Web</strong> framework, designed for building enterprise web portals. Our mission is to virtualize the enterprise brand (<em>eBranding</em>) by unifying diverse systems like ERP, CRM, and BPMS into a single, consistent digital channel for all stakeholders.
+      </p>
+      <p><img src="./figures/spin-the-web.png" alt="Spin the Web"></p>
+    </div>
+  </main>
 </body>
 
 </html>
