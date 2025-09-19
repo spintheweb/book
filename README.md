@@ -4,8 +4,7 @@
 
 **Weaving Web Portals**
 
-[**Read the Latest PDF Version (Local)**](SpinTheWeb.pdf) |
-[**View the Live Site**](https://spintheweb.github.io/book/)
+[**Read the Latest PDF Version (Local)**](https://spintheweb.github.io/book/SpinTheWeb.pdf)
 
 This book presents the Spin the Web framework, from foundational concepts to implementation techniques. The content details the Webbase Description Language (WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on how to use it to build web portals. The framework and this book are stewarded by the eponymous open-source **Spin the Web Foundation**.
 
