@@ -82,6 +82,24 @@ The Web Spinner operates through several key subsystems:
 \item[\textbf{Session Manager}]: Maintains user state and authentication information
 \end{description}
 
+\subsection{Role-Based Visibility (Overview)}
+\label{sec:rbv-overview}
+
+Spin the Web enforces authorization using a \emph{role-based visibility} (RBV) model. Rather than returning explicit authorization errors, elements not visible to the requester are treated as non-existent and yield a \texttt{200 OK} with an empty response. This privacy-by-design approach applies uniformly to contents, pages, areas, and the site.
+
+Key characteristics:
+\begin{itemize}
+	\item \textbf{Declarative rules in \wbdl{}}: visibility is defined per element and can be inherited.
+	\item \textbf{Inheritance}: when a role setting is \texttt{undefined}, visibility is inherited recursively from the parent up to the root.
+	\item \textbf{Three-state roles}: \texttt{true} (granted), \texttt{false} (denied), \texttt{undefined} (inherit).
+	\item \textbf{Safe defaults}: unauthenticated users receive the \texttt{guests} role by default; elements are invisible unless made visible via rules or inheritance.
+\end{itemize}
+
+For operational details see \secref{sec:security} in the Web Spinner chapter, and for the formal schema see the \wbdl{} appendix (\cref{app:wbdl-json-schema}).
+
+\paragraph{Side note: \texttt{rwx} and RBV}
+The familiar UNIX-style \texttt{rwx} access paradigm can be expressed with RBV: a content that supports reading, writing, or executing (in any combination) can be exposed to specific roles. In practice, "read" aligns with viewing content, while "write" and "execute" align with content operations (e.g., mutations or actions). RBV governs \emph{visibility} of these capabilities per role; the concrete enforcement of operation-level permissions is handled at runtime by the Web Spinner security layer (see \secref{sec:security}).
+
 \subsection{Performance and Scalability}
 
 \begin{itemize}

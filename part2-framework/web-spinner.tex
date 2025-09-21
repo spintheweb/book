@@ -57,6 +57,149 @@ All datasources defined in the \texttt{STWSite} element are initialized and conn
 
 A comprehensive routing table is built from the \webbase{} structure, mapping URL patterns to specific \texttt{STWPage} and \texttt{STWContent} elements.
 
+\section{Security}
+\label{sec:security}
+
+Security in Spin the Web encompasses both \textbf{authentication} and \textbf{authorization}.
+
+\begin{itemize}
+	\item \textbf{Authentication} verifies that an entity is who it claims to be.
+	\item \textbf{Authorization} determines whether an authenticated entity can access a given service.
+\end{itemize}
+
+\subsection{Authentication}
+
+Spin the Web supports native authentication via:
+
+\begin{itemize}
+	\item \textbf{User/password pairs}
+	\item \textbf{Service-based credentials} (e.g., API tokens or external identity providers)
+\end{itemize}
+
+Authenticated entities are assigned one or more roles.
+
+\paragraph{Initial Role Assignment}
+When a portal is accessed, the requester is automatically treated as a \textbf{guest user}.
+
+\begin{itemize}
+	\item The guest user is assigned the \texttt{guests} role by default.
+	\item This role governs visibility for unauthenticated users.
+	\item Content not explicitly visible to \texttt{guests} will return a \texttt{200 OK} with an empty response.
+\end{itemize}
+
+This ensures safe default behavior and prevents metadata leakage.
+
+\subsection{Authorization: The Visibility Paradigm}
+
+Authorization in Spin the Web is based on \textbf{visibility}. Content is either:
+
+\begin{itemize}
+	\item \textbf{Visible} $\to$ served to the requester
+	\item \textbf{Invisible} $\to$ treated as non-existent, returning a \texttt{200 OK} with an empty response
+\end{itemize}
+
+This paradigm simplifies access control and enforces privacy by design.
+
+\begin{figure}[H]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[node distance=1.6cm,>=stealth,rounded corners,align=center]
+	% Nodes
+	\node[draw, fill=gray!10, minimum width=2.8cm] (roles) {Session Roles\\\small guests, users, ...};
+	\node[draw, fill=gray!10, right=2.8cm of roles, minimum width=3.6cm] (element) {Requested Element\\\small Page / Content};
+	\node[draw, fill=blue!10, below=1.8cm of element, minimum width=5.2cm] (inherit) {RBV Inheritance\\\small true / false / undefined\\inherit up to root};
+	\node[draw, fill=green!10, right=3.2cm of element, minimum width=3.8cm] (filter) {Visibility Filter\\\small visible? yes/no};
+	\node[draw, fill=green!20, right=2.6cm of filter, minimum width=3.4cm] (serve) {Serve Content};
+	\node[draw, fill=red!10, below=1.8cm of filter, minimum width=3.8cm] (omit) {Omit from Response\\\small 200 OK, empty body};
+
+	% Edges
+	\draw[->] (roles) -- node[above] {evaluate} (element);
+	\draw[->] (element) -- (inherit);
+	\draw[->] (inherit) -- (filter);
+	\draw[->] (filter) -- node[above] {yes} (serve);
+	\draw[->] (filter) -- node[right] {no} (omit);
+
+	% Legend
+	\node[anchor=west] at ($(roles.south west)+(0,-1.0)$) {\small Role states: true (grant), false (deny), undefined (inherit)};
+\end{tikzpicture}}%
+\caption{Role-Based Visibility flow: roles are evaluated against element RBV with inheritance; invisible elements are omitted without error.}
+\label{fig:rbv-flow}
+\end{figure}
+
+\paragraph{Role States}
+Each role can be in one of three states:
+
+\begin{description}
+	\item[\texttt{true}] explicitly granted
+	\item[\texttt{false}] explicitly denied
+	\item[\texttt{undefined}] inherited from parent elements
+\end{description}
+
+Inheritance follows a recursive model from the content up to the site root.
+
+\paragraph{Role Assignment}
+Roles can be assigned to:
+\begin{itemize}
+	\item Individual contents
+	\item Pages
+	\item Areas
+	\item Entire site
+\end{itemize}
+If no role is explicitly assigned, it inherits from its parent.
+
+\paragraph{Default Role: Guests}
+The \texttt{guests} role is automatically assigned to the portal home page and its contents. All other elements are invisible to guests unless explicitly made visible.
+
+\subsection{Predefined Roles}
+
+Spin the Web defines the following non-deletable roles:
+
+\begin{itemize}
+	\item \texttt{roots} \hfill\emph{superuser; see override below}
+	\item \texttt{guests}
+	\item \texttt{users}
+	\item \texttt{administrators}
+	\item \texttt{developers}
+	\item \texttt{webmasters}
+	\item \texttt{translators}
+\end{itemize}
+
+You may define additional roles as needed. A good starting point is your organizational chart.
+
+\paragraph{Superuser override (\texttt{roots})}
+The \texttt{roots} role represents a trusted superuser. When a session includes \texttt{roots}, the “no assignment found up to the site level” condition does \emph{not} cause a deny; instead, evaluation proceeds to the element’s \texttt{visible} flag. This does not change the semantics of \texttt{visible=false} (which still hides the element).
+
+\subsection{RBV Decision Procedure}
+\label{sec:rbv-decision}
+
+With reference to Figure~\ref{fig:rbv-flow}, the Web Spinner applies Role-Based Visibility (RBV) using the following precise rules. Let \emph{roles} be the set of roles in the current session; visibility flags are tri-state \{\texttt{true}, \texttt{false}, unset\}, where unset is treated as \texttt{true}.
+
+\paragraph{Page decision}
+\begin{enumerate}
+	\item If the requested page is the Home page, \textbf{ALLOW} by default.
+	\item Else, if no authorization for any of the session roles is found on the page or any ancestor (page \textrightarrow{} area \textrightarrow{} site), \textbf{DENY} — \emph{unless} the session has the \texttt{roots} role, in which case continue to step 3.
+	\item Else, if \texttt{page.visible} is \texttt{false}, \textbf{DENY} and \emph{navigate to the Home page}.
+	\item Otherwise, \textbf{ALLOW}.
+\end{enumerate}
+
+\paragraph{Content decision (for each content on an allowed page)}
+\begin{enumerate}
+	\item If the content or its ancestors (page \textrightarrow{} area \textrightarrow{} site) define authorizations for the session roles:
+		\begin{enumerate}
+			\item If none of those authorizations evaluate to \texttt{true}, \textbf{DENY}.
+			\item Else, if \texttt{content.visible} is \texttt{false}, \textbf{DENY}.
+			\item Otherwise, \textbf{ALLOW}.
+		\end{enumerate}
+	\item If no role assignment for any session role is found all the way up to the site level, treat as an \emph{explicit deny} — \emph{unless} the session has the \texttt{roots} role, in which case evaluate \texttt{content.visible}: if \texttt{false} then \textbf{DENY}, otherwise \textbf{ALLOW}.
+\end{enumerate}
+
+\paragraph{Defaults and inheritance}
+\begin{itemize}
+		\item Pages are \emph{default-deny} (unless Home), requiring an explicit or inherited allow for at least one session role, and \texttt{visible} must not be \texttt{false}. If no role assignment is found all the way to the site level, treat the outcome as an \emph{explicit deny}; sessions with the \texttt{roots} role bypass this specific condition and proceed to the \texttt{visible} check.
+		\item Contents without any role assignment up to the site level are \emph{explicitly denied}. Sessions with the \texttt{roots} role bypass only this condition and proceed to the \texttt{visible} check.
+		\item RBV inherits up the hierarchy; evaluation short-circuits at the nearest level that defines role entries. If none are found by the time the site is reached, the result is an explicit deny (subject to the \texttt{roots} override above).
+\end{itemize}
+
 \section{User Session Management}
 \label{sec:session-management}
 
@@ -64,7 +207,7 @@ The Web Spinner maintains stateful user sessions to manage authentication, autho
 
 \subsection{Session Establishment}
 
-When a user first accesses the portal, a new session is created with a unique identifier, guest is set as the session user (guest has is assigned the guests role). Sessions are maintained using cookies, JWT tokens, or other mechanisms.
+When a user first accesses the portal, a new session is created with a unique identifier; a guest user is set as the session user (assigned the \texttt{guests} role). Sessions are maintained using cookies, JWT tokens, or other mechanisms.
 
 \subsection{Authentication Integration}
 
@@ -100,7 +243,11 @@ Incoming URLs are parsed to extract the area/page/content hierarchy. For example
 
 \subsection{Element Resolution}
 
-Using the pre-built routing table, URLs are resolved to specific \wbdl{} elements. Missing or invalid paths result in no result in case of contents the nearest site or area main page in case of a page.
+Using the pre-built routing table, URLs are resolved to specific \wbdl{} elements. Runtime outcomes:
+\begin{itemize}
+	\item \textbf{Pages}: If the URL resolves to a page that is not visible to the current session (per Figure~\ref{fig:rbv-flow} and \secref{sec:rbv-decision}), the user is taken to the \textbf{Home page}. If the path itself is invalid, the nearest site or area main page is served.
+	\item \textbf{Contents}: If a content is not visible, it is omitted entirely and the request returns \texttt{200 OK} with an empty body. If the path is invalid, no result is returned.
+\end{itemize}
 
 \subsection{Protocol Handling}
 
@@ -113,7 +260,7 @@ The Web Spinner supports both HTTP and WebSocket protocols:
 \section{Visibility and Authorization Engine}
 \label{sec:authorization-engine}
 
-Before any content is delivered, the Web Spinner performs comprehensive authorization checks:
+Before any content is delivered, the Web Spinner performs comprehensive authorization checks. See \secref{sec:security} for the visibility model and predefined roles; this section focuses on runtime enforcement:
 
 \subsection{Role-Based Filtering}
 
