@@ -6,6 +6,18 @@
 This appendix collects the formal JSON Schema definitions for the main WBDL element types used in Spin the Web. These schemas provide the canonical structure for sites, areas, pages, and content elements.
 
 \section{STWElement Base}
+The abstract base for all WBDL objects. Provides identity, common metadata (localized name, slug, keywords, description), visibility, and an optional recursive \texttt{children} array used by composed types. Concrete types specialize via \texttt{type}.
+\paragraph{Properties}
+\begin{description}
+  \item[\texttt{\_id} (string, uuid) (required)] Global unique identifier for the element instance.
+  \item[\texttt{type} (enum)] Discriminator for concrete kinds: \texttt{"Site" | "Area" | "Page" | "Content"}.
+  \item[\texttt{name} (STWLocalized)] Localized display name used in navigation and titles.
+  \item[\texttt{slug} (STWLocalized)] Localized, URL-safe identifier used to compose paths.
+  \item[\texttt{keywords} (STWLocalized)] Search keywords and tags aiding discovery.
+  \item[\texttt{description} (STWLocalized)] Human-readable summary for listings or previews.
+  \item[\texttt{visibility} (STWVisibility)] Role based boolean visibility.
+  \item[\texttt{children} (array of STWElement)] Optional recursive structure for nested compositions.
+\end{description}
 \begin{lstlisting}[language=JSON,caption={STWElement Base Schema Definition}]
 {
   "$id": "https://spintheweb.org/schemas/STWElement.json",
@@ -30,7 +42,46 @@ This appendix collects the formal JSON Schema definitions for the main WBDL elem
 }
 \end{lstlisting}
 
+\section{STWLocalized}
+Represents a localized string as an array of language–text pairs, e.g., \texttt{[{"lang":"en","text":"Hello"}, {"lang":"en-US","text":"Color"}, {"lang":"it","text":"Ciao"}]}. Use IETF BCP\,47 language codes (language only like \texttt{en} or language+region like \texttt{en-US}).
+\begin{lstlisting}[language=JSON,caption={STWLocalized Schema Definition}]
+{
+  "$id": "https://spintheweb.org/schemas/STWLocalized.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STWLocalized",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "lang": { "type": "string", "description": "IETF BCP 47 language tag (e.g., 'en', 'en-US')" },
+      "text": { "type": "string" }
+    },
+    "required": ["lang", "text"],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}
+\end{lstlisting}
+
+% Examples for localized strings (language-only and language+region)
+\begin{lstlisting}[language=JSON,caption={STWLocalized Examples (language and region-qualified tags)}]
+[
+  { "lang": "en",    "text": "Color" },
+  { "lang": "en-US", "text": "Color" },
+  { "lang": "en-GB", "text": "Colour" },
+  { "lang": "it",    "text": "Colore" }
+]
+\end{lstlisting}
+
 \section{STWSite}
+Represents the root of a portal. Inherits common fields and introduces: the \texttt{mainpage} (landing page UUID), optional \texttt{langs} list, optional \texttt{datasources}, and \texttt{children} Areas. Use this as the top-level container for navigation and localization scope.
+\paragraph{Properties}
+\begin{description}
+  \item[\texttt{type} (const "Site")] Discriminator for this shape.
+  \item[\texttt{mainpage} (string, uuid) (required)] UUID of the portal's landing page (homepage).
+  \item[\texttt{langs} (array of string)] List of supported language codes (IETF BCP\,47), e.g., \texttt{"en"}, \texttt{"en-US"}. The first in the list is the default; if omitted, the array defaults to \texttt{["en"]}.
+  \item[\texttt{datasources} (array of object)] Integration endpoints/configuration objects.
+\end{description}
 \begin{lstlisting}[language=JSON,caption={STWSite Schema Definition}]
 {
   "$id": "https://spintheweb.org/schemas/STWSite.json",
@@ -42,37 +93,118 @@ This appendix collects the formal JSON Schema definitions for the main WBDL elem
     "mainpage": { "type": "string", "format": "uuid" },
     "langs": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "default": ["en"]
     },
     "datasources": {
       "type": "array",
       "items": { "type": "object" }
-    },
-    "children": {
-      "type": "array",
-      "items": { "$ref": "STWArea.json" }
     }
   },
   "required": ["mainpage"]
 }
 \end{lstlisting}
 
+\paragraph{Minimum webbase}\label{par:min-webbase}
+Because \texttt{STWSite.mainpage} is required and points to the homepage, the smallest valid webbase consists of one \texttt{STWSite} and one \texttt{STWPage} whose UUID matches \texttt{mainpage}.
+
+% Examples for STWSite showing explicit langs and omitted langs (default to ["en"]).
+\begin{lstlisting}[language=JSON,caption={STWSite Example with explicit langs ["en", "en-US"]}]
+{
+  "_id": "b1b8c9fa-3d9e-4c44-8fd6-5a8436cfe8a1",
+  "type": "Site",
+  "name": [
+    { "lang": "en", "text": "Spin the Web" },
+    { "lang": "it", "text": "Spin il Web" }
+  ],
+  "slug": [
+    { "lang": "en", "text": "spin-the-web" },
+    { "lang": "it", "text": "spin-il-web" }
+  ],
+  "mainpage": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "langs": ["en", "en-US"],
+  "children": []
+}
+\end{lstlisting}
+
+% Minimal bundle example: one STWSite and its homepage STWPage
+\begin{lstlisting}[language=JSON,caption={Minimal Webbase: STWSite + homepage STWPage}]
+[
+  {
+    "_id": "0c2a7f6b-1d3e-4a5b-8c9d-0e1f2a3b4c5d",
+    "type": "Site",
+    "name": [ { "lang": "en", "text": "Demo Site" } ],
+    "slug": [ { "lang": "en", "text": "demo-site" } ],
+    "mainpage": "9a9c3b6e-1d9a-4e62-9e10-0b25e84684ef",
+    "children": [
+      {
+        "_id": "9a9c3b6e-1d9a-4e62-9e10-0b25e84684ef",
+        "type": "Page",
+        "name": [ { "lang": "en", "text": "Home" } ],
+        "slug": [ { "lang": "en", "text": "home" } ],
+        "children": [
+          {
+            "_id": "6f1a1a52-1fa6-4a03-9e38-8d80d1b6c29b",
+            "type": "Content",
+            "subtype": "Text",
+            "name": [ { "lang": "en", "text": "Greetings" } ],
+            "slug": [ { "lang": "en", "text": "greetings" } ],
+            "section": "main",
+            "layout": { "lang": "en", "text": "Hello World!" }
+         }
+        ]
+      }
+    ]
+  }
+]
+\end{lstlisting}
+
 \section{STWArea}
-\begin{lstlisting}[language=JSON,caption={STWArea Schema Definition}]
+A sectional grouping below the Site. Typical uses include functional domains (e.g., Support, Sales) or topic silos. Areas can be modeled in two ways:
+\begin{itemize}
+  \item \textbf{Full Area}: Inherits \texttt{STWElement}, requires \texttt{mainpage} (UUID). Best when the area participates in site-wide navigation and indexing.
+  \item \textbf{Lightweight Area}: Minimal proxy with only \texttt{src} (URI) to a webbaselet. Best for externally hosted or federated content that should appear as a single hop in navigation.
+\end{itemize}
+\paragraph{Properties}
+  \textit{Common}: See \texttt{STWElement} for shared fields (\texttt{\_id}, \texttt{name}, etc.).\\
+  \textit{Full Area-specific}: \texttt{type} (const "Area"), \texttt{mainpage} (string, uuid) (required).\\
+  \textit{Lightweight Area-specific}: \texttt{src} (string, uri) (required) pointing to the webbaselet.
+\begin{lstlisting}[language=JSON,caption={STWArea Schema Definition (two shapes via oneOf)}]
 {
   "$id": "https://spintheweb.org/schemas/STWArea.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "STWArea",
-  "allOf": [{ "$ref": "STWElement.json" }],
-  "properties": {
-    "type": { "const": "Area" },
-    "mainpage": { "type": "string", "format": "uuid" }
-  },
-  "required": ["mainpage"]
+  "oneOf": [
+    {
+      "allOf": [
+        { "$ref": "STWElement.json" },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "Area" },
+            "mainpage": { "type": "string", "format": "uuid" }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "src": { "type": "string", "format": "uri", "description": "URL of a webbaselet" }
+      },
+      "required": ["src"]
+    }
+  ]
 }
 \end{lstlisting}
 
 \section{STWPage}
+A concrete navigable page. Inherits common fields and constrains \texttt{children} to \texttt{STWContent} items in display sequence. Use Pages to compose content blocks and layouts.
+\paragraph{Properties}
+\begin{description}
+  \item[\texttt{type} (const "Page")] Discriminator for this shape.
+  \item[\texttt{children} (array of STWContent) (required)] Ordered content blocks composing the page.
+\end{description}
 \begin{lstlisting}[language=JSON,caption={STWPage Schema Definition}]
 {
   "$id": "https://spintheweb.org/schemas/STWPage.json",
@@ -91,6 +223,19 @@ This appendix collects the formal JSON Schema definitions for the main WBDL elem
 \end{lstlisting}
 
 \section{STWContent}
+An atomic content block rendered within a Page region. Supports optional \texttt{subtype}, CSS hooks, and data bindings (\texttt{dsn}, \texttt{command}, \texttt{params}); requires a \texttt{layout} describing placement.
+\paragraph{Properties}
+\begin{description}
+  \item[\texttt{type} (const "Content")] Discriminator for this shape.
+  \item[\texttt{subtype} (string)] Content specialization hint (e.g., \texttt{"Form"}, \texttt{"Table"}, \texttt{"Calendar"}). Defaults to \texttt{"Text"}.
+  \item[\texttt{cssClass} (string)] Optional CSS class hook for theming and targeting.
+  \item[\texttt{section} (string)] Logical region name (e.g., \texttt{"main"}, \texttt{"aside"}).
+  \item[\texttt{sequence} (number)] Display order within the \texttt{section} (can be fractional, e.g., 10.5).
+  \item[\texttt{dsn} (string)] Data source name or connection identifier.
+  \item[\texttt{command} (string)] Operation to execute against the data source.
+  \item[\texttt{params} (string)] Serialized parameters for the command.
+  \item[\texttt{layout} (STWLayout) (required)] Placement and sizing information in the page grid.
+\end{description}
 \begin{lstlisting}[language=JSON,caption={STWContent Schema Definition}]
 {
   "$id": "https://spintheweb.org/schemas/STWContent.json",
@@ -99,10 +244,10 @@ This appendix collects the formal JSON Schema definitions for the main WBDL elem
   "allOf": [{ "$ref": "STWElement.json" }],
   "properties": {
     "type": { "const": "Content" },
-    "subtype": { "type": "string" },
+    "subtype": { "type": "string", "default": "Text" },
     "cssClass": { "type": "string" },
     "section": { "type": "string" },
-    "sequence": { "type": "integer" },
+    "sequence": { "type": "number" },
     "dsn": { "type": "string" },
     "command": { "type": "string" },
     "params": { "type": "string" },
@@ -113,6 +258,14 @@ This appendix collects the formal JSON Schema definitions for the main WBDL elem
 \end{lstlisting}
 
 \section{STWContentWithOptions}
+A content variant that references a set of available options by UUID (e.g., menus, tabbed panels, harmoniums) and selects among them via presentation logic; still requires a \texttt{layout}.
+\paragraph{Properties}
+\begin{description}
+  \item[\texttt{type} (const "Content")] Discriminator for this shape.
+  \item[\texttt{subtype} (string)] Variant hint for presentation logic.
+  \item[\texttt{options} (array of string uuid) (required)] Identifiers of selectable option items.
+  \item[\texttt{layout} (STWLayout)] Placement and sizing information; required for rendering.
+\end{description}
 \begin{lstlisting}[language=JSON,caption={STWContentWithOptions Schema Definition}]
 {
   "$id": "https://spintheweb.org/schemas/STWContentWithOptions.json",
