@@ -65,7 +65,8 @@
 
 % Index and glossary
 \usepackage{makeidx}
-\usepackage[acronym,toc]{glossaries}
+% Glossaries: ensure entries hyperlink correctly and appear as a chapter in book class
+\usepackage[acronym,toc,section=chapter,hyperfirst=true]{glossaries}
 
 % Bibliography
 \usepackage{natbib}
