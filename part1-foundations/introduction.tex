@@ -13,34 +13,37 @@
 
 In today's digital economy, businesses operate through a complex web of disparate software systems—\erp{s}, \crm{s}, \bpms{s}, \mrp{s}, and much more. While individually capable, these systems often create siloed user experiences, forcing employees, customers, and partners to navigate multiple interfaces to perform their tasks. This fragmentation leads to inefficiency, poor user adoption, and a disjointed view of the enterprise.
 
-The \textbf{Spin the Web} addresses this challenge head-on. The word ``Spin'' is used in the sense of ``to weave,'' as a spider dynamically weaves a web. The project is designed to weave together disparate systems and user experiences into a single, coherent whole, based on Internet technologies. It introduces a new paradigm for developing web portals centered on three core components: a specialized language, the \textbf{Webbase Description Language (\wbdl{})}; a server-side rendering engine, the \textbf{Web Spinner}; and a specialized \webbaselet{} for editing \webbase{s}, the \textbf{Spin the Web Studio}. The project's core mission is to enable the creation of unified, role-based web portals that act as a "virtualized company"—a single, coherent digital channel for all business interactions.
-\footnote{Companies like SAP should prioritize robust data structures and business logic, exposing them through well-documented APIs rather than enforcing rigid user interfaces. While their ambition to “include the world” is commendable, the resulting environments often suffer from visual incoherence and operational friction with the enterprise's unique needs. \textit{Spin the Web} advocates a modular approach: let foundational systems focus on data integrity and process orchestration, while role-based portals handle presentation, interaction, and organizational identity. See Sections~\ref{sec:integration-vision} and~\ref{sec:ebranding-vision} for a deeper exploration of this architectural separation.}
+The \textbf{Spin the Web} addresses this challenge head-on. The word ``Spin'' is used in the sense of ``to weave,'' as a spider dynamically weaves a web. The project is designed to weave together disparate systems and user experiences into a single, coherent whole, based on Internet technologies. It introduces a new paradigm for developing web portals centered on three core components: a specialized language, the \textbf{Webbase Description Language (\wbdl{})}; a server-side rendering engine, the \textbf{Web Spinner}; and a specialized \webbaselet{} for editing \webbase{s}, the \textbf{Spin the Web Studio}. The project's core mission is to enable the creation of unified, role-based web portals that act as a "virtualized enterprise"—a single, coherent digital channel for all business interactions.
+	It introduces a new paradigm for developing web portals centered on three core components: a specialized language, the \textbf{Webbase Description Language (\wbdl{})}; a server-side rendering engine, the \textbf{Web Spinner}; and a specialized \webbaselet{} for editing \webbase{s}, the \textbf{Spin the Web Studio}. The project's core mission is to enable the creation of unified, role-based web portals that act as a "virtualized enterprise"—a single, coherent digital channel for all business interactions.
+\footnote{Enterprises like SAP should prioritize robust data structures and business logic, exposing them through well-documented APIs rather than enforcing rigid user interfaces. While their ambition to “include the world” is commendable, the resulting environments often suffer from visual incoherence and operational friction with the enterprise's unique needs. \textit{Spin the Web} advocates a modular approach: let foundational systems focus on data integrity and process orchestration, while role-based portals handle presentation, interaction, and organizational identity. See Sections~\ref{sec:integration-vision} and~\ref{sec:ebranding-vision} for a deeper exploration of this architectural separation.}
 
 It is important to note that Spin the Web is a professional framework. It is not a low-code/no-code platform for the general public, but rather a toolset for engineers building bespoke, enterprise-grade web portals. On this subject we could open a parenthesis: low-code/no-code platforms often promise ease of use and rapid development but frequently fall short when it comes to scalability, customization, and integration with existing systems. Spin the Web aims to fill this gap by providing a robust framework that empowers developers to create highly tailored solutions without being constrained by the limitations of low-code/no-code environments.
+	It is important to note that Spin the Web is a professional framework. It is not a low-code/no-code platform for the general public, but rather a toolset for engineers building bespoke, enterprise-grade web portals. On this subject we could open a parenthesis: low-code/no-code platforms often promise ease of use and rapid development but frequently fall short when it comes to scalability, customization, and integration with existing systems. Spin the Web aims to fill this gap by providing a robust framework that empowers developers to create highly tailored solutions without being constrained by the limitations of low-code/no-code environments.
 
+\section{Understanding Web Portals}
 \section{Understanding Web Portals}
 \label{sec:web-portals}
 
-The development of a company web portal has two main goals: to \textbf{document how things are done} and to \textbf{provide a means for doing them}. It is an all-encompassing digital channel wrapped in a uniform, shared, accessible, and protected environment. It is crucial to understand that "uniform" should not be interpreted as monotonous or uncreative; on the contrary, it refers to a consistent and coherent user experience that reduces cognitive load and enhances usability.
+The development of an enterprise portal has two main goals: to \textbf{document how things are done} and to \textbf{provide a means for doing them}. It is an all-encompassing digital channel wrapped in a uniform, shared, accessible, and protected environment. It is crucial to understand that "uniform" should not be interpreted as monotonous or uncreative; on the contrary, it refers to a consistent and coherent user experience that reduces cognitive load and enhances usability.
 
-Web portals expand on the concept of a traditional website by serving a diverse, segmented audience that includes not only the general public but also internal and external stakeholders like employees, clients, suppliers, governance bodies, and developers. They function as \textbf{virtualized companies}, allowing individuals, based on their specific role[s], to interact with every facet of the organization—from administration and logistics to sales, marketing, human resources, and production. It is a comprehensive framework for:
+Portals expand on the concept of a traditional website by serving a diverse, segmented audience that includes not only the general public but also internal and external stakeholders like employees, clients, suppliers, governance bodies, and developers. They function as \textbf{virtualized enterprises}, allowing individuals, based on their specific role[s], to interact with every facet of the organization—from administration and logistics to sales, marketing, human resources, and production. It is a comprehensive framework for:
 
 \begin{description}
 \item[\textbf{Multi-Audience Communication}]: Providing tailored content and functionality for different user groups
 \item[\textbf{Bi-directional Data Interaction}]: Enabling users to not only consume data but also to input, manage, and interact with it, effectively participating in business processes
-\item[\textbf{Centralized Access}]: Acting as a single point of access to a wide array of company information, applications, and services
+\item[\textbf{Centralized Access}]: Acting as a single point of access to a wide array of enterprise information, applications, and services
 \item[\textbf{Role-Based Personalization}]: Ensuring that the experience is secure and customized, granting each user access only to the information and tools relevant to their role
-\item[\textbf{System-to-System Integration}]: Exposing its functionalities as an API, allowing it to be contacted by other web portals or external systems, which can interact with it programmatically
+\item[\textbf{System-to-System Integration}]: Exposing its functionalities as an API, allowing it to be contacted by other portals or external systems, which can interact with it programmatically
 \end{description}
 
-\wbdl{} is the language specifically designed to model the complexity of web portals, defining their structures, data integrations, and authorization rules that govern this dynamic digital ecosystem.
+\wbdl{} is the language specifically designed to model the complexity of portals, defining their structures, data integrations, and authorization rules that govern this dynamic digital ecosystem.
 
 \section{The Integration Vision}
 \label{sec:integration-vision}
 
 The concept of the \textbf{\webbaselet{}} opens the door to a vision for the future of enterprise software. In this vision, monolithic and disparate systems like Enterprise Resource Planning (\erp{}), Customer Relationship Management (\crm{}), Business Process Management Systems (\bpms{}), and Manufacturing Resource Planning (\mrp{}) no longer need to exist in separate silos with their own disjointed user interfaces.
 
-Instead, the front-end of each of these critical business systems could be engineered as a self-contained \textbf{\webbaselet{}}. These \webbaselet{s} could then be seamlessly integrated into a single, unified company \textbf{\webbase{}}.
+Instead, the front-end of each of these critical business systems could be engineered as a self-contained \textbf{\webbaselet{}}. These \webbaselet{s} could then be seamlessly integrated into a single, unified enterprise \textbf{\webbase{}}.
 
 The result would be a high level of coherence and consistency across the entire enterprise software landscape. Users would navigate a single, familiar portal environment, moving effortlessly between what were once separate applications. This approach would not only improve the user experience but also simplify the development, deployment, and maintenance of enterprise front-ends.
 
@@ -49,7 +52,7 @@ Extending large platforms can be costly. Spin the Web excels at adding smaller, 
 \section{The Book Analogy}
 \label{sec:book-analogy}
 
-To better understand the structure of a web portal defined in \wbdl{}, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs. However, the book analogy ends there: web technologies introduce hyperlinks and dynamic routing that open a new, non-linear dimension. The sequence in which users traverse the portal is not fixed; it changes based on navigational setups---menus, breadcrumbs, deep links, search results, role-based visibility, and workflow-driven redirects---so journeys adapt to context, permissions, and intent.
+To better understand the structure of a portal defined in \wbdl{}, it's helpful to use the analogy of a book. The portal is organized hierarchically, much like a book is divided into chapters, pages, and paragraphs. However, the book analogy ends there: web technologies introduce hyperlinks and dynamic routing that open a new, non-linear dimension. The sequence in which users traverse the portal is not fixed; it changes based on navigational setups---menus, breadcrumbs, deep links, search results, role-based visibility, and workflow-driven redirects---so journeys adapt to context, permissions, and intent.
 
 \begin{description}
 \item[\textbf{Areas (\texttt{STWArea})}]: These are the main sections of the portal, analogous to the \textbf{chapters} of a book. An area groups related pages together but also other areas.
@@ -62,7 +65,7 @@ To better understand the structure of a web portal defined in \wbdl{}, it's help
 \section{Portal Organization and User Journeys}
 \label{sec:user-journeys}
 
-The structure of a web portal built with \wbdl{} is typically organized around the core functions of the business it represents. This creates a logical and intuitive navigation system for all users. Common top-level \textbf{Areas (\texttt{STWArea})} would include:
+The structure of a portal built with \wbdl{} is typically organized around the core functions of the business it represents. This creates a logical and intuitive navigation system for all users. Common top-level \textbf{Areas (\texttt{STWArea})} would include:
 
 \begin{itemize}
 	\item Sales
@@ -98,26 +101,26 @@ The full potential of the portal is revealed when we consider the specific journ
 \begin{itemize}
 	\item Logs in and is presented with an "Employee Self-Service" area
 	\item Can access a "Welfare Management" page to view and adjust their benefits
-	\item Can view internal company news, submit vacation requests, and access HR documents
+	\item Can view internal enterprise news, submit vacation requests, and access HR documents
 \end{itemize}
 
 \textbf{The CEO:}
 \begin{itemize}
 	\item Logs in to a high-level "Executive Dashboard"
-	\item Can view key performance indicators (KPIs) for the entire company, such as sales figures, production output, and financial health
+	\item Can view key performance indicators (KPIs) for the entire enterprise, such as sales figures, production output, and financial health
 	\item Can access detailed reports from various departments
 \end{itemize}
 
-These user journeys demonstrate how \wbdl{}'s hierarchical structure and role-based visibility rules work together to create a highly functional and personalized web portal that serves as a central hub for the entire business ecosystem.
+These user journeys demonstrate how \wbdl{}'s hierarchical structure and role-based visibility rules work together to create a highly functional and personalized portal that serves as a central hub for the entire business ecosystem.
 
 \section{The Greater Vision: eBranding Through Portal Development}
 \label{sec:ebranding-vision}
 
-This book's mission extends beyond technical instruction to address a fundamental challenge in modern web portal development: creating coherent digital brand experiences in an era of fragmented enterprise systems. The Spin the Web approach represents a perspective that organizations can present unified digital identities through thoughtful portal architecture, even when their underlying systems remain disparate. Rather than accepting the status quo of disconnected interfaces that force stakeholders to navigate multiple, inconsistent touchpoints, this framework proposes that web portals can serve as the primary vehicle for eBranding—where an organization's digital presence reflects its true character and values. By embedding business processes, quality management principles, and organizational knowledge directly within portal structures, the framework suggests that portals can evolve from mere functional interfaces into authentic digital representations of the organization itself. This approach to web portal development prioritizes stakeholder experience and organizational coherence, viewing the portal not as a collection of features but as an expression of how the organization wishes to engage with its various communities in the digital realm.
+This book's mission extends beyond technical instruction to address a fundamental challenge in modern portal development: creating coherent digital brand experiences in an era of fragmented enterprise systems. The Spin the Web approach represents a perspective that organizations can present unified digital identities through thoughtful portal architecture, even when their underlying systems remain disparate. Rather than accepting the status quo of disconnected interfaces that force stakeholders to navigate multiple, inconsistent touchpoints, this framework proposes that portals can serve as the primary vehicle for eBranding—where an organization's digital presence reflects its true character and values. By embedding business processes, quality management principles, and organizational knowledge directly within portal structures, the framework suggests that portals can evolve from mere functional interfaces into authentic digital representations of the organization itself. This approach to portal development prioritizes stakeholder experience and organizational coherence, viewing the portal not as a collection of features but as an expression of how the organization wishes to engage with its various communities in the digital realm.
 
 \section{Looking Forward}
 \label{sec:looking-forward}
 
-This introduction has laid out the core problems of enterprise software fragmentation and presented the Spin the Web vision as a solution. But how does this vision translate from an abstract concept into a concrete digital entity? How can a web portal truly become a "virtualized company"?
+This introduction has laid out the core problems of enterprise software fragmentation and presented the Spin the Web vision as a solution. But how does this vision translate from an abstract concept into a concrete digital entity? How can a portal truly become a "virtualized enterprise"?
 
 The next chapter explores this concept in depth, detailing how the project's components work in concert to transform complex business structures into a tangible, unified digital experience.

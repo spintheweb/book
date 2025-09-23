@@ -8,7 +8,7 @@
 — Ralph Johnson
 \end{quote}
 
-Spin the Web is built upon a core architectural foundation that enables the creation of sophisticated enterprise web portals. This architecture is composed of three distinct but complementary components: the Blueprint, the Engine, and the Workshop. Together, they transform complex business requirements into unified, role-based digital experiences.
+Spin the Web is built upon a core architectural foundation that enables the creation of sophisticated portals. This architecture aligns to three book parts for coherence: the Foundations, the Framework, and the Portal. Together, they transform complex business requirements into unified, role-based digital experiences.
 
 \section{The Core Components}
 \label{sec:core-components}
@@ -16,12 +16,12 @@ Spin the Web is built upon a core architectural foundation that enables the crea
 The architecture consists of three core components:
 
 \begin{description}
-\item[\textbf{Webbase Description Language (\wbdl{})}]: A declarative language for modeling complex web portal structures, data relationships, and business logic
-\item[\textbf{Web Spinner Engine}]: A runtime engine that interprets \wbdl{} specifications and delivers dynamic, role-based content
+\item[\textbf{Webbase Description Language (\wbdl{})}]: A declarative language for modeling complex portal structures, data relationships, and business logic
+\item[\textbf{Web Spinner Runtime}]: A runtime that interprets \wbdl{} specifications and delivers dynamic, role-based content
 \item[\textbf{Spin the Web Studio}]: A specialized \webbaselet{} for creating, editing, and managing \webbase{} definitions with in-place editing capabilities
 \end{description}
 
-\section{The Blueprint: Webbase Description Language (\wbdl{})}
+\section{Foundations: Webbase Description Language (\wbdl{})}
 \label{sec:blueprint-wbdl}
 
 \wbdl{} forms the declarative foundation of the entire system. Unlike traditional approaches that mix structure, presentation, and logic, \wbdl{} provides a clean separation of concerns through a hierarchical, schema-based approach.
@@ -55,10 +55,10 @@ The architecture consists of three core components:
 	\item \textbf{Testability}: Declarative definitions are easier to validate and test than imperative code
 \end{itemize}
 
-\section{The Engine: Web Spinner}
+\section{Framework: Web Spinner}
 \label{sec:engine-spinner}
 
-The Web Spinner Engine serves as the runtime foundation that brings \wbdl{} specifications to life. It handles the complex orchestration of data retrieval, security enforcement, and content delivery that makes dynamic portals possible.
+The Web Spinner runtime serves as the execution layer that brings \wbdl{} specifications to life. It handles the complex orchestration of data retrieval, security enforcement, and content delivery that makes dynamic portals possible.
 
 \subsection{Core Responsibilities}
 
@@ -76,7 +76,7 @@ The Web Spinner operates through several key subsystems:
 
 \begin{description}
 \item[\textbf{Webbase Loader}]: Loads and parses \wbdl{} documents into optimized in-memory structures
-\item[\textbf{Authorization Engine}]: Evaluates role-based visibility rules in real-time
+\item[\textbf{Authorization Module}]: Evaluates role-based visibility rules in real-time
 \item[\textbf{Command Processor}]: Handles \wbpl{} placeholder resolution and datasource command execution
 \item[\textbf{Content Cache}]: Manages caching strategies for improved performance
 \item[\textbf{Session Manager}]: Maintains user state and authentication information
@@ -109,7 +109,7 @@ The familiar UNIX-style \texttt{rwx} access paradigm can be expressed with RBV: 
 	\item \textbf{Horizontal Scaling}: Support for load-balanced, multi-instance deployments
 \end{itemize}
 
-\section{The Workshop: Spin the Web Studio}
+\section{Portal: Spin the Web Studio}
 \label{sec:workshop-studio}
 
 The Spin the Web Studio is a specialized \webbaselet{} designed for editing and managing \webbase{} definitions. As a \webbaselet{}, it can be seamlessly integrated into any \webbase{} to provide in-place editing capabilities, enabling professional developers to create and maintain complex portal structures efficiently.
@@ -142,22 +142,22 @@ Unlike low-code/no-code platforms, the Studio is designed specifically for profe
 \section{Architectural Interactions}
 \label{sec:architectural-interactions}
 
-The Blueprint, Engine, and Workshop work together through well-defined interfaces and protocols:
+Foundations, Framework, and Portal work together through well-defined interfaces and protocols:
 
 \subsection{Design-Time to Runtime}
 
 \begin{enumerate}
 	\item Developers use the Studio to create and modify \webbase{} definitions
 	\item \wbdl{} documents are saved and versioned using standard development practices
-	\item The Web Spinner Engine loads updated \webbase{} definitions and applies changes
+	\item The Web Spinner runtime loads updated \webbase{} definitions and applies changes
 	\item Changes take effect immediately without requiring system restarts
 \end{enumerate}
 
 \subsection{Runtime Operations}
 
 \begin{enumerate}
-	\item User requests arrive at the Web Spinner Engine
-	\item The engine consults the in-memory \webbase{} structure to route the request
+	\item User requests arrive at the Web Spinner runtime
+	\item The runtime consults the in-memory \webbase{} structure to route the request
 	\item Authorization rules defined in \wbdl{} are evaluated against user roles
 	\item Appropriate \texttt{STWContent} elements are identified and executed
 	\item Responses are assembled and delivered to the client
@@ -239,6 +239,6 @@ Common implementation patterns emerge when working with this architecture:
 \section{Looking Forward}
 \label{sec:architecture-forward}
 
-With the high-level architecture of the Blueprint, Engine, and Workshop defined, our focus must now turn to the underlying engineering. How are these components built? What are the technical specifications of the languages and the internal mechanics of the runtime?
+With the high-level architecture of the Foundations, Framework, and Portal defined, our focus must now turn to the underlying engineering. How are these components built? What are the technical specifications of the languages and the internal mechanics of the runtime?
 
-The next part of this book is dedicated to a deep dive into the framework's implementation. We will explore the complete specifications of the languages and the architectural details of the Web Spinner engine.
+The next part of this book is dedicated to a deep dive into the framework's implementation. We will explore the complete specifications of the languages and the architectural details of the Web Spinner runtime.

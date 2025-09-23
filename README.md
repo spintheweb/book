@@ -4,30 +4,30 @@
 
 **Weaving Web Portals**
 
-[**Read the Latest PDF Version (Local)**](https://spintheweb.github.io/book/SpinTheWeb.pdf)
+[**Read the latest PDF**](https://spintheweb.github.io/book/SpinTheWeb.pdf)
 
 This book presents the Spin the Web framework, from foundational concepts to implementation techniques. The content details the Webbase Description Language (WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on how to use it to build web portals. The framework and this book are stewarded by the eponymous open-source **Spin the Web Foundation**.
 
 ## Book Content
 
-### Part I: The Philosophy (Chapters 1–4)
+### Part I: The Foundations (Chapters 1–4)
 
-- Chapter 1: Genesis — History and evolution of Spin the Web
+- Chapter 1: Genesis and History — History and evolution of Spin the Web
 - Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain analysis
-- Chapter 3: Virtualized Portal Framework — Conceptual architecture
-- Chapter 4: Technical Architecture and Mechanics — System design principles
+- Chapter 3: Web Portals as Virtualized Enterprises — Concept and rationale
+- Chapter 4: Architecture Overview — System design principles
 
 ### Part II: The Framework (Chapters 5–11)
 
-- Chapter 5: WBDL (Webbase Definition Language) — Declarative markup language
-- Chapter 6: WBPL (Webbase Placeholder Language) — Placeholder management
+- Chapter 5: WBDL (Webbase Description Language) — Declarative language
+- Chapter 6: WBPL (Webbase Placeholders Language) — Placeholder management
 - Chapter 7: WBLL (Webbase Layout Language) — Component layout management
 - Chapter 8: Webbase and Webbaselets
-- Chapter 9: Web Spinner Engine Architecture and Mechanics
+- Chapter 9: Web Spinner Runtime Architecture and Mechanics
 - Chapter 10: Spin the Web Studio: An Integrated Development Environment
-- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL engine, WBPL, session/state, security, and deployment
+- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL layout interpreter, WBPL, session/state, security, and deployment
 
-### Part III: The Web Portal (Chapters 12–13)
+### Part III: The Portal (Chapters 12–13)
 
 - Chapter 12: Implementing Portal Contents — Structure, semantics, information architecture, documentation, search, and evolution
 - Chapter 13: Implementing Portal Visuals — Layout, navigation systems, interaction, accessibility, theming, and performance
@@ -59,7 +59,7 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 │   ├── dedication.tex         # Dedication page
 │   ├── abstract.tex           # Abstract
 │   └── preface.tex            # Preface with mathematical philosophy
-├── part1-foundations/         # Part I: Foundations and Concepts
+├── part1-foundations/         # Part I: The Foundations
 │   ├── intro.tex              # Part introduction
 │   ├── genesis.tex            # History and genesis
 │   ├── introduction.tex       # Introduction to enterprise portals
@@ -67,11 +67,11 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 │   └── architecture.tex       # Technical architecture
 ├── part2-framework/           # Part II: Framework Specification and Mechanics
 │   ├── intro.tex              # Part introduction
-│   ├── wbdl.tex               # Webbase Definition Language (WBDL)
+│   ├── wbdl.tex               # Webbase Description Language (WBDL)
 │   ├── wbpl.tex               # Webbase Placeholders Language (WBPL)
 │   ├── wbll.tex               # Webbase Layout Language (WBLL)
 │   ├── webbaselets.tex        # Webbaselets and components
-│   ├── web-spinner.tex        # The Web Spinner Engine
+│   ├── web-spinner.tex        # The Web Spinner Runtime
 │   ├── studio.tex             # The Spin the Web Studio
 │   └── technology.tex         # Technology stack of the reference implementation
 ├── part3-implementation/      # Part III: Implementation (Contents & Visuals)

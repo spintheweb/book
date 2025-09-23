@@ -10,7 +10,7 @@
 \section{The Need for an Integrated Environment}
 \label{sec:studio-need}
 
-While the \wbdl{} and \wbpl{} languages provide a powerful declarative framework for defining enterprise portals, and the \webspinner{} engine offers a robust runtime, the development experience can still be laborious. Without a dedicated toolset, a developer would be forced to:
+While the \wbdl{} and \wbpl{} languages provide a powerful declarative framework for defining enterprise portals, and the \webspinner{} runtime offers a robust execution layer, the development experience can still be laborious. Without a dedicated toolset, a developer would be forced to:
 
 \begin{itemize}
     \item Write and edit complex \wbdl{} files in a standard text editor, without syntax highlighting, validation, or autocompletion.
@@ -29,8 +29,8 @@ The Spin the Web Studio is a webbased development environment designed specifica
 Crucially, the Studio is not an external, standalone application. It is itself a \textbf{\webbaselet{}}, built using the very same technologies it helps to create. This has two profound implications:
 
 \begin{enumerate}
-    \item \textbf{The Ultimate Testing Ground}: The Studio serves as the primary testing ground for the \webspinner{} engine and the entire Spin the Web framework. Every feature of the framework must be robust and performant enough to run the Studio itself.
-    \item \textbf{Part of the Virtualized Portal}: As a \webbaselet{}, the Studio can be seamlessly integrated into any \webbase{}. This allows developers with the appropriate permissions to access the development environment directly from within the live portal, making it a true part of the virtualized web portal.
+    \item \textbf{The Ultimate Testing Ground}: The Studio serves as the primary testing ground for the \webspinner{} runtime and the entire Spin the Web framework. Every feature of the framework must be robust and performant enough to run the Studio itself.
+    \item \textbf{Part of the Virtualized Portal}: As a \webbaselet{}, the Studio can be seamlessly integrated into any \webbase{}. This allows developers with the appropriate permissions to access the development environment directly from within the live portal, making it a true part of the virtualized portal.
 \end{enumerate}
 
 \section{Studio Architecture and Activation}
@@ -110,6 +110,6 @@ The Studio provides a real-time preview of the portal as you build it. Developer
 \section{Looking Forward}
 \label{sec:studio-forward}
 
-The Spin the Web Studio completes the conceptual picture of the framework, providing the "workshop" necessary to build with the "blueprint" and the "engine." It transforms \webbase{} development from a manual, error-prone task into a streamlined, interactive experience.
+The Spin the Web Studio completes the conceptual picture of the framework, providing the development environment necessary to move from Foundations to Framework to working Portal. It transforms \webbase{} development from a manual, error-prone task into a streamlined, interactive experience.
 
-Now that we have covered the complete set of tools in the framework—from the declarative languages to the runtime engine and the IDE—the next chapter will ground these concepts in reality. We will examine the specific technology stack and implementation details of the reference Web Spinner, revealing how these architectural principles are translated into running code.
+Now that we have covered the complete set of tools in the framework—from the declarative languages to the runtime and the IDE—the next chapter will ground these concepts in reality. We will examine the specific technology stack and implementation details of the reference Web Spinner, revealing how these architectural principles are translated into running code.

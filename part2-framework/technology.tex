@@ -14,7 +14,7 @@ The reference implementation is written in TypeScript and runs on the Deno runti
 \end{itemize}
 
 \subsection{Why Deno for the \webspinner?}
-Choosing Deno aligns the engine with the platform’s web-first design and keeps the implementation close to the browser runtime:
+Choosing Deno aligns the runtime with the platform’s web-first design and keeps the implementation close to the browser runtime:
 \begin{itemize}
 	\item \textbf{TypeScript end-to-end:} one language for the spinner, utilities, and any shared logic with client code.
 	\item \textbf{Web APIs in the server:} standard \texttt{URL}, \texttt{Request/Response}, \texttt{Fetch}, and \texttt{Crypto} lower cognitive load and reduce bespoke abstractions.
@@ -44,7 +44,7 @@ The in-memory model mirrors the WBDL structure:
 \end{itemize}
 
 \section{Rendering Pipeline: WBLL and WBPL}
-Presentation is described with WBLL (Webbase Layout Language), interpreted by a layout engine:
+Presentation is described with WBLL (Webbase Layout Language), interpreted by a layout interpreter:
 \begin{itemize}
 	\item WBLL strings are tokenized and validated; tokens drive generation of a specialized render function
 	\item Token handlers cover inputs, lists, links, media, buttons/actions, and structural fragments; they build HTML using placeholders and field values
@@ -79,7 +79,7 @@ For a content render request:
 The following folders in the reference implementation contain the mechanics described above:
 \begin{itemize}
 	\item \texttt{stwElements/}: \textit{STWElement}, \textit{STWSite}, \textit{STWArea}, \textit{STWPage}, \textit{STWContent}
-	\item \texttt{stwContents/}: concrete contents and \textit{WBLL} engine (layout parsing/rendering)
+	\item \texttt{stwContents/}: concrete contents and \textit{WBLL} interpreter (layout parsing/rendering)
 	\item \texttt{tests/}: WBPL and layout-related unit tests
 	\item \texttt{public/}: client-side scripts, styles, and SPA shell
 	\item \texttt{tasks/}: Deno-powered dev/build utilities (e.g., minification, CSS merge)
@@ -94,6 +94,6 @@ At a glance:
 	\item The server responds with an HTML fragment or instructs the client to fetch multiple fragments via REST/WebSockets
 \end{enumerate}
 
-\noindent This chapter has bridged theory and implementation, showing how the abstract mechanics of the Web Spinner are realized in a modern technology stack. With the platform's construction now fully detailed—from its languages to its engine and development tools—our focus shifts from building the framework to using it.
+\noindent This chapter has bridged theory and implementation, showing how the abstract mechanics of the Web Spinner are realized in a modern technology stack. With the platform's construction now fully detailed—from its languages to its runtime and development tools—our focus shifts from building the framework to using it.
 
-The next part of this book begins the practical guide for developers, covering the development models and methodologies for designing and building effective web portals with the platform we have just described.
+The next part of this book begins the practical guide for developers, covering the development models and methodologies for designing and building effective portals with the platform we have just described.
