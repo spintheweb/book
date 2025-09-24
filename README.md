@@ -95,6 +95,56 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 
 ## Building the Book
 
+### Install LaTeX (pdflatex)
+
+You need a LaTeX toolchain that provides `pdflatex`, `bibtex`, `makeindex`, and `makeglossaries` (or `makeglossaries-lite`).
+
+- Windows (recommended: MiKTeX)
+	- Install via winget:
+		```powershell
+		winget install -e --id MiKTeX.MiKTeX
+		```
+		- Alternative: TeX Live
+		```powershell
+		winget install -e --id TUG.TexLive
+		```
+	- After install, restart VS Code so PATH updates.
+	- In MiKTeX Console → Settings, set “Install missing packages on-the-fly” to Yes.
+	- If `pdflatex` is still not found in Git Bash, add MiKTeX bin for this session:
+		```bash
+		export PATH="$HOME/AppData/Local/Programs/MiKTeX/miktex/bin/x64:$PATH"
+		```
+
+- macOS
+	- Full TeX: 
+		```bash
+		brew install --cask mactex
+		```
+	- Minimal (smaller download):
+		```bash
+		brew install --cask basictex
+		sudo tlmgr update --self
+		# Install missing packages as prompted during first build
+		```
+
+- Linux (Debian/Ubuntu)
+	- Full TeX Live:
+		```bash
+		sudo apt update
+		sudo apt install -y texlive-full makeglossaries
+		```
+	- Minimal sets vary by distro; ensure `pdflatex`, `bibtex`, `makeindex`, `makeglossaries` are available.
+
+Verify installation:
+```bash
+pdflatex --version
+bibtex --version
+makeindex --version
+makeglossaries --version || makeglossaries-lite --version
+```
+
+### macOS/Linux (bash)
+
 ```bash
 ./build.sh
 ```
@@ -102,5 +152,6 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 This will:
 
 1. Compile the LaTeX source using pdflatex
-2. Generate `SpinTheWeb.pdf` in the root directory
-3. Display build status and any warnings
+2. Run bibtex, makeindex, and makeglossaries
+3. Generate `SpinTheWeb.pdf` in the root directory
+4. Display build status and any warnings

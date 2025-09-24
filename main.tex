@@ -76,9 +76,14 @@
 
 %% BACK MATTER %%
 \backmatter
-\nocite{*}
-\bibliographystyle{plain}
-\bibliography{bibliography/references}
+% Hide bibliography from PDF outline (bookmarks) while keeping it out of TOC
+\begingroup
+	\bookmarksetup{startatroot,depth=-2}
+	\phantomsection
+	\nocite{*}
+	\bibliographystyle{plain}
+	\bibliography{bibliography/references}
+\endgroup
 % Ensure glossary is populated even if some entries aren't referenced yet
 \glsaddall
 \printglossary
