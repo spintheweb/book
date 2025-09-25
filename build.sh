@@ -27,6 +27,22 @@ if [ -f "build/main.pdf" ]; then
     rm -f "SpinTheWeb.pdf" || true
     cp "build/main.pdf" "SpinTheWeb.pdf"
     echo "PDF successfully created as SpinTheWeb.pdf in root directory"
+    
+    # Create deployment directory for GitHub Pages
+    echo "Preparing deployment assets..."
+    rm -rf "deploy" || true
+    mkdir -p "deploy"
+    
+    # Copy web assets for GitHub Pages deployment
+    cp "index.html" "deploy/"
+    cp "SpinTheWeb.pdf" "deploy/"
+    
+    # Copy logo and figures if they exist
+    if [ -d "figures" ]; then
+        cp -r "figures" "deploy/"
+    fi
+    
+    echo "Deployment assets prepared in deploy/ directory"
 else
     echo "Build failed - PDF not created"
     exit 1

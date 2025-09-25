@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin the Web Book</title>
+    <meta name="description" content="Weaving Web Portals - A comprehensive guide to building enterprise web portals">
+    <meta name="author" content="Giancarlo Trevisan">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .logo {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            color: #34495e;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .download-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #2980b9, #21618c);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .info-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-card li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .info-card li:before {
+            content: "▶";
+            color: #3498db;
+            position: absolute;
+            left: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #7f8c8d;
+        }
+        
+        .build-info {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #27ae60;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="figures/spin-the-web.png" alt="Spin the Web Logo" class="logo">
+            <h1>Spin the Web</h1>
+            <p class="subtitle">Weaving Web Portals</p>
+            <div class="tagline">
+                <em>"Visualize, then Realize: Weaving Web Portals to Shape Your Brand's Identity."</em>
+            </div>
+        </div>
+
+        <div class="build-info">
+            📖 Latest PDF build available for download
+        </div>
+        
+        <div class="download-section">
+            <a href="SpinTheWeb.pdf" class="download-btn" download>
+                📚 Download PDF Book
+            </a>
+            <p style="margin-top: 1rem; color: #7f8c8d;">
+                <small>Latest version • Generated from LaTeX source</small>
+            </p>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>📋 Book Content</h3>
+                <ul>
+                    <li>Part I: The Foundations</li>
+                    <li>Part II: The Framework</li>
+                    <li>Part III: The Portal</li>
+                    <li>Part IV: The Roadmap</li>
+                    <li>Comprehensive Appendices</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>🛠 Technical Topics</h3>
+                <ul>
+                    <li>WBDL (Webbase Description Language)</li>
+                    <li>WBPL (Webbase Placeholders Language)</li>
+                    <li>WBLL (Webbase Layout Language)</li>
+                    <li>Web Spinner Runtime</li>
+                    <li>Spin the Web Studio IDE</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>🎯 Target Audience</h3>
+                <ul>
+                    <li>Enterprise Portal Developers</li>
+                    <li>System Architects</li>
+                    <li>Technical Leaders</li>
+                    <li>Platform Engineers</li>
+                    <li>Web Framework Designers</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>📊 Book Stats</h3>
+                <ul>
+                    <li>42+ pages of technical content</li>
+                    <li>Professional LaTeX typesetting</li>
+                    <li>Comprehensive glossary & index</li>
+                    <li>JSON Schema references</li>
+                    <li>Real-world examples</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>
+                <strong>Spin the Web Book</strong> by Giancarlo Trevisan<br>
+                <small>Built with LaTeX • Deployed via GitHub Actions</small>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
