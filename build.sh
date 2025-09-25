@@ -13,8 +13,13 @@ echo "Running makeindex..."
 makeindex build/main
 
 echo "Running makeglossaries (glossary + acronyms)..."
-# Use -d to point to the build directory and pass the basename only
-makeglossaries -d build main
+# Check if makeglossaries is available
+if command -v makeglossaries >/dev/null 2>&1; then
+    # Use -d to point to the build directory and pass the basename only
+    makeglossaries -d build main
+else
+    echo "Warning: makeglossaries not found, skipping glossary processing"
+fi
 
 echo "Running second pdflatex pass..."
 pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
