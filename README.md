@@ -6,14 +6,19 @@
 
 [**Read the latest PDF**](https://spintheweb.github.io/book/SpinTheWeb.pdf)
 
-This book presents the Spin the Web framework, from foundational concepts to implementation techniques. The content details the Webbase Description Language (WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on how to use it to build web portals. The framework and this book are stewarded by the eponymous open-source **Spin the Web Foundation**.
+This book presents the Spin the Web framework, from foundational concepts to
+implementation techniques. The content details the Webbase Description Language
+(WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on
+how to use it to build web portals. The framework and this book are stewarded by
+the eponymous open-source **Spin the Web Foundation**.
 
 ## Book Content
 
 ### Part I: The Foundations (Chapters 1–4)
 
 - Chapter 1: Genesis and History — History and evolution of Spin the Web
-- Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain analysis
+- Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain
+  analysis
 - Chapter 3: Web Portals as Virtualized Enterprises — Concept and rationale
 - Chapter 4: Architecture Overview — System design principles
 
@@ -25,12 +30,16 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 - Chapter 8: Webbase and Webbaselets
 - Chapter 9: Web Spinner Runtime Architecture and Mechanics
 - Chapter 10: Spin the Web Studio: An Integrated Development Environment
-- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript runtime, WBLL layout interpreter, WBPL, session/state, security, and deployment
+- Chapter 11: Technology Stack and Implementation Mechanics — Deno/TypeScript
+  runtime, WBLL layout interpreter, WBPL, session/state, security, and
+  deployment
 
 ### Part III: The Portal (Chapters 12–13)
 
-- Chapter 12: Implementing Portal Contents — Structure, semantics, information architecture, documentation, search, and evolution
-- Chapter 13: Implementing Portal Visuals — Layout, navigation systems, interaction, accessibility, theming, and performance
+- Chapter 12: Implementing Portal Contents — Structure, semantics, information
+  architecture, documentation, search, and evolution
+- Chapter 13: Implementing Portal Visuals — Layout, navigation systems,
+  interaction, accessibility, theming, and performance
 
 ### Part IV: The Roadmap (Chapter 14)
 
@@ -38,9 +47,13 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 
 ### Appendices
 
-- Appendix A: WBDL JSON Schema Reference — Formal JSON Schema definitions for WBDL element types (Site, Area, Page, Content, etc.)
-- Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax, examples, and interpreter behavior
-- Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design for three foundational webbaselets; includes structured classification and examples
+- Appendix A: WBDL JSON Schema Reference — Formal JSON Schema definitions for
+  WBDL element types (Site, Area, Page, Content, etc.)
+- Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax,
+  examples, and interpreter behavior
+- Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design
+  for three foundational webbaselets; includes structured classification and
+  examples
 
 ## Book Structure
 
@@ -97,45 +110,20 @@ This book presents the Spin the Web framework, from foundational concepts to imp
 
 ### Install LaTeX (pdflatex)
 
-You need a LaTeX toolchain that provides `pdflatex`, `bibtex`, `makeindex`, and `makeglossaries` (or `makeglossaries-lite`).
+You need a LaTeX toolchain that provides `pdflatex`, `bibtex`, `makeindex`, and
+`makeglossaries` (or `makeglossaries-lite`).
 
-- Windows (recommended: MiKTeX)
-	- Install via winget:
-		```powershell
-		winget install -e --id MiKTeX.MiKTeX
-		```
-		- Alternative: TeX Live
-		```powershell
-		winget install -e --id TUG.TexLive
-		```
-	- After install, restart VS Code so PATH updates.
-	- In MiKTeX Console → Settings, set “Install missing packages on-the-fly” to Yes.
-	- If `pdflatex` is still not found in Git Bash, add MiKTeX bin for this session:
-		```bash
-		export PATH="$HOME/AppData/Local/Programs/MiKTeX/miktex/bin/x64:$PATH"
-		```
-
-- macOS
-	- Full TeX: 
-		```bash
-		brew install --cask mactex
-		```
-	- Minimal (smaller download):
-		```bash
-		brew install --cask basictex
-		sudo tlmgr update --self
-		# Install missing packages as prompted during first build
-		```
-
-- Linux (Debian/Ubuntu)
-	- Full TeX Live:
-		```bash
-		sudo apt update
-		sudo apt install -y texlive-full makeglossaries
-		```
-	- Minimal sets vary by distro; ensure `pdflatex`, `bibtex`, `makeindex`, `makeglossaries` are available.
+- Linux
+  - Full TeX Live:
+    ```bash
+    sudo apt update
+    sudo apt install -y texlive-full makeglossaries
+    ```
+  - Minimal sets vary by distro; ensure `pdflatex`, `bibtex`, `makeindex`,
+    `makeglossaries` are available.
 
 Verify installation:
+
 ```bash
 pdflatex --version
 bibtex --version
@@ -143,7 +131,7 @@ makeindex --version
 makeglossaries --version || makeglossaries-lite --version
 ```
 
-### macOS/Linux (bash)
+### Linux (bash)
 
 ```bash
 ./build.sh
