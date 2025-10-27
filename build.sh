@@ -53,3 +53,30 @@ else
     exit 1
 fi
 
+# Release steps
+VERSION=$(cat VERSION)
+TAG="v$VERSION"
+
+echo "Preparing release for $TAG..."
+
+# Delete tag locally and remotely if it exists
+if git rev-parse "$TAG" >/dev/null 2>&1; then
+    echo "Tag $TAG exists. Deleting local and remote tag to allow overwrite."
+    git tag -d "$TAG" || true
+    git push --delete origin "$TAG" || true
+fi
+
+# Create and push new tag
+git add SpinTheWeb.pdf
+git commit -m "Release $TAG (book PDF)" || true
+git tag "$TAG"
+git push origin "$TAG"
+
+# (Optional) Create or update GitHub release and upload PDF (requires GitHub CLI)
+if command -v gh >/dev/null 2>&1; then
+    echo "Creating/updating GitHub release for $TAG..."
+    gh release delete "$TAG" -y || true
+    gh release create "$TAG" SpinTheWeb.pdf --title "Spin the Web $TAG" --notes "Release $TAG of the book PDF."
+fi
+
+echo "Release $TAG complete."
