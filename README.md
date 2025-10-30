@@ -11,7 +11,7 @@ This book presents the Spin the Web framework, from foundational concepts to
 implementation techniques. The content details the Webbase Description Language
 (WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on
 how to use it to build web portals. The framework and this book are stewarded by
-the eponymous open-source **Spin the Web Foundation**.
+the eponymous open-source **Spin the Web Project**.
 
 ## Book Content
 
