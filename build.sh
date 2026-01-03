@@ -1,6 +1,5 @@
 #!/bin/bash
 # Prerequisites: Requires pdflatex, bibtex, makeindex, and makeglossaries installed and in PATH
-set -e
 echo "Building SpinTheWeb book..."
 
 echo "Running first pdflatex pass..."
@@ -25,7 +24,7 @@ echo "Running second pdflatex pass..."
 pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
 
 echo "Running third pdflatex pass..."
-pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex
+pdflatex -output-directory=build -synctex=1 -interaction=nonstopmode main.tex || true
 
 if [ -f "build/main.pdf" ]; then
     # Remove old root PDF to avoid stale cache/confusion
@@ -53,30 +52,34 @@ else
     exit 1
 fi
 
-# Release steps
-VERSION=$(cat VERSION)
-TAG="v$VERSION"
+# Optional release steps (only when RELEASE=1)
+if [ "${RELEASE:-0}" = "1" ]; then
+    VERSION=$(cat VERSION)
+    TAG="v$VERSION"
 
-echo "Preparing release for $TAG..."
+    echo "Preparing release for $TAG..."
 
-# Delete tag locally and remotely if it exists
-if git rev-parse "$TAG" >/dev/null 2>&1; then
-    echo "Tag $TAG exists. Deleting local and remote tag to allow overwrite."
-    git tag -d "$TAG" || true
-    git push --delete origin "$TAG" || true
+    # Delete tag locally and remotely if it exists
+    if git rev-parse "$TAG" >/dev/null 2>&1; then
+        echo "Tag $TAG exists. Deleting local and remote tag to allow overwrite."
+        git tag -d "$TAG" || true
+        git push --delete origin "$TAG" || true
+    fi
+
+    # Create and push new tag
+    git add SpinTheWeb.pdf
+    git commit -m "Release $TAG (book PDF)" || true
+    git tag "$TAG"
+    git push origin "$TAG"
+
+    # (Optional) Create or update GitHub release and upload PDF (requires GitHub CLI)
+    if command -v gh >/dev/null 2>&1; then
+        echo "Creating/updating GitHub release for $TAG..."
+        gh release delete "$TAG" -y || true
+        gh release create "$TAG" SpinTheWeb.pdf --title "Spin the Web $TAG" --notes "Release $TAG of the book PDF."
+    fi
+
+    echo "Release $TAG complete."
+else
+    echo "RELEASE=1 not set; skipping git/GitHub release steps."
 fi
-
-# Create and push new tag
-git add SpinTheWeb.pdf
-git commit -m "Release $TAG (book PDF)" || true
-git tag "$TAG"
-git push origin "$TAG"
-
-# (Optional) Create or update GitHub release and upload PDF (requires GitHub CLI)
-if command -v gh >/dev/null 2>&1; then
-    echo "Creating/updating GitHub release for $TAG..."
-    gh release delete "$TAG" -y || true
-    gh release create "$TAG" SpinTheWeb.pdf --title "Spin the Web $TAG" --notes "Release $TAG of the book PDF."
-fi
-
-echo "Release $TAG complete."

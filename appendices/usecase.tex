@@ -1,0 +1,202 @@
+\chapter{Webbaselet Use Cases}
+\label{app:usecases}
+
+This appendix illustrates typical use cases for webbaselets:
+small, self-contained web applications that used to live in
+spreadsheets, ad-hoc scripts, or custom line-of-business tools.
+The goal is not to replace existing systems, but to harmonize them:
+software vendors expose stable APIs, and UI integrators compose
+webbaselets that sit on top of those APIs.
+
+Despite the name, webbaselets are not necessarily simple or small.
+At one end of the spectrum they can model a single form or report;
+at the other end they can embody a complete ERP, CRM, or vertical
+line-of-business solution. The key distinction is not size, but the
+fact that they are modular, API-driven, and composable.
+
+\section{Team Task Board}
+
+\subsection*{Before: Spreadsheet To-Do List}
+Many teams maintain a shared spreadsheet to track tasks:
+columns for assignee, status, due date, and comments. Over time,
+these files proliferate (``Q1\_tasks\_final\_v7.xlsx''), access
+control becomes informal, and simple workflows (e.g.\ notifications,
+filtering by user) require manual effort.
+
+\subsection*{After: Task Board Webbaselet}
+A task board webbaselet connects to a tasks API (or a simple JSON
+data source) and offers:
+\begin{itemize}
+  \item Column-based views (e.g.\ \emph{Backlog}, \emph{In Progress}, \emph{Done}).
+  \item Per-user filters and saved views.
+  \item Inline editing, without opening or emailing files.
+  \item Optional integration with issue trackers or chat tools.
+\end{itemize}
+The underlying logic (task model, permissions, notifications)
+remains in the core product; the webbaselet focuses on UI and
+composition.
+
+\section{Inventory and Stock Tracking}
+
+\subsection*{Before: Warehouse Spreadsheet}
+Small warehouses or teams often track inventory in a spreadsheet:
+SKU, description, location, stock level, reorder threshold. There is
+no single source of truth, concurrent edits conflict, and basic
+queries (``show low stock by location'') require manual filtering.
+
+\subsection*{After: Inventory Webbaselet}
+An inventory webbaselet consumes an inventory API (or database
+view) and provides:
+\begin{itemize}
+  \item Search and filtering by SKU, category, or location.
+  \item Highlighting of low-stock and out-of-stock items.
+  \item Simple forms for stock adjustments and movements.
+  \item Read-only views for stakeholders who should not edit data.
+\end{itemize}
+The stock logic and validation stay in the backend; the webbaselet
+offers a focused UI that can be embedded in portals or dashboards.
+
+\section{Event Registration and Attendance}
+
+\subsection*{Before: Sign-up Forms + CSV Exports}
+Event organizers often rely on generic form builders that export
+CSV files. They manually merge lists, send reminders, and track
+attendance in a spreadsheet with ad-hoc columns.
+
+\subsection*{After: Registration Webbaselet}
+A registration webbaselet connects to an events/participants API
+and enables:
+\begin{itemize}
+  \item Branded sign-up forms backed by a structured data model.
+  \item Live views of registration counts per session or ticket type.
+  \item Check-in views optimized for tablets or mobile devices.
+  \item Export to downstream systems (CRM, email marketing) via APIs.
+\end{itemize}
+Again, business rules (capacity limits, ticket types, pricing) live
+in the backend. The webbaselet tailors the UI for a specific event
+or organizer.
+
+\section{Lightweight CRM and Contact Lists}
+
+\subsection*{Before: Contact Spreadsheet}
+Sales or support teams maintain contact lists in spreadsheets: name,
+company, email, notes, last-contact date. Different teams fork their
+own copies, and no one has a consistent, up-to-date view of customer
+interactions.
+
+\subsection*{After: Contact Webbaselet}
+A contact webbaselet integrates with a CRM or customer API and
+offers:
+\begin{itemize}
+  \item Unified views of contacts with filters for segment, owner,
+        or lifecycle stage.
+  \item Inline note taking and tagging.
+  \item Contextual links to external systems (support tickets,
+        billing, product usage dashboards).
+\end{itemize}
+The CRM remains the system of record; the webbaselet is a customized
+lens focused on one team’s workflow.
+
+\section{Timesheets and Time Tracking}
+
+\subsection*{Before: Weekly Timesheet Templates}
+Consulting and development teams often email around weekly timesheet
+templates as spreadsheets. Employees fill them in, send them back,
+and someone consolidates the data manually for payroll or billing.
+
+\subsection*{After: Timesheet Webbaselet}
+A timesheet webbaselet talks to a time-tracking or billing API and
+provides:
+\begin{itemize}
+  \item Simple weekly views per person, project, or client.
+  \item Validation rules delegated to the backend (e.g.\ max hours,
+        required fields).
+  \item Role-specific views (employee, manager, finance).
+  \item Export or synchronization to accounting systems.
+\end{itemize}
+The core product owns timesheet logic and compliance; the webbaselet
+delivers a focused UI that can evolve independently.
+
+\section{Guest Registration via QR Code}
+
+\subsection*{Before: Paper Forms and Ad-hoc Apps}
+Guest registration is often handled with paper sign-in sheets,
+generic form builders, or improvised tablet apps. Data ends up
+scattered across mailboxes and CSV exports; hosts lack a live
+view of who has arrived, and compliance requirements (e.g.\ GDPR
+consent, visitor badges, emergency lists) are handled informally.
+
+\subsection*{After: Guest Registration Webbaselet}
+A guest registration webbaselet focuses entirely on the arrival
+experience and visitor lifecycle:
+\begin{itemize}
+  \item Pre-registration links sent by email, each with a unique QR code.
+  \item A check-in view that scans the QR code and confirms arrival.
+  \item Dynamic questions per visit type (e.g.\ NDA, health \& safety).
+  \item Instant notifications to hosts and reception staff.
+  \item Secure integration with identity systems and visitor logs via APIs.
+\end{itemize}
+The underlying policies (who may enter, retention times, badge
+rules) remain in the core system; the webbaselet specializes the
+UI around QR-code–based registration and check-in.
+
+\section{Employee Timesheets}
+
+\subsection*{Before: Spreadsheet-based Timesheets}
+In many organizations, employees track working hours in shared
+spreadsheets or emailed templates. Each week, files are copied,
+renamed, and manually consolidated for payroll and billing. There
+is no single source of truth, approval workflows are ad hoc, and
+basic checks (e.g.\ missing entries, overtime rules) are performed
+by hand.
+
+\subsection*{After: Timesheet Webbaselet}
+A timesheet webbaselet is dedicated to capturing, reviewing, and
+exporting working hours:
+\begin{itemize}
+  \item Weekly and monthly views per employee, project, or client.
+  \item Validation of entries (required fields, maximum hours, holidays)
+        delegated to backend policies.
+  \item Manager approval flows (pending, approved, rejected) surfaced
+        as simple UI states.
+  \item Role-specific perspectives for employees, managers, and finance.
+  \item API-based integration with HR, payroll, and invoicing systems.
+\end{itemize}
+The core HR or ERP system remains the system of record; the webbaselet
+provides a focused, evolvable UI for time capture and approval, instead
+of relying on fragile spreadsheet processes.
+
+\section{Human Resources and Welfare Management}
+
+\subsection*{Before: Fragmented HR and Welfare Processes}
+HR and welfare programs are often split across multiple tools:
+spreadsheets for benefits eligibility, email threads for requests,
+PDF forms for reimbursements, and separate portals for leave,
+training, and well-being initiatives. Employees struggle to find
+the right entry point, HR staff re-key data across systems, and
+visibility on participation and costs is limited.
+
+\subsection*{After: HR and Welfare Webbaselet}
+An HR and welfare management webbaselet unifies access to policies,
+requests, and status tracking:
+\begin{itemize}
+  \item A single entry point where employees can view benefits,
+        submit requests (e.g.\ childcare, wellness, commuting),
+        and track approvals.
+  \item Dynamic workflows based on role, location, and employment
+        type, driven by backend rules.
+  \item Integration with HRIS, payroll, and benefits providers via
+        APIs, avoiding manual data transfer.
+  \item Aggregated dashboards for HR to monitor utilization,
+        budget impact, and compliance indicators.
+\end{itemize}
+The core HR and payroll systems keep ownership of contracts,
+eligibility, and calculations; the webbaselet orchestrates a
+coherent, employee-centric UI for welfare management at scale.
+
+\bigskip
+These examples illustrate a recurring pattern: existing spreadsheets
+and ad-hoc tools reveal stable data structures and workflows.
+Webbaselets capture those patterns as reusable, composable UI pieces
+that sit on top of well-defined APIs, harmonizing rather than
+replacing the underlying systems.
