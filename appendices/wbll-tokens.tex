@@ -50,22 +50,22 @@ If you need to skip an argument, use an empty segment: e.g., \wballsyn{e(';usern
 % Example recordset used in examples
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
-\textbf{Example recordset} (fields in order): \texttt{price}, \texttt{username}, \texttt{city}.
+\textbf{Example recordset} (fields in order): \texttt{rent}, \texttt{username}, \texttt{city}.
 
 \medskip
 \begin{tabularx}{\linewidth}{@{}l l l@{}}
-\textbf{price} & \textbf{username} & \textbf{city} \\
+\textbf{rent} & \textbf{username} & \textbf{city} \\
 \hline
-1234.5 & alice & Milan \\
-99 & bob & Paris \\
-0 & carol & Berlin \\
+450.00 & alice & Milan \\
+525.00 & bob & Paris \\
+400.00 & carol & Berlin \\
 \end{tabularx}
 
 \medskip
 \textit{Assumptions for examples:} unless stated otherwise,
 (1) examples evaluate the first row;
-(2) the field cursor starts at the first field (\texttt{price});
-(3) when currency output like “€ 1{,}234.50” appears, it is the formatted \texttt{price} of row 1 using the pattern \texttt{€ \#,\#\#0.00}.
+(2) the field cursor starts at the first field (\texttt{rent});
+(3) when currency output like “€ 1{,}234.50” appears, it is the formatted \texttt{rent} of row 1 using the pattern \texttt{€ \#,\#\#0.00}.
 }
 \end{tcolorbox}
 
@@ -77,19 +77,21 @@ If you need to skip an argument, use an empty segment: e.g., \wballsyn{e(';usern
 \hline
 \textbf{Description} & Multiline comment. The interpreter ignores everything between \texttt{/*} and \texttt{*/}. Can span multiple lines. Produces no output and does \textbf{not} move the field cursor. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 lf /* comment
    spanning
    lines */
 \rl('UserName')f
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<label>price</label>1234.5<br><label>UserName</label>alice
+<label>rent</label>450.00<br><label>UserName</label>alice
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -101,17 +103,19 @@ lf /* comment
 \hline
 \textbf{Description} & Line comment. The interpreter ignores everything from \textbf{//} to the end of the line. Produces no output and does \textbf{not} move the field cursor. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 t('Hello') // inline comment after code
 \r
 // full-line comment
 t('World')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 Hello<br>World
 \end{lstlisting}
@@ -125,14 +129,16 @@ Hello<br>World
 \hline
 \textbf{Description} & Moves the field cursor back by one position. Produces no output. If the cursor is already at the first field, this operation is a no-op. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 >>><f
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 Milan
 \end{lstlisting}
@@ -146,14 +152,16 @@ Milan
 \hline
 \textbf{Description} & Advances the field cursor by one position. Produces no output. If the cursor is already at the last field, this operation is a no-op. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 >f
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 alice
 \end{lstlisting}
@@ -165,12 +173,11 @@ alice
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
 \textbf{Token} & \wballsyn{\\A('attr="value" ...')} \\
 \hline
-\textbf{Description} & Like \textbf{\textbackslash a}, but applies attributes to the \emph{parent} structural element: the nearest enclosing \texttt{<tr>} (in table contexts) or \texttt{<li>} (in list contexts). Non-editing; produces no output and does \textbf{not} move the field cursor. Has effect only when inside a table row or list item context. The attributes are processed by the WBPL interpreter. \\
+\textbf{Description} & Like \textbf{\textbackslash a}, but applies attributes to the \emph{parent} structural element: the nearest enclosing \texttt{<tr>} (in table context) or \texttt{<li>} (in list context). Non-editing; produces no output and does \textbf{not} move the field cursor. Has effect only when inside a table row or list item context. The attributes are processed by the WBPL interpreter. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 // In a table row context (created by the table subtype)
 \A('class="highlight"')e
@@ -178,9 +185,12 @@ alice
 // In a list item context (created by the list/menu subtype)
 \A('data-role="user"')>e(';username')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<tr class="highlight">... <input type="text" name="price" value="1234.5"> ...</tr>
+<tr class="highlight">... <input type="text" name="rent" value="450.00"> ...</tr>
 <li data-role="user">... <input type="text" name="username" value="alice"> ...</li>
 \end{lstlisting}
 \end{tcolorbox}
@@ -193,17 +203,19 @@ alice
 \hline
 \textbf{Description} & Assigns HTML attributes to the most recently emitted element. Use immediately after a token that creates an element (e.g., \texttt{e}, \texttt{w}, \texttt{m}, \texttt{h}). Attributes are appended/merged; later attributes override earlier ones when duplicated. Non-editing; produces no output and does \textbf{not} move the field cursor. The attributes are processed by the WBPL interpreter. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 e\a('required style="color:red"')
 >e(';username')\a('maxlength="20"')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<input type="text" name="price" value="1234.5" required style="color:red"><input type="text" name="username" value="alice" maxlength="20">
+<input type="text" name="rent" value="450.00" required style="color:red"><input type="text" name="username" value="alice" maxlength="20">
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -215,16 +227,18 @@ e\a('required style="color:red"')
 \hline
 \textbf{Description} & Inserts a line break: \texttt{<br>}. Non-editing; produces no value output and does \textbf{not} advance the field cursor. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 f\rf
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-1234.5<br>alice
+450.00<br>alice
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -236,22 +250,24 @@ f\rf
 \hline
 \textbf{Description} & Renders an input element. Arguments are \emph{positional but optional}. Defaults: \textit{format} = \texttt{text}, \textit{name} = active field name, \textit{value} = active field value. \textbf{Format options:} any HTML5 input type (\texttt{text}, \texttt{email}, \texttt{url}, \texttt{tel}, \texttt{number}, \texttt{date}, \texttt{datetime-local}, \texttt{time}, \texttt{month}, \texttt{week}, \texttt{color}, \texttt{range}, etc.); or a numeric/date-time formatting string (e.g., \texttt{\#,\#\#0.00} for decimals, \texttt{yyyy-MM-dd} for dates). Numeric patterns set \texttt{type="number"} with appropriate \texttt{step} attribute. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance (even if \textit{value} is omitted). \textbf{Non-interactive mode:} renders as \textbf{f} (formatted field value). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 e('email;userEmail') // HTML5 email input type
 e('date;startDate') // HTML5 date input
-e('#,##0.00;price;1234.5') // Numeric format pattern -> type="number" step="0.01"
+e('#,##0.00;rent;450.00') // Numeric format pattern -> type="number" step="0.01"
 e // Defaults to type="text", uses active field
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<input type="email" name="userEmail" value="1234.5">
+<input type="email" name="userEmail" value="450.00">
 <input type="date" name="startDate" value="alice">
-<input type="number" name="price" value="1234.5" step="0.01" inputmode="decimal">
-<input type="text" name="price" value="1234.5">
+<input type="number" name="rent" value="450.00" step="0.01" inputmode="decimal">
+<input type="text" name="rent" value="450.00">
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -263,16 +279,18 @@ e // Defaults to type="text", uses active field
 \hline
 \textbf{Description} & Renders the active field value at the cursor, optionally applying a \textit{format}. The \textit{format} argument is positional but optional (default: identity). \textbf{Cursor rule (non-editing):} advances because it consumes the active field value. \textbf{Formatting:} applies to numeric and date-time values (e.g., \texttt{\#,\#\#0.00} for decimals, \texttt{yyyy-MM-dd} for dates). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 f('#,##0.00')\r // Numeric formatting of active field
 f('yyyy-MM-dd')\r // Date formatting
 f // No format (identity)
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 1,234.50<br>2025-11-30<br>alice
 \end{lstlisting}
@@ -286,18 +304,20 @@ f // No format (identity)
 \hline
 \textbf{Description} & Inserts an HTML input element of type hidden. Arguments are \emph{positional but optional}. Defaults when omitted: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} the cursor advances when \textit{name} is not specified (e.g., just \textbf{h}); if \textit{name} is provided, the cursor does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 h
 h('kind;area')
 h('id')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<input type="hidden" name="price" value="1234.5"><input type="hidden" name="kind" value="area"><input type="hidden" name="id" value="alice">
+<input type="hidden" name="rent" value="450.00"><input type="hidden" name="kind" value="area"><input type="hidden" name="id" value="alice">
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -309,17 +329,20 @@ h('id')
 \hline
 \textbf{Description} & Inserts a JavaScript code block as \texttt{<script>code</script>}. If \textit{code} is omitted, uses the active field value. Placeholders (e.g., \texttt{@@placeholder}) within \textit{code} are automatically replaced with their values. Use \texttt{\textbackslash @} to escape the \texttt{@} symbol if literal text is needed. \textbf{Cursor rule (non-editing):} advances only when \textit{code} is empty (consuming active field value). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
+// assuming @@rows = 3, active field value = "alert('Hello');"
 j('function foo() { alert("what?"); }')
 j('console.log("Rows:", @@rows)')
 j('// Email: user\@example.com')
 j>
 \end{lstlisting}
-\textit{Renders (assuming @@rows = 3, active field value = "alert('Hello');"):}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <script>function foo() { alert("what?"); }</script>
 <script>console.log("Rows:", 3)</script>
@@ -336,15 +359,17 @@ j>
 \hline
 \textbf{Description} & Sets a session variable. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. Produces no output. \textbf{Cursor rule (non-editing):} advances only when it implicitly uses the active field \emph{value} (i.e., when \textit{value} is omitted). If \textit{value} is provided, the cursor does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 k('role;admin')
 k
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 \end{lstlisting}
 \end{tcolorbox}
@@ -357,16 +382,18 @@ k
 \hline
 \textbf{Description} & Renders a label element \emph{as a sibling} (not wrapping) to the next input element: \texttt{<label for="<id>"><text></label>}. The \texttt{for} attribute references the next input's \texttt{id}. Arguments: \textit{id} (optional, defaults to auto-generated ID), \textit{text} (optional, defaults to active field name or value). \textbf{Cursor rule (non-editing):} does not advance. \textbf{Note:} Use uppercase \textbf{L} to wrap the next input inside the label. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 l('uname;Username:')e('username')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<label for="uname">Username:</label><input type="text" name="username" id="uname" value="1234.5">
+<label for="uname">Username:</label><input type="text" name="username" id="uname" value="450.00">
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -378,16 +405,18 @@ l('uname;Username:')e('username')
 \hline
 \textbf{Description} & Renders a label element that \emph{wraps} the next input element: \texttt{<label><text> <input...></label>}. The \textit{text} argument is optional (default = active field value or empty). Unlike lowercase \textbf{l}, this creates a label without \texttt{for} attribute and contains the input. \textbf{Cursor rule (non-editing):} does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 L('Username:')e('username')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<label>Username: <input type="text" name="username" value="1234.5"></label>
+<label>Username: <input type="text" name="username" value="450.00"></label>
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -399,16 +428,18 @@ L('Username:')e('username')
 \hline
 \textbf{Description} & Renders a multiline input. Arguments are \emph{positional but optional}. \textbf{Format modes:} empty or \texttt{textarea} = plain \texttt{<textarea>}; \texttt{wysiwyg} = Summernote WYSIWYG editor; language code (\texttt{javascript}, \texttt{html}, \texttt{css}, \texttt{bash}, etc.) = Ace code editor with syntax highlighting. Defaults: \textit{format} = textarea, \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance. \textbf{Non-interactive mode:} renders as \textbf{f} (formatted field value). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 m(';comments;Hello') // Plain textarea
 m('wysiwyg;description') // Summernote editor
 m('javascript;code;console.log("test")') // Ace editor with JavaScript syntax
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <textarea name="comments">Hello</textarea>
 <textarea id="..." name="description">alice</textarea><script>...</script>
@@ -424,21 +455,24 @@ m('javascript;code;console.log("test")') // Ace editor with JavaScript syntax
 \hline
 \textbf{Description} & Sets content-level attributes: \texttt{caption}, \texttt{header}, \texttt{footer}, \texttt{key}, \texttt{visible}, \texttt{enabled}, \texttt{disabled}, \texttt{nodata}. Non-editing; does not move the field cursor. Multiple calls accumulate; later values override earlier ones for the same key. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
+// table subtype
 \s('caption="Users" header="Found: @@rows" key="fId"') l f l f l f
 \end{lstlisting}
-\textit{Renders (table subtype):}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <table data-key="fId">
   <caption>Users</caption>
   <thead>Found: 3</thead>
   <tbody>
     <tr>
-      <th>price</th><td>1234.5</td>
+      <th>rent</th><td>450.00</td>
       <th>username</th><td>alice</td>
       <th>city</th><td>Milan</td>
     </tr>
@@ -456,7 +490,7 @@ m('javascript;code;console.log("test")') // Ace editor with JavaScript syntax
 \hline
 \textbf{Description} & Inserts the given text string into the response flow at the current position. Non-editing; does not move the field cursor. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
 \end{tabularx}}
 
 % Keep verbatim listings outside tabularx to prevent runaway arguments
@@ -464,7 +498,10 @@ m('javascript;code;console.log("test")') // Ace editor with JavaScript syntax
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 t('Hello World!')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 Hello World!
 \end{lstlisting}
@@ -478,16 +515,18 @@ Hello World!
 \hline
 \textbf{Description} & Renders a password input element: \texttt{<input type="password" name="<name>" value="<value>">}. Arguments are \emph{positional but optional}. Defaults: \textit{name} = active field name, \textit{value} = active field value. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance. \textit{Note:} some browsers ignore preset password values. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 w('pwd;secret')\rw\rw(';password')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<input type="password" name="pwd" value="secret"><br><input type="password" name="price" value="1234.5"><br><input type="password" name="username" value="password">
+<input type="password" name="pwd" value="secret"><br><input type="password" name="rent" value="450.00"><br><input type="password" name="username" value="password">
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -499,18 +538,20 @@ w('pwd;secret')\rw\rw(';password')
 \hline
 \textbf{Description} & Renders an anchor element: \texttt{<a href="url?params">text</a>}. The \textit{url} argument is optional (default = active field value). Use \textbf{p()} tokens to append query parameters; use \textbf{t()} or another display token for link text. \textbf{Cursor rule (non-editing):} advances only if \textit{url} is empty (consuming active field value). \textbf{Note:} Use uppercase \textbf{A} to open link in new tab. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 a('/users')p('id;@@userId')t('View User')
 a>t('Link from field')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <a href="/users?id=123">View User</a>
-<a href="1234.5">Link from field</a>
+<a href="450.00">Link from field</a>
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -522,14 +563,16 @@ a>t('Link from field')
 \hline
 \textbf{Description} & Renders an anchor element with \texttt{target="\_blank"}: \texttt{<a href="url?params" target="\_blank">text</a>}. Same as lowercase \textbf{a} but opens in a new tab/window. \textbf{Cursor rule (non-editing):} advances only if \textit{url} is empty. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 A('https://example.com')t('External Link')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <a href="https://example.com" target="_blank">External Link</a>
 \end{lstlisting}
@@ -555,15 +598,17 @@ A('https://example.com')t('External Link')
 \hline
 \textbf{Description} & Renders a button or submit input. Arguments: \textit{url} (optional redirect), \textit{namespace} (typically \texttt{stw}), \textit{action} (e.g., \texttt{insert}, \texttt{update}, \texttt{delete}, \texttt{search}, \texttt{filter}, \texttt{submit}, \texttt{logon}, \texttt{logoff}, \texttt{pwdreset}). Use \textbf{p()} for parameters, \textbf{t()} for button text. \textbf{Cursor rule (non-editing):} does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 b(';stw;insert')t('Add Record')
 b(';stw;submit')t('Save')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <button type="submit" name="stwAction" value="stwinsert">Add Record</button>
 <button type="submit" name="stwAction" value="stwsubmit">Save</button>
@@ -578,16 +623,18 @@ b(';stw;submit')t('Save')
 \hline
 \textbf{Description} & Renders checkbox input(s). \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list (each item is both value and label); \texttt{mode=2} = key-value pairs (value;label;value;label...). For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields (id, value), acts as mode=2. Arguments: \textit{mode}, \textit{name} (optional, defaults to active field), \textit{value} (optional, defaults to active field value), then options. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders as disabled checkboxes. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 c('0;tags;;mysqldb;SELECT id,name FROM tags') // Datasource (2 fields -> key-value)
 c('1;agree;;yes;no;maybe') // Simple list
 c('2;choice;;1;Option A;2;Option B') // Key-value pairs
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <fieldset class="stwGroup"><label><input type="checkbox" name="tags" value="1">Tag One</label>...</fieldset>
 <fieldset class="stwGroup"><label><input type="checkbox" name="agree" value="yes">yes</label>...</fieldset>
@@ -603,14 +650,16 @@ c('2;choice;;1;Option A;2;Option B') // Key-value pairs
 \hline
 \textbf{Description} & Renders radio button input(s). \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list; \texttt{mode=2} = key-value pairs. For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields, acts as mode=2. Arguments: \textit{mode}, \textit{name} (optional), \textit{value} (optional), then options. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders as disabled radio buttons. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 r('1;gender;;male;female;other')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <fieldset class="stwGroup"><label><input type="radio" name="gender" value="male">male</label>...</fieldset>
 \end{lstlisting}
@@ -624,16 +673,18 @@ r('1;gender;;male;female;other')
 \hline
 \textbf{Description} & Renders a dropdown select. \textbf{Lowercase d} allows empty selection (includes \texttt{<option></option>}); \textbf{uppercase D} requires selection (no empty option). \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list; \texttt{mode=2} = key-value pairs. For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields, acts as mode=2. Arguments: \textit{name} (optional), \textit{value} (optional), \textit{mode}, then options. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders as \textbf{n} (mapped value display). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 d('country;;0;mysqldb;SELECT id,name FROM countries') // Datasource
 d('city;;1;Milan;Paris;Berlin') // Simple list
 D('status;;2;1;Active;2;Inactive') // Key-value pairs
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <select name="country"><option></option><option value="1">Italy</option>...</select>
 <select name="city"><option></option><option value="Milan">Milan</option>...</select>
@@ -649,14 +700,16 @@ D('status;;2;1;Active;2;Inactive') // Key-value pairs
 \hline
 \textbf{Description} & Renders a multi-select dropdown with \texttt{multiple} attribute. \textbf{Lowercase s} allows empty; \textbf{uppercase S} requires selection. \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list; \texttt{mode=2} = key-value pairs. For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields, acts as mode=2. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders comma-separated mapped values (similar to \textbf{n} but handles multiple selections). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 s('tags;;1;tag1;tag2;tag3')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <select name="tags" multiple><option></option><option value="tag1">tag1</option>...</select>
 \end{lstlisting}
@@ -670,14 +723,16 @@ s('tags;;1;tag1;tag2;tag3')
 \hline
 \textbf{Description} & Renders a file upload input: \texttt{<input type="file">}. Uses active field name. \textbf{Cursor rule (non-editing):} does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 u\a('accept="image/*"')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <input type="file" accept="image/*">
 \end{lstlisting}
@@ -691,16 +746,19 @@ u\a('accept="image/*"')
 \hline
 \textbf{Description} & Renders an image element. \textbf{Modes:} empty or \texttt{0} = direct URL from \textit{mode} or active field value; \texttt{1} = indexed by value (field value selects from option list); \texttt{2} = key-value pairs (field value matches key, renders corresponding URL). \textbf{Cursor rule (non-editing):} advances. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
+// assuming field value = 2
 i('/img/logo.png')
 i('1;img1.png;img2.png;img3.png')
 i('2;1;img-one.png;2;img-two.png')
 \end{lstlisting}
-\textit{Renders (assuming field value = 2):}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <img src="/img/logo.png">
 <img src="img2.png">
@@ -716,15 +774,18 @@ i('2;1;img-one.png;2;img-two.png')
 \hline
 \textbf{Description} & Displays a mapped value (non-interactive version of dropdown). \textbf{Modes:} \texttt{1} = indexed by value; \texttt{2} = key-value pairs. \textbf{Cursor rule (non-editing):} advances. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
+// field value = 2
 n('1;Low;Medium;High')
 n('2;1;Active;2;Inactive;3;Pending')
 \end{lstlisting}
-\textit{Renders (field value = 2):}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 Medium
 Inactive
@@ -739,16 +800,18 @@ Inactive
 \hline
 \textbf{Description} & Renders an article container element with auto-generated ID and optional href built from \textit{url} and parameters. \textbf{Cursor rule (non-editing):} does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 o('/item')p('id')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<article id="..." href="/item?id=1234.5"></article>
+<article id="..." href="/item?id=450.00"></article>
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -760,14 +823,16 @@ o('/item')p('id')
 \hline
 \textbf{Description} & Evaluates a JavaScript expression at compile time and inlines the result. \textbf{Warning:} executes at layout compilation time, not render time. Use with caution. \textbf{Cursor rule (non-editing):} does not advance. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 v('new Date().getFullYear()')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 2025
 \end{lstlisting}
@@ -781,14 +846,16 @@ v('new Date().getFullYear()')
 \hline
 \textbf{Description} & Inserts a line break: \texttt{<br>}. Same as \textbf{\textbackslash r}. Non-editing; does not advance the field cursor. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 t('Line 1')\nt('Line 2')
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 Line 1<br>Line 2
 \end{lstlisting}
@@ -802,16 +869,18 @@ Line 1<br>Line 2
 \hline
 \textbf{Description} & Inserts an empty label element: \texttt{<label></label>}. Useful for layout spacing in flex forms. Non-editing; does not advance the field cursor. \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
 \tL('Name:')e
 \end{lstlisting}
-\textit{Renders:}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
-<label></label><label>Name: <input type="text" name="price" value="1234.5"></label>
+<label></label><label>Name: <input type="text" name="rent" value="450.00"></label>
 \end{lstlisting}
 \end{tcolorbox}
 
@@ -823,15 +892,18 @@ Line 1<br>Line 2
 \hline
 \textbf{Description} & Renders a horizontal bar element for plots and visualizations: \texttt{<span style="display:inline-block; width:<width>px; height:1rem;"></span>}. The \textit{width} argument (in pixels) is optional; default = active field value. \textbf{Cursor rule (non-editing):} advances when \textit{width} is not specified (consuming active field value). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
+// assuming active field value = 250
 x('100')
 x
 \end{lstlisting}
-\textit{Renders (assuming active field value = 250):}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <span style="display:inline-block; width:100px; height:1rem;"></span>
 <span style="display:inline-block; width:250px; height:1rem;"></span>
@@ -846,15 +918,18 @@ x
 \hline
 \textbf{Description} & Renders a vertical bar element for plots and visualizations: \texttt{<span style="display:inline-block; width:1rem; height:<height>px;"></span>}. The \textit{height} argument (in pixels) is optional; default = active field value. \textbf{Cursor rule (non-editing):} advances when \textit{height} is not specified (consuming active field value). \\
 \hline
-\textbf{Example} & Code and output below. \\
+\textbf{Example} & \\
+\hline
 \end{tabularx}}
-
-\vspace{0.3em}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
+// assuming active field value = 200
 y('150')
 y
 \end{lstlisting}
-\textit{Renders (assuming active field value = 200):}
+{\small\setstretch{1.05}%
+\begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
+\hline
+\end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=HTML]
 <span style="display:inline-block; width:1rem; height:150px;"></span>
 <span style="display:inline-block; width:1rem; height:200px;"></span>
