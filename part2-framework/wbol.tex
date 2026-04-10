@@ -1,24 +1,24 @@
-% Chapter 5: Webbase Description Language (WBDL)
+% Chapter 5: Webbase Ontology Language (WBOL)
 
-\chapter{Webbase Description Language (WBDL)}
-\label{chap:wbdl}
+\chapter{Webbase Ontology Language (WBOL)}
+\label{chap:wbol}
 
 \begin{quote}
 \textit{"The limits of my language mean the limits of my world."} \\
 — Ludwig Wittgenstein
 \end{quote}
 
-\wbdl{} is formally defined using the standard \textbf{JSON Schema}.
+\wbol{} is formally defined using the standard \textbf{JSON Schema}.
 
-\section{WBDL Ecosystem}
-\label{sec:wbdl-ecosystem}
+\section{WBOL Ecosystem}
+\label{sec:wbol-ecosystem}
 
-While \wbdl{} serves as the declarative language for describing portals, it operates within a comprehensive ecosystem of associated technologies and APIs that enhance its capabilities:
+While \wbol{} serves as the declarative language for describing portals, it operates within a comprehensive ecosystem of associated technologies and APIs that enhance its capabilities:
 
 \subsection{Layout API}
 \label{sec:layout-api}
 
-\wbdl{} includes an associated Layout API that provides programmatic control over content presentation and styling. This API works in conjunction with the declarative \texttt{STWLayout} elements to enable:
+\wbol{} includes an associated Layout API that provides programmatic control over content presentation and styling. This API works in conjunction with the declarative \texttt{STWLayout} elements to enable:
 
 \begin{itemize}
 \item Dynamic layout adjustments based on content type and user preferences
@@ -32,7 +32,7 @@ The Layout API ensures that content presentation remains consistent across diffe
 \subsection{Text Preprocessor}
 \label{sec:text-preprocessor}
 
-The \wbdl{} text preprocessor is a powerful engine that processes textual content before rendering, enabling:
+The \wbol{} text preprocessor is a powerful engine that processes textual content before rendering, enabling:
 
 \begin{itemize}
 \item Placeholder substitution using the \textbf{Webbase Placeholders Language (\wbpl{})}
@@ -59,7 +59,7 @@ The Visual Component Library provides a standardized set of UI components that c
 \subsection{Content Management Integration}
 \label{sec:cms-integration}
 
-\wbdl{} is designed as a fundamental language for Content Management Systems (CMS), providing:
+\wbol{} is designed as a fundamental language for Content Management Systems (CMS), providing:
 
 \begin{itemize}
 \item Structured content definition that separates presentation from data
@@ -68,17 +68,17 @@ The Visual Component Library provides a standardized set of UI components that c
 \item Integration points for external content repositories
 \end{itemize}
 
-This integration capability makes \wbdl{} particularly suitable for enterprise environments where content management workflows are critical to business operations.
+This integration capability makes \wbol{} particularly suitable for enterprise environments where content management workflows are critical to business operations.
 
 \section{Spin the Web Studio}
 \label{sec:studio}
 
-The third and final component of Spin the Web is the \textbf{Spin the Web Studio}. Alongside the \textbf{\wbdl{}} and the \textbf{Web Spinner}, it completes the framework. The Spin the Web Studio is a specialized \webbaselet{} engineered for editing \webbase{s}. To use it, you simply add the \webbaselet{} to the \webbase{} you wish to edit, enabling direct, in-place modification.
+The third and final component of Spin the Web is the \textbf{Spin the Web Studio}. Alongside the \textbf{\wbol{}} and the \textbf{Web Spinner}, it completes the framework. The Spin the Web Studio is a specialized \webbaselet{} engineered for editing \webbase{s}. To use it, you simply add the \webbaselet{} to the \webbase{} you wish to edit, enabling direct, in-place modification.
 
 \section{The STWElement Base}
 \label{sec:stwelement-base}
 
-\wbdl{} defines a base element, \texttt{STWElement}, from which all other elements inherit. JSON Schema definitions for \wbdl{} elements are in \Cref{app:wbdl-json-schema} (see Appendix: WBDL JSON Schema Reference).
+\wbol{} defines a base element, \texttt{STWElement}, from which all other elements inherit. JSON Schema definitions for \wbol{} elements are in \Cref{app:wbol-json-schema} (see Appendix: WBOL JSON Schema Reference).
 
 \subsection{Property Description}
 
@@ -93,10 +93,10 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \item[\textbf{children}]: A list of child \texttt{STWElement} objects.
 \end{description}
 
-\section{WBDL Element Types}
-\label{sec:wbdl-element-types}
+\section{WBOL Element Types}
+\label{sec:wbol-element-types}
 
-This section describes the specialized element types available in \wbdl{}.
+This section describes the specialized element types available in \wbol{}.
 
 \subsection{STWSite}
 
@@ -114,7 +114,7 @@ This section describes the specialized element types available in \wbdl{}.
 \subsubsection{Data Sources and Groups}
 \label{sec:datasources-groups}
 
-The \texttt{datasources} element within \texttt{STWSite} provides a flexible framework for defining how the portal connects to and manages external data systems. Beyond simple connection definitions, \wbdl{} supports advanced data organization concepts:
+The \texttt{datasources} element within \texttt{STWSite} provides a flexible framework for defining how the portal connects to and manages external data systems. Beyond simple connection definitions, \wbol{} supports advanced data organization concepts:
 
 \begin{description}
 \item[\textbf{Data Source Configuration}]: Each data source can be configured with specific connection parameters, authentication credentials, and command optimization settings. Supported data source types include:
@@ -144,7 +144,7 @@ The \texttt{datasources} element within \texttt{STWSite} provides a flexible fra
 \end{itemize}
 \end{description}
 
-This comprehensive approach to data source management ensures that \wbdl{} can integrate seamlessly with complex enterprise data environments while maintaining accessibility and security standards.
+This comprehensive approach to data source management ensures that \wbol{} can integrate seamlessly with complex enterprise data environments while maintaining accessibility and security standards.
 
 \subsection{STWArea}
 
@@ -182,7 +182,7 @@ This comprehensive approach to data source management ensures that \wbdl{} can i
 \subsubsection{Content Categories}
 \label{sec:content-categories}
 
-Contents are the fundamental elements of \wbdl{} and represent interactive data units that fall into four distinct categories, each serving a specific purpose in the portal's user interface:
+Contents are the fundamental elements of \wbol{} and represent interactive data units that fall into four distinct categories, each serving a specific purpose in the portal's user interface:
 
 \begin{description}
 \item[\textbf{Sensorial Contents}]: These render data in human-readable formats for information consumption and input. They include:
@@ -237,8 +237,8 @@ All content types explicitly declare or request the data they interact with, and
 \end{description}
 
 \section{Looking Forward}
-\label{sec:wbdl-forward}
+\label{sec:wbol-forward}
 
-A static portal, however well-structured, has limited utility in a dynamic business environment. The true power of an enterprise portal lies in its ability to present real-time, contextualized data. But how do we bridge the gap between the static structure of \wbdl{} and the dynamic data living in enterprise systems?
+A static portal, however well-structured, has limited utility in a dynamic business environment. The true power of an enterprise portal lies in its ability to present real-time, contextualized data. But how do we bridge the gap between the static structure of \wbol{} and the dynamic data living in enterprise systems?
 
-The next chapter introduces the \textbf{Webbase Placeholders Language (\wbpl{})}, a specialized language designed to embed dynamic queries and data-driven logic directly within your \wbdl{} definitions. We will explore how \wbpl{} turns your static templates into living, breathing documents.
+The next chapter introduces the \textbf{Webbase Placeholders Language (\wbpl{})}, a specialized language designed to embed dynamic queries and data-driven logic directly within your \wbol{} definitions. We will explore how \wbpl{} turns your static templates into living, breathing documents.

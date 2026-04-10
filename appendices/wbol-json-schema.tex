@@ -1,12 +1,12 @@
-% Appendix: WBDL JSON Schema Reference
+% Appendix: WBOL JSON Schema Reference
 
-\chapter{WBDL JSON Schema Reference}
-\label{app:wbdl-json-schema}
+\chapter{WBOL JSON Schema Reference}
+\label{app:wbol-json-schema}
 
-This appendix collects the formal JSON Schema definitions for the main WBDL element types used in Spin the Web. These schemas provide the canonical structure for sites, areas, pages, and content elements.
+This appendix collects the formal JSON Schema definitions for the main WBOL element types used in Spin the Web. These schemas provide the canonical structure for sites, areas, pages, and content elements.
 
 \section{STWElement Base}
-The abstract base for all WBDL objects. Provides identity, common metadata (localized name, slug, keywords, description), visibility, and an optional recursive \texttt{children} array used by composed types. Concrete types specialize via \texttt{type}.
+The abstract base for all WBOL objects. Provides identity, common metadata (localized name, slug, keywords, description), visibility, and an optional recursive \texttt{children} array used by composed types. Concrete types specialize via \texttt{type}.
 \paragraph{Properties}
 \begin{description}
   \item[\texttt{\_id} (string, uuid) (required)] Global unique identifier for the element instance.
@@ -23,7 +23,7 @@ The abstract base for all WBDL objects. Provides identity, common metadata (loca
   "$id": "https://spintheweb.org/schemas/STWElement.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "STWElement",
-  "description": "The base element for all WBDL objects.",
+  "description": "The base element for all WBOL objects.",
   "type": "object",
   "properties": {
     "_id": { "type": "string", "format": "uuid" },

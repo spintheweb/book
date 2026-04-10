@@ -7,8 +7,8 @@
 [**Read the latest PDF**](https://spintheweb.github.io/book/SpinTheWeb.pdf)
 
 This book presents the Spin the Web framework, from foundational concepts to
-implementation techniques. The content details the Webbase Description Language
-(WBDL), the Web Spinner, and Spin the Web Studio, and then provides a guide on
+implementation techniques. The content details the Webbase Ontology Language
+(WBOL), the Web Spinner, and Spin the Web Studio, and then provides a guide on
 how to use it to build web portals. The framework and this book are stewarded by
 the eponymous open-source **Spin the Web Project**.
 
@@ -24,7 +24,7 @@ the eponymous open-source **Spin the Web Project**.
 
 ### Part II: The Framework (Chapters 5–11)
 
-- Chapter 5: WBDL (Webbase Description Language) — Declarative language
+- Chapter 5: WBOL (Webbase Ontology Language) — Declarative language
 - Chapter 6: WBPL (Webbase Placeholders Language) — Placeholder management
 - Chapter 7: WBLL (Webbase Layout Language) — Component layout management
 - Chapter 8: Webbase and Webbaselets
@@ -47,8 +47,8 @@ the eponymous open-source **Spin the Web Project**.
 
 ### Appendices
 
-- Appendix A: WBDL JSON Schema Reference — Formal JSON Schema definitions for
-  WBDL element types (Site, Area, Page, Content, etc.)
+- Appendix A: WBOL JSON Schema Reference — Formal JSON Schema definitions for
+  WBOL element types (Site, Area, Page, Content, etc.)
 - Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax,
   examples, and interpreter behavior
 - Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design
@@ -80,7 +80,7 @@ the eponymous open-source **Spin the Web Project**.
 │   └── architecture.tex       # Technical architecture
 ├── part2-framework/           # Part II: Framework Specification and Mechanics
 │   ├── intro.tex              # Part introduction
-│   ├── wbdl.tex               # Webbase Description Language (WBDL)
+│   ├── wbol.tex               # Webbase Ontology Language (WBOL)
 │   ├── wbpl.tex               # Webbase Placeholders Language (WBPL)
 │   ├── wbll.tex               # Webbase Layout Language (WBLL)
 │   ├── webbaselets.tex        # Webbaselets and components
@@ -100,7 +100,7 @@ the eponymous open-source **Spin the Web Project**.
 ├── bibliography/              # References and citations
 │   └── references.bib
 ├── appendices/                # Appendices
-│   ├── wbdl-json-schema.tex   # WBDL JSON Schema reference
+│   ├── wbol-json-schema.tex   # WBOL JSON Schema reference
 │   ├── wbll-tokens.tex        # WBLL token reference
 │   └── webbaselets.tex        # Webbaselets appendix
 └── build/                     # Generated files (auto-generated, can be safely cleaned)

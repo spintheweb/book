@@ -9,7 +9,7 @@
 This chapter focuses on the *visual and interaction layer* of a Spin the Web portal: translating semantic structure into perceivable, accessible, performant, and brand-aligned experiences—without compromising the stability of information architecture defined in \cref{chap:portal-contents}. The goal is to make presentation an *orthogonal dimension*: evolvable, themable, and testable in isolation.
 
 \section{Separation of Structure and Presentation}
-Structure lives in \wbdl{}: Areas, Pages, and Content blocks define semantics, navigation graph, and documentation. Presentation lives in a theming and layout layer (CSS variables, design tokens, component library primitives) that consumes structural metadata. This separation yields:
+Structure lives in \wbol{}: Areas, Pages, and Content blocks define semantics, navigation graph, and documentation. Presentation lives in a theming and layout layer (CSS variables, design tokens, component library primitives) that consumes structural metadata. This separation yields:
 \begin{itemize}
 	\item \textbf{Predictable Evolution}: New visual themes deploy without structural migrations.
 	\item \textbf{Stable Deep Links}: URLs and identifiers remain constant across redesigns.
@@ -51,7 +51,7 @@ Navigation can also be accomplished through \textbf{clickable images}, floor-pla
 	\item \textbf{Progressive Enhancement}: Initial load should render a textual list fallback while SVG/hotspot script enhancements hydrate.
 	\item \textbf{Performance Budget}: Large planimetric diagrams should be chunked or lazily loaded; defer non-visible layers (e.g., annotations) until interaction.
 	\item \textbf{Analytics Instrumentation}: Tag each hotspot with structural IDs (Area/Page/Content) and business semantics to measure navigation efficacy and dead zones.
-	\item \textbf{Scalability}: For dynamic catalogs, auto-generate hotspot layers from the \wbdl{} structure rather than manually editing coordinates.
+	\item \textbf{Scalability}: For dynamic catalogs, auto-generate hotspot layers from the \wbol{} structure rather than manually editing coordinates.
 	\item \textbf{Theming}: Bind fills, strokes, and hover states to design tokens (not hard-coded colors) for dark mode and brand adaptations.
 \end{itemize}
 Use image-based navigation to \emph{accelerate discovery}, not to replace canonical hierarchical paths. Spatial or iconographic maps become a complementary entry surface feeding into the same stable URL and breadcrumb system.
@@ -117,7 +117,7 @@ Brand expression emerges from typography scale, color system, shape language (ra
 	\item Guard legibility: run contrast validation when updating token sets; reject failing combinations.
 	\item Expose a Theme Inspector webbaselet for administrators to preview token diffs live.
 \end{enumerate}
-Multi-brand portals map different token sets to identical \wbdl{} structures, enabling re-use of governance and search analytics.
+Multi-brand portals map different token sets to identical \wbol{} structures, enabling re-use of governance and search analytics.
 
 \section{Performance and Perceived Speed}
 User perception hinges on \textit{time to meaningful interaction}. Strategies:
@@ -131,4 +131,4 @@ User perception hinges on \textit{time to meaningful interaction}. Strategies:
 Instrument Web Vitals (LCP, INP, CLS) and map to structural IDs for precise remediation. Performance data should be browsable through an internal observability webbaselet.
 
 \section{Conclusion}
-A disciplined visual layer preserves semantic clarity while amplifying usability, trust, and brand presence. By keeping presentation orthogonal to structure, portals remain evolvable: new themes, devices, and interaction models can emerge without refactoring the underlying \wbdl{} definitions. Visual excellence compounds: accessible, performant, token-driven interfaces reduce cognitive load and accelerate enterprise adoption.
+A disciplined visual layer preserves semantic clarity while amplifying usability, trust, and brand presence. By keeping presentation orthogonal to structure, portals remain evolvable: new themes, devices, and interaction models can emerge without refactoring the underlying \wbol{} definitions. Visual excellence compounds: accessible, performant, token-driven interfaces reduce cognitive load and accelerate enterprise adoption.

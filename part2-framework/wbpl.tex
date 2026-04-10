@@ -104,10 +104,10 @@ With placeholder \texttt{statuses = "pending,shipped,delivered"}, this becomes:
 SELECT * FROM orders WHERE status IN ('pending','shipped','delivered')
 \end{lstlisting}
 
-\section{Integration with WBDL}
+\section{Integration with WBOL}
 \label{sec:wbpl-integration}
 
-\wbpl{} is primarily used within \texttt{STWContent} elements in \wbdl{} documents. The \texttt{command} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified datasource.
+\wbpl{} is primarily used within \texttt{STWContent} elements in \wbol{} documents. The \texttt{command} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified datasource.
 
 The placeholder values are sourced from multiple locations in order of precedence:
 \begin{enumerate}
@@ -133,6 +133,6 @@ The \wbpl{} processor is optimized for high-performance scenarios:
 \section{Looking Forward}
 \label{sec:wbpl-forward}
 
-While \wbdl{} provides the structure and \wbpl{} injects dynamic data, a critical question remains: how do we manage the complexity of a large-scale enterprise portal? How do we ensure that different parts of the portal can be developed, maintained, and deployed independently without causing system-wide disruptions?
+While \wbol{} provides the structure and \wbpl{} injects dynamic data, a critical question remains: how do we manage the complexity of a large-scale enterprise portal? How do we ensure that different parts of the portal can be developed, maintained, and deployed independently without causing system-wide disruptions?
 
 The next chapter introduces the concepts of \textbf{\webbase{s}} and \textbf{\webbaselet{s}}—the architectural solution for modularity and scalability in the Spin the Web ecosystem. We will see how these concepts allow for a "divide and conquer" approach to portal development.

@@ -8,9 +8,9 @@
 — Aristotle
 \end{quote}
 
-A complete \wbdl{} document, representing a full portal, is called a \textbf{\webbase{}}. A key requirement for a valid \webbase{} is that it must contain exactly one \texttt{STWSite} element, which serves as the root of the entire structure.
+A complete \wbol{} document, representing a full portal, is called a \textbf{\webbase{}}. A key requirement for a valid \webbase{} is that it must contain exactly one \texttt{STWSite} element, which serves as the root of the entire structure.
 
-However, it is also possible to create smaller, modular \wbdl{} files called \textbf{\webbaselet{s}}. A \webbaselet{} is a \wbdl{} document that does \emph{not} contain an \texttt{STWSite} element. Instead, its root element must be an \texttt{STWArea}. \webbaselet{s} are designed to be portable fragments that can be imported or included within a larger \webbase{}.
+However, it is also possible to create smaller, modular \wbol{} files called \textbf{\webbaselet{s}}. A \webbaselet{} is a \wbol{} document that does \emph{not} contain an \texttt{STWSite} element. Instead, its root element must be an \texttt{STWArea}. \webbaselet{s} are designed to be portable fragments that can be imported or included within a larger \webbase{}.
 
 This modularity ensures that the portal can evolve without requiring a monolithic update, promoting agility and long-term maintainability.
 
@@ -51,7 +51,7 @@ A \webbase{} represents a complete, self-contained portal. It includes:
 
 \subsection{Webbaselet Definition}
 
-A \webbaselet{} is a valid \wbdl{} document whose root element is an \texttt{STWArea}.
+A \webbaselet{} is a valid \wbol{} document whose root element is an \texttt{STWArea}.
 
 \begin{lstlisting}[language=JSON,caption={Example of a Webbaselet in JSON}]
 {
@@ -209,6 +209,6 @@ Future tools could provide:
 \section{Looking Forward}
 \label{sec:webbaselets-forward}
 
-We have now defined the languages (\wbdl{}, \wbpl{}, \wbll{}) and the modular architecture (\webbaselet{s}) that form the static blueprint of a Spin the Web portal. But how is this blueprint brought to life? What is the machinery that parses these definitions, executes queries, enforces security, and renders the final user interface?
+We have now defined the languages (\wbol{}, \wbpl{}, \wbll{}) and the modular architecture (\webbaselet{s}) that form the static blueprint of a Spin the Web portal. But how is this blueprint brought to life? What is the machinery that parses these definitions, executes queries, enforces security, and renders the final user interface?
 
 The next chapter provides a detailed look at the \textbf{\webspinner{} Engine}, the high-performance runtime that serves as the heart of the Spin the Web project. We will explore its internal architecture, from request handling to final HTML rendering.

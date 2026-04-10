@@ -8,7 +8,7 @@
 — William Shakespeare
 \end{quote}
 
-\wbdl{} is processed by a server-side engine called the \textbf{Web Spinner}. In a direct analogy to how a client-side web browser renders HTML into a user-facing webpage, the Web Spinner interprets \wbdl{} descriptions to generate and manage the portal on the server. It is the runtime engine of the project, complemented by the \textbf{Spin the Web Studio}, which serves as the design-time tool for creating and modifying the \webbase{} itself. This architecture allows for dynamic, data-driven portal generation based on the \wbdl{} specification.
+\wbol{} is processed by a server-side engine called the \textbf{Web Spinner}. In a direct analogy to how a client-side web browser renders HTML into a user-facing webpage, the Web Spinner interprets \wbol{} descriptions to generate and manage the portal on the server. It is the runtime engine of the project, complemented by the \textbf{Spin the Web Studio}, which serves as the design-time tool for creating and modifying the \webbase{} itself. This architecture allows for dynamic, data-driven portal generation based on the \wbol{} specification.
 
 When the Web Spinner starts, it loads the \webbase{} (in JSON format) into memory. This \webbase{} is transformed into an optimized, in-memory object, allowing for fast access and manipulation of the portal's structure.
 
@@ -36,7 +36,7 @@ When the Web Spinner starts up, it performs several critical initialization step
 
 \subsection{Webbase Loading}
 
-The engine loads the complete \wbdl{} document (\webbase{}) from disk, stored in JSON format. This document contains the entire portal structure, including all areas, pages, content definitions, and configuration data.
+The engine loads the complete \wbol{} document (\webbase{}) from disk, stored in JSON format. This document contains the entire portal structure, including all areas, pages, content definitions, and configuration data.
 
 \subsection{In-Memory Optimization}
 
@@ -243,7 +243,7 @@ Incoming URLs are parsed to extract the area/page/content hierarchy. For example
 
 \subsection{Element Resolution}
 
-Using the pre-built routing table, URLs are resolved to specific \wbdl{} elements. Runtime outcomes:
+Using the pre-built routing table, URLs are resolved to specific \wbol{} elements. Runtime outcomes:
 \begin{itemize}
 	\item \textbf{Pages}: If the URL resolves to a page that is not visible to the current session (per Figure~\ref{fig:rbv-flow} and \secref{sec:rbv-decision}), the user is taken to the \textbf{Home page}. If the path itself is invalid, the nearest site or area main page is served.
 	\item \textbf{Contents}: If a content is not visible, it is omitted entirely and the request returns \texttt{200 OK} with an empty body. If the path is invalid, no result is returned.
@@ -402,6 +402,6 @@ This architecture ensures that the Web Spinner can handle enterprise-scale workl
 \section{Looking Forward}
 \label{sec:webspinner-forward}
 
-At this point, we have a powerful engine and a sophisticated set of languages. However, asking developers to write raw \wbdl{} in a text editor, manage resources via the command line, and test queries in a separate database tool would be laborious and inefficient. How can we streamline this development process?
+At this point, we have a powerful engine and a sophisticated set of languages. However, asking developers to write raw \wbol{} in a text editor, manage resources via the command line, and test queries in a separate database tool would be laborious and inefficient. How can we streamline this development process?
 
 This is where the \textbf{Spin the Web Studio} comes in. The Studio, itself a \webbaselet{}, provides a comprehensive, integrated development environment for building, testing, and deploying \webbase{s}. It is the testing ground for the entire Web Spinner ecosystem and an essential tool for any serious developer. The next chapter will be dedicated to exploring the Studio's rich feature set.

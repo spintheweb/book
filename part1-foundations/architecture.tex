@@ -16,15 +16,15 @@ Spin the Web is built upon a core architectural foundation that enables the crea
 The architecture consists of three core components:
 
 \begin{description}
-\item[\textbf{Webbase Description Language (\wbdl{})}]: A declarative language for modeling complex portal structures, data relationships, and business logic
-\item[\textbf{Web Spinner Runtime}]: A runtime that interprets \wbdl{} specifications and delivers dynamic, role-based content
+\item[\textbf{Webbase Ontology Language (\wbol{})}]: A declarative language for modeling complex portal structures, data relationships, and business logic
+\item[\textbf{Web Spinner Runtime}]: A runtime that interprets \wbol{} specifications and delivers dynamic, role-based content
 \item[\textbf{Spin the Web Studio}]: A specialized \webbaselet{} for creating, editing, and managing \webbase{} definitions with in-place editing capabilities
 \end{description}
 
-\section{Foundations: Webbase Description Language (\wbdl{})}
-\label{sec:blueprint-wbdl}
+\section{Foundations: Webbase Ontology Language (\wbol{})}
+\label{sec:blueprint-wbol}
 
-\wbdl{} forms the declarative foundation of the entire system. Unlike traditional approaches that mix structure, presentation, and logic, \wbdl{} provides a clean separation of concerns through a hierarchical, schema-based approach.
+\wbol{} forms the declarative foundation of the entire system. Unlike traditional approaches that mix structure, presentation, and logic, \wbol{} provides a clean separation of concerns through a hierarchical, schema-based approach.
 
 \subsection{Core Principles}
 
@@ -32,12 +32,12 @@ The architecture consists of three core components:
 \item[\textbf{Declarative Definition}]: Developers describe \textit{what} the portal should do, not \textit{how} it should do it
 \item[\textbf{Data-Driven Structure}]: Portal elements are defined in terms of their data relationships and business semantics
 \item[\textbf{Role-Based Access}]: Security and personalization are built into the language specification
-\item[\textbf{Technology Agnostic}]: \wbdl{} abstracts away implementation details, focusing on business requirements
+\item[\textbf{Technology Agnostic}]: \wbol{} abstracts away implementation details, focusing on business requirements
 \end{description}
 
 \subsection{Key Components}
 
-\wbdl{} defines several fundamental element types:
+\wbol{} defines several fundamental element types:
 
 \begin{description}
 \item[\textbf{STWSite}]: The root element containing global configuration, datasources, and site-wide settings
@@ -58,12 +58,12 @@ The architecture consists of three core components:
 \section{Framework: Web Spinner}
 \label{sec:engine-spinner}
 
-The Web Spinner runtime serves as the execution layer that brings \wbdl{} specifications to life. It handles the complex orchestration of data retrieval, security enforcement, and content delivery that makes dynamic portals possible.
+The Web Spinner runtime serves as the execution layer that brings \wbol{} specifications to life. It handles the complex orchestration of data retrieval, security enforcement, and content delivery that makes dynamic portals possible.
 
 \subsection{Core Responsibilities}
 
 \begin{description}
-\item[\textbf{Configuration Interpretation}]: Parsing and optimizing \wbdl{} documents for runtime execution
+\item[\textbf{Configuration Interpretation}]: Parsing and optimizing \wbol{} documents for runtime execution
 \item[\textbf{Request Routing}]: Mapping incoming URLs to appropriate portal elements based on the \webbase{} structure
 \item[\textbf{Security Enforcement}]: Implementing role-based access control and content filtering
 \item[\textbf{Data Integration}]: Orchestrating queries across multiple datasources and systems
@@ -75,7 +75,7 @@ The Web Spinner runtime serves as the execution layer that brings \wbdl{} specif
 The Web Spinner operates through several key subsystems:
 
 \begin{description}
-\item[\textbf{Webbase Loader}]: Loads and parses \wbdl{} documents into optimized in-memory structures
+\item[\textbf{Webbase Loader}]: Loads and parses \wbol{} documents into optimized in-memory structures
 \item[\textbf{Authorization Module}]: Evaluates role-based visibility rules in real-time
 \item[\textbf{Command Processor}]: Handles \wbpl{} placeholder resolution and datasource command execution
 \item[\textbf{Content Cache}]: Manages caching strategies for improved performance
@@ -89,13 +89,13 @@ Spin the Web enforces authorization using a \emph{role-based visibility} (RBV) m
 
 Key characteristics:
 \begin{itemize}
-	\item \textbf{Declarative rules in \wbdl{}}: visibility is defined per element and can be inherited.
+	\item \textbf{Declarative rules in \wbol{}}: visibility is defined per element and can be inherited.
 	\item \textbf{Inheritance}: when a role setting is \texttt{undefined}, visibility is inherited recursively from the parent up to the root.
 	\item \textbf{Three-state roles}: \texttt{true} (granted), \texttt{false} (denied), \texttt{undefined} (inherit).
 	\item \textbf{Safe defaults}: unauthenticated users receive the \texttt{guests} role by default; elements are invisible unless made visible via rules or inheritance.
 \end{itemize}
 
-For operational details see \secref{sec:security} in the Web Spinner chapter, and for the formal schema see the \wbdl{} appendix (\cref{app:wbdl-json-schema}).
+For operational details see \secref{sec:security} in the Web Spinner chapter, and for the formal schema see the \wbol{} appendix (\cref{app:wbol-json-schema}).
 
 \paragraph{Side note: \texttt{rwx} and RBV}
 The familiar UNIX-style \texttt{rwx} access paradigm can be expressed with RBV: a content that supports reading, writing, or executing (in any combination) can be exposed to specific roles. In practice, "read" aligns with viewing content, while "write" and "execute" align with content operations (e.g., mutations or actions). RBV governs \emph{visibility} of these capabilities per role; the concrete enforcement of operation-level permissions is handled at runtime by the Web Spinner security layer (see \secref{sec:security}).
@@ -120,7 +120,7 @@ The Studio is dynamically added to the portal \webbase{} when users with develop
 
 \begin{description}
 \item[\textbf{Visual Design Interface}]: Graphical tools for designing portal structure and navigation through an interactive \webbase{} hierarchy displayed in the side bar
-\item[\textbf{Code Assistance}]: Intelligent editing support for \wbdl{} and \wbpl{} syntax with multi-tab file editing capabilities
+\item[\textbf{Code Assistance}]: Intelligent editing support for \wbol{} and \wbpl{} syntax with multi-tab file editing capabilities
 \item[\textbf{Data Source Integration}]: Tools for connecting to and testing various data sources, accessible through portal primary folder contents
 \item[\textbf{Preview and Testing}]: Real-time preview capabilities with role simulation in the persistent browser tab that displays the live portal
 \item[\textbf{Version Control}]: Integration with standard source control systems through the side bar source control panel
@@ -133,7 +133,7 @@ The Studio is dynamically added to the portal \webbase{} when users with develop
 Unlike low-code/no-code platforms, the Studio is designed specifically for professional developers:
 
 \begin{itemize}
-	\item \textbf{Full Control}: Complete access to all \wbdl{} features and capabilities
+	\item \textbf{Full Control}: Complete access to all \wbol{} features and capabilities
 	\item \textbf{Extensibility}: Support for custom components and specialized functionality
 	\item \textbf{Integration}: Seamless integration with standard development workflows
 	\item \textbf{Performance Tools}: Profiling and optimization capabilities for enterprise-scale deployments
@@ -148,7 +148,7 @@ Foundations, Framework, and Portal work together through well-defined interfaces
 
 \begin{enumerate}
 	\item Developers use the Studio to create and modify \webbase{} definitions
-	\item \wbdl{} documents are saved and versioned using standard development practices
+	\item \wbol{} documents are saved and versioned using standard development practices
 	\item The Web Spinner runtime loads updated \webbase{} definitions and applies changes
 	\item Changes take effect immediately without requiring system restarts
 \end{enumerate}
@@ -158,7 +158,7 @@ Foundations, Framework, and Portal work together through well-defined interfaces
 \begin{enumerate}
 	\item User requests arrive at the Web Spinner runtime
 	\item The runtime consults the in-memory \webbase{} structure to route the request
-	\item Authorization rules defined in \wbdl{} are evaluated against user roles
+	\item Authorization rules defined in \wbol{} are evaluated against user roles
 	\item Appropriate \texttt{STWContent} elements are identified and executed
 	\item Responses are assembled and delivered to the client
 \end{enumerate}

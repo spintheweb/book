@@ -77,7 +77,7 @@ The idea was undoubtedly sound, but implementing it successfully required more t
 
 This realization marked the beginning of what would eventually become Spin the Web's core mission: developing the tools, languages, and methodologies necessary to transform the portal vision into practical reality.
 
-\section{The Birth of WBDL}
+\section{The Birth of WBOL}
 
 \subsection{Language Requirements}
 
@@ -91,17 +91,17 @@ The systematic approach demanded the definition of a specialized language capabl
 \item \textbf{Data Integration}: Connections to diverse data sources and systems
 \end{itemize}
 
-This language would need to be structured enough to handle complex enterprise realities while remaining flexible enough to evolve with changing business needs. This language was named \textbf{WBDL} (Webbase Description Language).
+This language would need to be structured enough to handle complex enterprise realities while remaining flexible enough to evolve with changing business needs. This language was named \textbf{WBOL} (Webbase Ontology Language).
 
 \subsection{Interpreter Requirement}
 
-Alongside the language definition, a second critical requirement emerged: the development of an \textbf{interpreter}—the Web Spinner—that could take a URL request, fetch the associated \wbdl{} fragment, and render it dynamically.
+Alongside the language definition, a second critical requirement emerged: the development of an \textbf{interpreter}—the Web Spinner—that could take a URL request, fetch the associated \wbol{} fragment, and render it dynamically.
 
-The analogy was clear and powerful: just as HTML is interpreted by a web browser to create user-facing web pages, \wbdl{} would be interpreted by a Web Spinner to create complete portal experiences.
+The analogy was clear and powerful: just as HTML is interpreted by a web browser to create user-facing web pages, \wbol{} would be interpreted by a Web Spinner to create complete portal experiences.
 
 This interpreter would need to:
 \begin{itemize}
-\item Parse and understand \wbdl{} documents
+\item Parse and understand \wbol{} documents
 \item Handle user authentication and authorization
 \item Manage data source connections and queries
 \item Render content appropriately for different users and contexts
@@ -112,12 +112,12 @@ This interpreter would need to:
 
 \subsection{Timeless Principles}
 
-Since its inception, \wbdl{} has demonstrated remarkable resilience and relevance. The core principles identified in the late 1990s have proven to be enduring:
+Since its inception, \wbol{} has demonstrated remarkable resilience and relevance. The core principles identified in the late 1990s have proven to be enduring:
 
 \begin{itemize}
-\item \textbf{Descriptive Power}: \wbdl{} can describe sites with the same ease today as it could in the past
+\item \textbf{Descriptive Power}: \wbol{} can describe sites with the same ease today as it could in the past
 \item \textbf{Technology Independence}: The framework remains relevant despite the rapidly evolving Internet landscape
-\item \textbf{Systematic Consistency}: Much like HTML, \wbdl{} provides a stable foundation that transcends specific technological implementations
+\item \textbf{Systematic Consistency}: Much like HTML, \wbol{} provides a stable foundation that transcends specific technological implementations
 \end{itemize}
 
 This persistence suggests that the project identified fundamental patterns and requirements that are intrinsic to enterprise portal development, rather than merely addressing temporary technological limitations.
@@ -195,20 +195,20 @@ While the relational database approach proved effective, it presented challenges
 Initially, this took the form of an XML-based language, which introduced two crucial concepts:
 
 \begin{description}
-\item[\textbf{Webbase Description Language (WBDL)}]: An XML schema that formally defined how portals should be structured, replacing the relational database schema with a portable, standardized format.
+\item[\textbf{Webbase Ontology Language (WBOL)}]: An XML schema that formally defined how portals should be structured, replacing the relational database schema with a portable, standardized format.
 \item[\textbf{Webbaselet}]: A modular fragment of a webbase that could be independently developed, maintained, and integrated.
 \end{description}
 
-As web technologies evolved, the project embraced \textbf{JSON Schema} as a more contemporary and lightweight alternative. This migration aligned \wbdl{} with modern development ecosystems, particularly those centered around JavaScript and TypeScript, while preserving the core principles of declarative structure and modularity. This transition from database schema to XML and finally to JSON Schema laid the foundation for the modular approach that characterizes Spin the Web today.
+As web technologies evolved, the project embraced \textbf{JSON Schema} as a more contemporary and lightweight alternative. This migration aligned \wbol{} with modern development ecosystems, particularly those centered around JavaScript and TypeScript, while preserving the core principles of declarative structure and modularity. This transition from database schema to XML and finally to JSON Schema laid the foundation for the modular approach that characterizes Spin the Web today.
 
 \subsection{Content Management System Integration}
 
-The formalization of \wbdl{} positioned it as a fundamental language for Content Management Systems (CMS). This integration capability addresses several critical enterprise needs:
+The formalization of \wbol{} positioned it as a fundamental language for Content Management Systems (CMS). This integration capability addresses several critical enterprise needs:
 
 \begin{itemize}
 \item \textbf{Separation of Concerns}: Content structure is independent of presentation technology
 \item \textbf{Version Control}: Portal configurations can be managed with standard software development practices
-\item \textbf{Workflow Integration}: Content approval and publishing processes integrate naturally with \wbdl{} structures
+\item \textbf{Workflow Integration}: Content approval and publishing processes integrate naturally with \wbol{} structures
 \item \textbf{Multi-Channel Publishing}: The same webbase can serve web, mobile, and API clients
 \end{itemize}
 
