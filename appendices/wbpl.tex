@@ -20,7 +20,7 @@ WBPL is a placeholder-driven template language for generating dynamic text safel
 A WBPL template contains placeholders marked by the \texttt{@} symbol. The most common forms are:
 \begin{itemize}
   \item \texttt{@name} — simple substitution of the value for \texttt{name}. A single \texttt{@} placeholder resolves first from cookies, then from URL querystring parameters.
-  \item \texttt{@@fieldname} — double-\texttt{@} substitution. This can resolve from a query field, a session variable, an application variable shared across sessions, or an HTTP header such as \texttt{@@REQUEST_METHOD}.
+  \item \texttt{@@fieldname} — double-\texttt{@} substitution. This can resolve from a query field, a session variable, an application variable shared across sessions, or an HTTP header such as \texttt{@@REQUEST\_METHOD}.
   \item \texttt{'@name'} or \texttt{"@name"} — quoted substitution; the engine quotes and escapes the inserted value.
   \item \texttt{'@list'...} — list expansion; converts a comma-separated string into a quoted list for use in SQL \texttt{IN} clauses. If the @list is wrapped in quotes, the quotes are preserved around each item in the list. For example, \texttt{IN ('@list'...)} with \texttt{list=one,two,three} becomes \texttt{IN ('one','two','three')}.
 \end{itemize}

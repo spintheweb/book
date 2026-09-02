@@ -3,7 +3,7 @@
 \chapter{Webbaselets: BPMS, PLM, and Ticketing}
 \label{app:webbaselets}
 
-This appendix summarizes three foundational webbaselets that commonly ship with a Spin the Web deployment. Each is delivered as a standalone webbaselet (root STWArea) that can be imported into any Webbase, sharing common conventions for navigation, security, and data.
+This appendix summarizes three foundational webbaselets that commonly ship with a Spin the Web deployment. Each is delivered as a standalone webbaselet (root \texttt{webbaselet} element) that can be imported into any Webbase, sharing common conventions for navigation, security, and data.
 
 \begin{itemize}
   \item Business Process Management System (BPMS)
@@ -33,22 +33,18 @@ All three follow the same patterns:
 \textbf{Interoperability.} Events are published as notifications that other webbaselets can subscribe to (e.g., Ticket created -> BPMS starts a triage workflow; Leave approved -> Ticket auto-closes).
 
 \subsection{Minimal Area Stub}
-A minimal root for each webbaselet as an STWArea:
-\begin{lstlisting}[language=JSON,caption={Minimal Webbaselet Root (Area)}]
-{
-  "_id": "area-bpms-root",
-  "type": "Area",
-  "namespace": "bpms",
-  "name": { "en": "BPMS" },
-  "slug": { "en": "bpms" },
-  "children": []
-}
+A minimal root for each webbaselet as a \texttt{webbaselet} element:
+\begin{lstlisting}[language=XML,caption={Minimal Webbaselet Root}]
+<webbaselet xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="aBPMSRoot000000001" version="1.0.0">
+  <name><text xml:lang="en" slug="bpms">BPMS</text></name>
+</webbaselet>
 \end{lstlisting}
 
 \section{Structured Classification for Webbaselets}
 \label{sec:app-webbaselets-classification}
 
-To make webbaselets discoverable and governable across the ecosystem, the root \texttt{STWArea} of each webbaselet SHOULD declare a compact, structured \emph{classification}. We recommend a dedicated \texttt{class} object on the Area to avoid collisions with core keys; engines MAY also surface these as indexed metadata for search.
+To make webbaselets discoverable and governable across the ecosystem, the root \texttt{webbaselet} of each SHOULD declare a compact, structured \emph{classification}. This is a proposed extension to the base \wbol{} XSD (Appendix~\ref{app:wbol-xml-schema}): a dedicated \texttt{classification} element, distinct from \texttt{name}/\texttt{visibilities}/\texttt{documentation}, to avoid collisions with core elements. Engines MAY also surface these as indexed metadata for search.
 
 \subsection{Classification keys}
 Recommended fields and value ranges:
@@ -75,40 +71,41 @@ Recommended fields and value ranges:
 \end{tabularx}
 
 \subsection{Example}
-BPMS classification on its root Area:
-\begin{lstlisting}[language=JSON,caption={STWArea with classification}]
-{
-  "_id": "area-bpms-root",
-  "type": "Area",
-  "namespace": "bpms",
-  "name": { "en": "BPMS" },
-  "slug": { "en": "bpms" },
-  "class": {
-    "purpose": "bpms",
-    "domain": "hr",
-    "capability": ["workflow","approvals","forms","sla"],
-    "layer": "ui",
-    "audience": ["employees","managers","admins"],
-    "criticality": "high",
-    "maturity": "stable",
-    "visibility": "authenticated",
-    "compliance": ["gdpr"],
-    "dataSensitivity": "pii",
-    "i18n": ["en","it"],
-    "engine": { "min": "1.3.0" },
-    "dependsOn": ["directory>=1.1", "notifications"],
-    "imports": ["tickets.created"],
-    "exports": ["bpms.task.created","bpms.task.completed"],
-    "tags": ["process","tasks","orchestration"]
-  },
-  "children": []
-}
+BPMS classification on its root \texttt{webbaselet}:
+\begin{lstlisting}[language=XML,caption={Webbaselet with classification}]
+<webbaselet xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="aBPMSRoot000000001" version="1.0.0">
+  <name><text xml:lang="en" slug="bpms">BPMS</text></name>
+  <classification purpose="bpms" domain="hr" layer="ui"
+      criticality="high" maturity="stable" visibility="authenticated"
+      dataSensitivity="pii">
+    <capability>workflow</capability>
+    <capability>approvals</capability>
+    <capability>forms</capability>
+    <capability>sla</capability>
+    <audience>employees</audience>
+    <audience>managers</audience>
+    <audience>admins</audience>
+    <compliance>gdpr</compliance>
+    <i18n>en</i18n>
+    <i18n>it</i18n>
+    <engine min="1.3.0" />
+    <dependsOn>directory&gt;=1.1</dependsOn>
+    <dependsOn>notifications</dependsOn>
+    <imports>tickets.created</imports>
+    <exports>bpms.task.created</exports>
+    <exports>bpms.task.completed</exports>
+    <tags>process</tags>
+    <tags>tasks</tags>
+    <tags>orchestration</tags>
+  </classification>
+</webbaselet>
 \end{lstlisting}
 
 \paragraph{Notes}
 \begin{itemize}
-  \item Engines should index \texttt{class.*} for search and dependency checks.
-  \item Recommending enums keeps catalogs consistent; use \texttt{tags} for additional nuance.
+  \item Engines should index \texttt{classification} attributes/children for search and dependency checks.
+  \item Recommending enumerated attribute values keeps catalogs consistent; use \texttt{tags} for additional nuance.
   \item Version ranges follow semantic versioning; omit \texttt{max} for open-ended support.
 \end{itemize}
 
@@ -138,7 +135,7 @@ admin & directory, identity, governance \\
 general & dashboards, search, navigation, utilities \\
 \end{tabularx}
 
-These values map to \texttt{class.domain} and inform facets in catalog pages.
+These values map to \texttt{classification} attributes and inform facets in catalog pages.
 
 \subsection{Data model}
 Key entities managed by the Ecosystem webbaselet:

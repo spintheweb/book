@@ -8,9 +8,9 @@
 — Aristotle
 \end{quote}
 
-A complete \wbol{} document, representing a full portal, is called a \textbf{\webbase{}}. A key requirement for a valid \webbase{} is that it must contain exactly one \texttt{STWSite} element, which serves as the root of the entire structure.
+A complete \wbol{} document, representing a full portal, is called a \textbf{\webbase{}}. A key requirement for a valid \webbase{} is that it must contain exactly one \texttt{webbase} element, which serves as the root of the entire structure.
 
-However, it is also possible to create smaller, modular \wbol{} files called \textbf{\webbaselet{s}}. A \webbaselet{} is a \wbol{} document that does \emph{not} contain an \texttt{STWSite} element. Instead, its root element must be an \texttt{STWArea}. \webbaselet{s} are designed to be portable fragments that can be imported or included within a larger \webbase{}.
+However, it is also possible to create smaller, modular \wbol{} files called \textbf{\webbaselet{s}}. A \webbaselet{} is a \wbol{} document that does \emph{not} contain a \texttt{webbase} element. Instead, its root element must be a \texttt{webbaselet} (structurally an \texttt{area}, with an independent \texttt{version}). \webbaselet{s} are designed to be portable fragments that can be imported or included within a larger \webbase{}.
 
 This modularity ensures that the portal can evolve without requiring a monolithic update, promoting agility and long-term maintainability.
 
@@ -20,7 +20,7 @@ This modularity ensures that the portal can evolve without requiring a monolithi
 A \webbase{} represents a complete, self-contained portal. It includes:
 
 \begin{description}
-\item[\textbf{Site Configuration}]: The root \texttt{STWSite} element containing global settings, supported languages, and datasource definitions
+\item[\textbf{Site Configuration}]: The root \texttt{webbase} element containing global settings, supported languages, and datasource definitions
 \item[\textbf{Navigation Hierarchy}]: A complete tree of areas, pages, and content elements that define the portal structure
 \item[\textbf{Security Model}]: Comprehensive visibility rules and role-based access controls throughout the hierarchy
 \item[\textbf{Data Integration}]: Datasource configurations and command templates for dynamic content generation
@@ -28,60 +28,54 @@ A \webbase{} represents a complete, self-contained portal. It includes:
 
 \subsection{Webbase Example Structure}
 
-\begin{lstlisting}[language=JSON,caption={Basic Webbase Structure in JSON}]
-{
-  "_id": "12345678-1234-1234-1234-123456789012",
-  "type": "Site",
-  "version": "1.0",
-  "mainpage": "87654321-4321-4321-4321-210987654321",
-  "name": { "en": "Corporate Portal" },
-  "slug": { "en": "portal" },
-  "langs": ["en", "it", "fr"],
-  "datasources": [
-    { "name": "main", "type": "postgresql", "connectionString": "..." }
-  ],
-  "children": [
-    {
-      "_id": "...",
-      "type": "Area"
-    }
-  ]
-}
+\begin{lstlisting}[language=XML,caption={Basic Webbase Structure in XML}]
+<?xml version="1.0" encoding="UTF-8"?>
+<webbase xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="w1234567890123456789012" homepage="p876543210987654321"
+    protocol="https://" defaultLanguage="en">
+  <datasources>
+    <datasource id="main" queryLanguage="SQL" connection-string="..." />
+  </datasources>
+  <roles>
+    <role id="root" /><role id="administrators" /><role id="guests" />
+    <role id="users" /><role id="developers" /><role id="translators" /><role id="seo" />
+  </roles>
+  <name><text xml:lang="en" slug="portal">Corporate Portal</text></name>
+  <children>
+    <area guid="a..." origin="w1234567890123456789012">
+      <name><text xml:lang="en" slug="area">Area</text></name>
+    </area>
+  </children>
+</webbase>
 \end{lstlisting}
 
 \subsection{Webbaselet Definition}
 
-A \webbaselet{} is a valid \wbol{} document whose root element is an \texttt{STWArea}.
+A \webbaselet{} is a valid \wbol{} document whose root element is a \texttt{webbaselet}.
 
-\begin{lstlisting}[language=JSON,caption={Example of a Webbaselet in JSON}]
-{
-  "_id": "hr-webbaselet-root",
-  "type": "Area",
-  "name": { "en": "Human Resources" },
-  "slug": { "en": "human-resources" },
-  "children": [
-    {
-      "_id": "hr-page-1",
-      "type": "Page",
-      "name": { "en": "Employee Directory" },
-      "slug": { "en": "directory" }
-    }
-  ]
-}
+\begin{lstlisting}[language=XML,caption={Example of a Webbaselet in XML}]
+<webbaselet xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="aHRWebbaseletRoot1" version="1.0.0">
+  <name><text xml:lang="en" slug="human-resources">Human Resources</text></name>
+  <children>
+    <page guid="pHRDirectory0001" origin="aHRWebbaseletRoot1">
+      <name><text xml:lang="en" slug="directory">Employee Directory</text></name>
+      <keywords><text xml:lang="en">directory</text></keywords>
+      <description><text xml:lang="en">Employee directory</text></description>
+    </page>
+  </children>
+</webbaselet>
 \end{lstlisting}
 
 \subsection{Namespace Isolation}
 
-Each \webbaselet{} can define its own namespace by adding a \texttt{namespace} property to the root \texttt{STWArea} element.
+Each \webbaselet{} is imported under its own subtree, rooted at its \texttt{webbaselet} element's \texttt{guid}; slugs are scoped to that subtree so different \webbaselet{s} can reuse the same slug without colliding.
 
-\begin{lstlisting}[language=JSON,caption={Webbaselet with Namespace}]
-{
-  "_id": "hr-webbaselet-root",
-  "type": "Area",
-  "namespace": "hr",
-  "name": { "en": "Human Resources" },
-  "slug": { "en": "human-resources" }
-}
+\begin{lstlisting}[language=XML,caption={Webbaselet slug scoping}]
+<webbaselet xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="aHRWebbaseletRoot1" version="1.0.0">
+  <name><text xml:lang="en" slug="human-resources">Human Resources</text></name>
+</webbaselet>
 \end{lstlisting}
 
 When this \webbaselet{} is integrated, the final URL for the page could be resolved to \texttt{/human-resources/directory}, with the engine managing any potential conflicts.

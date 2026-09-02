@@ -188,18 +188,16 @@ This original webbase encompassed all the essential aspects of web presence:
 \item[\textbf{Security}]: Access control and authorization paradigms
 \end{description}
 
-\subsection{The Schema Revolution: XML and JSON}
+\subsection{The Schema Revolution: From Relational Database to XML}
 
-While the relational database approach proved effective, it presented challenges for portability and interoperability. To address these limitations, the webbase concept underwent a fundamental transformation—it was formalized into a schema-based language structure.
-
-Initially, this took the form of an XML-based language, which introduced two crucial concepts:
+While the relational database approach proved effective, it presented challenges for portability and interoperability. To address these limitations, the webbase concept underwent a fundamental transformation—it was formalized into a schema-based language structure, described by a standard \textbf{XML Schema (XSD)}, which introduced two crucial concepts:
 
 \begin{description}
-\item[\textbf{Webbase Ontology Language (WBOL)}]: An XML schema that formally defined how portals should be structured, replacing the relational database schema with a portable, standardized format.
+\item[\textbf{Webbase Ontology Language (WBOL)}]: An XML vocabulary, governed by an XSD, that formally defines how portals should be structured, replacing the relational database schema with a portable, standardized, and strictly validated format.
 \item[\textbf{Webbaselet}]: A modular fragment of a webbase that could be independently developed, maintained, and integrated.
 \end{description}
 
-As web technologies evolved, the project embraced \textbf{JSON Schema} as a more contemporary and lightweight alternative. This migration aligned \wbol{} with modern development ecosystems, particularly those centered around JavaScript and TypeScript, while preserving the core principles of declarative structure and modularity. This transition from database schema to XML and finally to JSON Schema laid the foundation for the modular approach that characterizes Spin the Web today.
+The choice of XML was deliberate: an XSD can express constraints that a data-interchange format alone cannot—cross-references between GUIDs (e.g., a page's \texttt{mainpage} resolving to an actual page, an option's \texttt{target} resolving to a navigable element), mixed content for multilingual text, and namespaces for safe composition of \webbaselet{s}. At runtime, the \webspinner{} parses this XML into an optimized in-memory object graph; XML is the source of truth on disk, while the in-memory representation is an implementation detail of the runtime. This transition from database schema to a validated XML format laid the foundation for the modular approach that characterizes Spin the Web today.
 
 \subsection{Content Management System Integration}
 

@@ -1,0 +1,148 @@
+% Appendix: WBOL XML Schema Reference
+
+\chapter{WBOL XML Schema Reference}
+\label{app:wbol-xml-schema}
+
+This appendix collects the formal XML Schema (XSD) definitions for the main WBOL element types used in Spin the Web. These definitions provide the canonical, validated structure for webbases, areas, pages, and content elements. The full schema is published at \url{https://spintheweb.org/schemas/wbol.xsd}.
+
+\section{Design Rationale}
+\label{sec:xsd-rationale}
+
+WBOL is deliberately expressed as an XML Schema rather than a data-interchange-only format. Three requirements drove this choice:
+
+\begin{description}
+  \item[\textbf{Referential integrity}] A webbase is a graph of cross-referencing GUIDs: a webbase's \texttt{homepage} must resolve to an actual \texttt{page}; an \texttt{area}'s or \texttt{webbaselet}'s \texttt{mainpage} must resolve to a \texttt{page} within scope; a \texttt{shortcut}'s \texttt{target} and every \texttt{option}'s \texttt{target} must resolve to a navigable element; every role referenced in a \texttt{visibilities} block must be declared in the webbase's \texttt{roles}. XSD's \texttt{xs:key} and \texttt{xs:keyref} express and validate all of these constraints declaratively, something a plain data format cannot do on its own.
+  \item[\textbf{Mixed, localized content}] Names, keywords, descriptions, and documentation are collections of \texttt{text} elements distinguished by \texttt{xml:lang}, and some (like \texttt{documentation}) carry inline, mixed markup. XML's mixed-content model handles this naturally.
+  \item[\textbf{Composable namespaces}] \webbaselet{s} are designed to be authored independently and imported into a larger \webbase{}. XML namespaces and qualified element names keep that composition unambiguous.
+\end{description}
+
+At runtime, the \webspinner{} parses this XML into an optimized in-memory object graph (see \cref{chap:web-spinner}). The XML document is the durable source of truth; the in-memory representation is a runtime implementation detail, not a second schema.
+
+\section{Webbase (\texttt{webbase})}
+The root element of a complete portal. Requires exactly one \texttt{webbase} per document.
+\paragraph{Attributes}
+\begin{description}
+  \item[\texttt{guid} (required)] Unique identifier for the webbase, matching pattern \texttt{w[0-9A-Za-z]+}.
+  \item[\texttt{homepage} (required)] GUID of the \texttt{page} that serves as the site's landing page.
+  \item[\texttt{protocol} (optional, default \texttt{https://})] One of \texttt{http://} or \texttt{https://}.
+  \item[\texttt{defaultLanguage} (required)] An \texttt{xs:language} tag (e.g., \texttt{en}, \texttt{it}).
+\end{description}
+\paragraph{Child Elements}
+\begin{description}
+  \item[\texttt{datasources} (optional)] One or more \texttt{datasource} definitions (\texttt{id}, \texttt{queryLanguage}, \texttt{connection-string}).
+  \item[\texttt{roles} (required)] At least the seven mandatory preset roles: \texttt{root}, \texttt{administrators}, \texttt{guests}, \texttt{users}, \texttt{developers}, \texttt{translators}, \texttt{seo}, plus any custom roles.
+  \item[\texttt{name} (required)] Localized display name (see \S\ref{sec:xsd-name}).
+  \item[\texttt{documentation} (optional)] Free-form, localized, mixed-content documentation.
+  \item[\texttt{visibilities} (optional)] Role-based visibility rules (see \S\ref{sec:xsd-visibilities}).
+  \item[\texttt{children} (required)] Any mix of \texttt{area}, \texttt{webbaselet}, \texttt{page}, \texttt{content}, and \texttt{shortcut} elements.
+\end{description}
+\begin{lstlisting}[language=XML,caption={Minimal Webbase}]
+<?xml version="1.0" encoding="UTF-8"?>
+<webbase xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="w2FYn1HghFMNRz8sX5s32YP" homepage="p41eZz1dU5ZxBafbmZeyQEB"
+    protocol="https://" defaultLanguage="en">
+  <roles>
+    <role id="root" /><role id="administrators" /><role id="guests" />
+    <role id="users" /><role id="developers" /><role id="translators" /><role id="seo" />
+  </roles>
+  <name>
+    <text xml:lang="en" slug="portal">Corporate Portal</text>
+  </name>
+  <children>
+    <page guid="p41eZz1dU5ZxBafbmZeyQEB" origin="w2FYn1HghFMNRz8sX5s32YP">
+      <name><text xml:lang="en" slug="home">Home</text></name>
+      <keywords><text xml:lang="en">home, welcome</text></keywords>
+      <description><text xml:lang="en">Portal landing page</text></description>
+    </page>
+  </children>
+</webbase>
+\end{lstlisting}
+
+\section{Area (\texttt{area}) and Webbaselet (\texttt{webbaselet})}
+\texttt{area} is a logical grouping of pages, analogous to a chapter in a book. \texttt{webbaselet} is structurally identical but marks the root of an independently authored, importable fragment (see \cref{chap:webbaselets}); a root \texttt{webbaselet} additionally requires a \texttt{version} attribute and omits \texttt{origin}.
+\paragraph{Attributes}
+\begin{description}
+  \item[\texttt{guid} (required)] Matches pattern \texttt{a[0-9A-Za-z]+}.
+  \item[\texttt{origin} (required for nested \texttt{area}/\texttt{webbaselet})] GUID of the containing webbase or area.
+  \item[\texttt{mainpage} (optional)] GUID of the \texttt{page} that serves as this area's entry point.
+  \item[\texttt{src} (optional)] URI of an externally hosted webbaselet to import in place.
+  \item[\texttt{sequence} (optional)] Decimal ordering hint among siblings.
+  \item[\texttt{version} (required on root \texttt{webbaselet} only)] Independent version token for the fragment.
+\end{description}
+\paragraph{Child Elements}
+\texttt{name} (required), \texttt{visibilities} (optional), \texttt{documentation} (optional), \texttt{children} (optional; any mix of \texttt{area}, \texttt{webbaselet}, \texttt{page}, \texttt{content}, \texttt{shortcut}).
+\begin{lstlisting}[language=XML,caption={Webbaselet Root (importable fragment)}]
+<webbaselet xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="aHRWebbaseletRoot1" version="1.0.0">
+  <name><text xml:lang="en" slug="human-resources">Human Resources</text></name>
+  <children>
+    <page guid="pHRDirectory0001" origin="aHRWebbaseletRoot1">
+      <name><text xml:lang="en" slug="directory">Employee Directory</text></name>
+      <keywords><text xml:lang="en">staff, directory</text></keywords>
+      <description><text xml:lang="en">Company employee directory</text></description>
+    </page>
+  </children>
+</webbaselet>
+\end{lstlisting}
+
+\section{Page (\texttt{page})}
+A concrete, navigable page. Restricts its \texttt{children} to \texttt{content} and \texttt{shortcut} elements.
+\paragraph{Attributes}
+\texttt{guid} (required, pattern \texttt{p[0-9A-Za-z]+}), \texttt{origin} (required), \texttt{template} (optional, default \texttt{index.html}), \texttt{sequence} (optional).
+\paragraph{Child Elements}
+\texttt{name} (required), \texttt{keywords} (required), \texttt{description} (required), \texttt{visibilities} (optional), \texttt{documentation} (optional), \texttt{children} (optional, ordered \texttt{content}/\texttt{shortcut}).
+
+\section{Content (\texttt{content}) and Shortcut (\texttt{shortcut})}
+\texttt{content} is an atomic, interactive data unit rendered within a page region; \texttt{shortcut} is a lightweight pointer that reuses an existing \texttt{content} elsewhere on the page.
+\paragraph{Content Attributes}
+\texttt{guid} (required, pattern \texttt{c[0-9A-Za-z]+}), \texttt{origin} (required), \texttt{type} (required; one of \texttt{text}, \texttt{table}, \texttt{form}, \texttt{list}, \texttt{graph}, \texttt{plots}, \texttt{calendar}, \texttt{tree}, \texttt{tabs}, \texttt{accordion}, \texttt{menu}, \texttt{breadcrumbs}, \texttt{keypad}, \texttt{imagemap}, \texttt{map}, \texttt{serverside}, \texttt{clientside}), \texttt{section} (optional layout region, e.g. \texttt{main}, \texttt{aside-left}, \texttt{popup}), \texttt{sequence} (optional), \texttt{class} (optional CSS hook).
+\paragraph{Content Elements}
+\texttt{name} (required), \texttt{query} (required; the \wbpl{}-processed command, with an optional \texttt{datasource} attribute), \texttt{parameters} (optional querystring payload), \texttt{layouts} (optional, localized \wbll{} templates), \texttt{documentation} (optional), \texttt{options} (optional; see below), \texttt{visibilities} (optional).
+\paragraph{Shortcut Attributes}
+\texttt{guid}, \texttt{origin}, \texttt{target} (required, GUID of the \texttt{content} being reused), \texttt{section}, \texttt{sequence}, \texttt{class} (required).
+\begin{lstlisting}[language=XML,caption={Content with a data-bound query}]
+<content xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="cEmployeeList00001" origin="pHRDirectory0001" type="table" section="main">
+  <name><text xml:lang="en" slug="employees">Employees</text></name>
+  <query datasource="MSSQL">SELECT name, department FROM employees WHERE active = 1</query>
+  <layouts><text xml:lang="en">name | department</text></layouts>
+</content>
+\end{lstlisting}
+
+\section{Options (menus, tabs, accordions)}
+\label{sec:xsd-options}
+Any \texttt{content} may carry an \texttt{options} element containing zero or more \texttt{option} entries; this is how menu, tabs, and accordion content reference the elements they present.
+\begin{lstlisting}[language=XML,caption={Content with options (e.g., a menu)}]
+<content xmlns="https://spintheweb.org/schemas/wbol.xsd"
+    guid="cMainMenu000001" origin="w2FYn1HghFMNRz8sX5s32YP" type="menu" section="header">
+  <name><text xml:lang="en" slug="main-menu">Main Menu</text></name>
+  <query>menu</query>
+  <options>
+    <option target="aHRWebbaseletRoot1">
+      <label><text xml:lang="en">Human Resources</text></label>
+      <parameters></parameters>
+    </option>
+  </options>
+</content>
+\end{lstlisting}
+Every \texttt{option}'s \texttt{target} must resolve, in scope, to a webbase, area, webbaselet, page, or content GUID; this is enforced by the schema's \texttt{optionTargetRef} keyref.
+
+\section{Localized Text (\texttt{name}, \texttt{keywords}, \texttt{description}, \texttt{documentation})}
+\label{sec:xsd-name}
+Localizable fields are containers of one or more \texttt{text} elements, each qualified with \texttt{xml:lang} (IETF BCP\,47, e.g. \texttt{en}, \texttt{en-US}, \texttt{it}). The \texttt{name/text} element additionally requires a \texttt{slug} attribute (pattern \texttt{[a-z0-9]+([.-][a-z0-9]+)*}) used to compose URL-friendly paths; \texttt{documentation/text} instead requires a \texttt{format} attribute (e.g., \texttt{text/plain}, \texttt{application/javascript}).
+\begin{lstlisting}[language=XML,caption={Localized name with per-language slugs}]
+<name>
+  <text xml:lang="en" slug="portal.example.local">Portal Example</text>
+  <text xml:lang="it" slug="portale.esempio">Portale Esempio</text>
+</name>
+\end{lstlisting}
+
+\section{Visibilities (\texttt{visibilities})}
+\label{sec:xsd-visibilities}
+Attaches role-based visibility rules to any element. Each \texttt{role} entry pairs a declared \texttt{id} with a \texttt{visibility} value: the literal \texttt{true} or \texttt{false}, or a call to a visibility function (pattern \texttt{name()}) resolved at request time to \texttt{true}, \texttt{false}, or \texttt{null} (meaning: inherit from the parent element). Every role \texttt{id} referenced here must already be declared in the webbase's \texttt{roles} element; the schema enforces this via the \texttt{visibilityRoleRefs} keyref.
+\begin{lstlisting}[language=XML,caption={Role-based visibility}]
+<visibilities>
+  <role id="users" visibility="true" />
+  <role id="guests" visibility="isPublished()" />
+</visibilities>
+\end{lstlisting}

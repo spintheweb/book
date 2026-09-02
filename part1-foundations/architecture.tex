@@ -95,7 +95,7 @@ Key characteristics:
 	\item \textbf{Safe defaults}: unauthenticated users receive the \texttt{guests} role by default; elements are invisible unless made visible via rules or inheritance.
 \end{itemize}
 
-For operational details see \secref{sec:security} in the Web Spinner chapter, and for the formal schema see the \wbol{} appendix (\cref{app:wbol-json-schema}).
+For operational details see \secref{sec:security} in the Web Spinner chapter, and for the formal schema see the \wbol{} appendix (Appendix~\ref{app:wbol-xml-schema}).
 
 \paragraph{Side note: \texttt{rwx} and RBV}
 The familiar UNIX-style \texttt{rwx} access paradigm can be expressed with RBV: a content that supports reading, writing, or executing (in any combination) can be exposed to specific roles. In practice, "read" aligns with viewing content, while "write" and "execute" align with content operations (e.g., mutations or actions). RBV governs \emph{visibility} of these capabilities per role; the concrete enforcement of operation-level permissions is handled at runtime by the Web Spinner security layer (see \secref{sec:security}).

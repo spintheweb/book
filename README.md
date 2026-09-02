@@ -47,8 +47,8 @@ the eponymous open-source **Spin the Web Project**.
 
 ### Appendices
 
-- Appendix A: WBOL JSON Schema Reference — Formal JSON Schema definitions for
-  WBOL element types (Site, Area, Page, Content, etc.)
+- Appendix A: WBOL XML Schema Reference — Formal XML Schema (XSD) definitions for
+  WBOL element types (webbase, area, page, content, etc.)
 - Appendix B: WBLL Token Reference — Complete reference for WBLL tokens, syntax,
   examples, and interpreter behavior
 - Appendix C: Webbaselets: BPMS, PLM, and Ticketing — Overview and common design

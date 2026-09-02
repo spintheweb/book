@@ -134,6 +134,16 @@
     morecomment=[l]{//},
 }
 
+% Define XML language (used for WBOL listings)
+\lstdefinelanguage{XML}{
+    basicstyle=\ttfamily\small,
+    showstringspaces=false,
+    morestring=[b]",
+    stringstyle=\color{stringcolor},
+    morecomment=[s]{<!--}{-->},
+    morecomment=[s]{<?}{?>},
+}
+
 % Define JSON language style for listings
 \lstdefinestyle{jsonstyle}{
     language=JavaScript, % Use JavaScript as a base for syntax
