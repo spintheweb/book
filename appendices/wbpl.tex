@@ -1,0 +1,95 @@
+% Appendix: Webbase Placeholders Language (WBPL)
+
+\chapter{Webbase Placeholders Language (WBPL)}
+\label{app:wbpl}
+
+This appendix explains the key concepts and usage patterns for the Webbase Placeholders Language (WBPL), the lightweight templating layer used by Spin the Web to build data-driven commands and queries.
+
+\section{What WBPL Is}
+WBPL is a placeholder-driven template language for generating dynamic text safely and predictably. It is designed to:
+\begin{itemize}
+  \item substitute values into templates,
+  \item include or omit optional fragments based on supplied parameters,
+  \item preserve syntax correctness for target languages like SQL, JSON, and HTML,
+  \item avoid injection risks by escaping quoted values automatically.
+\end{itemize}
+
+\section{Core Syntax}
+\label{sec:app-wbpl-syntax}
+
+A WBPL template contains placeholders marked by the \texttt{@} symbol. The most common forms are:
+\begin{itemize}
+  \item \texttt{@name} — simple substitution of the value for \texttt{name}. A single \texttt{@} placeholder resolves first from cookies, then from URL querystring parameters.
+  \item \texttt{@@fieldname} — double-\texttt{@} substitution. This can resolve from a query field, a session variable, an application variable shared across sessions, or an HTTP header such as \texttt{@@REQUEST_METHOD}.
+  \item \texttt{'@name'} or \texttt{"@name"} — quoted substitution; the engine quotes and escapes the inserted value.
+  \item \texttt{'@list'...} — list expansion; converts a comma-separated string into a quoted list for use in SQL \texttt{IN} clauses. If the @list is wrapped in quotes, the quotes are preserved around each item in the list. For example, \texttt{IN ('@list'...)} with \texttt{list=one,two,three} becomes \texttt{IN ('one','two','three')}.
+\end{itemize}
+
+\section{Conditional Fragments}
+WBPL supports optional text blocks that are included only when their placeholders resolve to non-empty values.
+
+\subsection{Curly braces}
+Text inside curly braces is kept only if at least one placeholder in the block is replaced successfully. If all placeholders are empty or missing, the entire block is removed.
+
+\subsection{Square brackets}
+Square brackets work like curly braces, but they also clean up one adjacent keyword when the block is removed. WBPL first checks for a removable word immediately after the closing bracket; if none is found, it then checks for a word immediately before the opening bracket. This is especially useful for SQL clauses such as \texttt{AND} or \texttt{OR}.
+
+\paragraph{Example}
+\begin{lstlisting}[language=SQL,caption={WBPL conditional fragment with SQL cleanup}]
+SELECT * FROM users WHERE 1=1 AND [status = '@status']
+\end{lstlisting}
+If \texttt{status} is not provided, the whole square-bracketed expression is removed along with the preceding \texttt{AND}.
+The final query becomes:
+\begin{lstlisting}[language=SQL]
+  SELECT * FROM users WHERE 1=1
+\end{lstlisting}
+
+\section{Escaping and Safety}
+
+WBPL treats an escaped at-sign (\texttt{\@}) as a literal character rather than a placeholder marker. Quoted placeholders automatically escape internal quotes and special characters appropriate for the target text context.
+
+\section{Integration Patterns}
+\label{sec:app-wbpl-integration}
+WBPL is frequently used inside \wbol{} content elements where a command or query needs runtime data. Typical placeholder value sources include:
+\begin{enumerate}
+  \item URL querystring values,
+  \item cookies 
+  \item session and user context,
+  \item global system variables,
+  \item HTTP headers and device metadata.
+\end{enumerate}
+
+\section{Example Usage}
+
+\subsection{Basic substitution}
+\begin{lstlisting}[language=SQL,caption={Simple WBPL substitution}]
+SELECT * FROM products WHERE sku = '@sku'
+\end{lstlisting}
+With \texttt{sku=ABC123}, the output becomes:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM products WHERE sku = 'ABC123'
+\end{lstlisting}
+
+\subsection{Optional conditions}
+\begin{lstlisting}[language=SQL,caption={Optional WHERE clauses with WBPL}]
+SELECT * FROM orders WHERE 1=1 AND [customer_id = @customer_id] AND [status = '@status']
+\end{lstlisting}
+If only \texttt{status=shipped} is provided, the rendered query becomes:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM orders WHERE 1=1 AND status = 'shipped'
+\end{lstlisting}
+
+\subsection{List expansion}
+\begin{lstlisting}[language=SQL,caption={WBPL list expansion for IN clauses}]
+SELECT * FROM shipments WHERE region IN ('@regions'...)
+\end{lstlisting}
+With \texttt{regions=us-east,eu-west}, this becomes:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM shipments WHERE region IN ('us-east','eu-west')
+\end{lstlisting}
+
+\section{Why WBPL Matters}
+WBPL makes dynamic portal behavior easier to author while keeping the underlying syntax safe. It separates data binding from query structure, enabling reusable templates that adapt to available inputs without producing broken or unsafe output.
+
+\section{Further Reading}
+For a fuller treatment of WBPL syntax, operators, and runtime semantics, see Chapter~\ref{chap:wbpl} in the main text.
