@@ -35,10 +35,10 @@ The spinner is a server that understands WBOL. On each request it:\footnote{See 
 	\item Renders contents on demand using WBLL-driven layouts and returns HTML fragments/resources
 \end{enumerate}
 
-\section{Core Elements and Site Tree}
+\section{Core Elements and Portal Tree}
 The in-memory model mirrors the WBOL structure:
 \begin{itemize}
-	\item \textbf{STWSite} (singleton root), \textbf{STWArea}, \textbf{STWPage}, \textbf{STWContent}
+	\item \textbf{STWPortal} (singleton root), \textbf{STWArea}, \textbf{STWPage}, \textbf{STWContent}
 	\item All derive from an abstract \textbf{STWElement} providing identity, naming, localization, hierarchy, and export to WBOL
 	\item A content type (e.g., Text, Table, Menus, Breadcrumbs, Calendar, Code Editor, ...), implemented under \texttt{stwContents/}, encapsulates data access and rendering concerns
 \end{itemize}
@@ -78,7 +78,7 @@ For a content render request:
 \section{Where the Mechanics Live (Guide to Source)}
 The following folders in the reference implementation contain the mechanics described above:
 \begin{itemize}
-	\item \texttt{stwElements/}: \textit{STWElement}, \textit{STWSite}, \textit{STWArea}, \textit{STWPage}, \textit{STWContent}
+	\item \texttt{stwElements/}: \textit{STWElement}, \textit{STWPortal}, \textit{STWArea}, \textit{STWPage}, \textit{STWContent}
 	\item \texttt{stwContents/}: concrete contents and \textit{WBLL} interpreter (layout parsing/rendering)
 	\item \texttt{tests/}: WBPL and layout-related unit tests
 	\item \texttt{public/}: client-side scripts, styles, and SPA shell
@@ -88,7 +88,7 @@ The following folders in the reference implementation contain the mechanics desc
 \section{Example: From WBOL to HTML}
 At a glance:
 \begin{enumerate}
-	\item WBOL defines the site tree; the spinner builds an in-memory model at startup/load
+	\item WBOL defines the portal tree; the spinner builds an in-memory model at startup/load
 	\item A user navigates to a page; the spinner locates the route and the associated contents
 	\item Each content loads data (if needed), prepares placeholders, and renders its WBLL layout
 	\item The server responds with an HTML fragment or instructs the client to fetch multiple fragments via REST/WebSockets

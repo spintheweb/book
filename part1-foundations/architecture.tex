@@ -40,7 +40,7 @@ The architecture consists of three core components:
 \wbol{} defines several fundamental element types:
 
 \begin{description}
-\item[\textbf{STWSite}]: The root element containing global configuration, datasources, and site-wide settings
+\item[\textbf{STWPortal}]: The root element containing global configuration, datasources, and portal-wide settings
 \item[\textbf{STWArea}]: Logical groupings of related functionality, typically corresponding to business domains
 \item[\textbf{STWPage}]: Individual pages within areas, defining layout sections and content organization
 \item[\textbf{STWContent}]: Atomic content elements that encapsulate data queries, business logic, and presentation rules
@@ -85,7 +85,7 @@ The Web Spinner operates through several key subsystems:
 \subsection{Role-Based Visibility (Overview)}
 \label{sec:rbv-overview}
 
-Spin the Web enforces authorization using a \emph{role-based visibility} (RBV) model. Rather than returning explicit authorization errors, elements not visible to the requester are treated as non-existent and yield a \texttt{200 OK} with an empty response. This privacy-by-design approach applies uniformly to contents, pages, areas, and the site.
+Spin the Web enforces authorization using a \emph{role-based visibility} (RBV) model. Rather than returning explicit authorization errors, elements not visible to the requester are treated as non-existent and yield a \texttt{200 OK} with an empty response. This privacy-by-design approach applies uniformly to contents, pages, areas, and the portal.
 
 Key characteristics:
 \begin{itemize}
@@ -212,7 +212,7 @@ Common implementation patterns emerge when working with this architecture:
 \subsection{Incremental Development}
 
 \begin{enumerate}
-	\item Start with core site structure and basic navigation
+	\item Start with core portal structure and basic navigation
 	\item Add key business areas one at a time
 	\item Implement critical content elements first
 	\item Gradually add advanced features like real-time updates and complex workflows

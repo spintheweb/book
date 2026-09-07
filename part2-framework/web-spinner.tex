@@ -51,7 +51,7 @@ The loaded \webbase{} is parsed and transformed into an optimized in-memory obje
 
 \subsection{Datasource Configuration}
 
-All datasources defined in the \texttt{STWSite} element are initialized and connection pools are established. This includes databases, \rest{} APIs, file systems, and any other external data providers.
+All datasources defined in the \texttt{STWPortal} element are initialized and connection pools are established. This includes databases, \rest{} APIs, file systems, and any other external data providers.
 
 \subsection{Route Table Generation}
 
@@ -135,7 +135,7 @@ Each role can be in one of three states:
 	\item[\texttt{undefined}] inherited from parent elements
 \end{description}
 
-Inheritance follows a recursive model from the content up to the site root.
+Inheritance follows a recursive model from the content up to the portal root.
 
 \paragraph{Role Assignment}
 Roles can be assigned to:
@@ -143,7 +143,7 @@ Roles can be assigned to:
 	\item Individual contents
 	\item Pages
 	\item Areas
-	\item Entire site
+	\item Entire portal
 \end{itemize}
 If no role is explicitly assigned, it inherits from its parent.
 
@@ -167,7 +167,7 @@ Spin the Web defines the following non-deletable roles:
 You may define additional roles as needed. A good starting point is your organizational chart.
 
 \paragraph{Superuser override (\texttt{roots})}
-The \texttt{roots} role represents a trusted superuser. When a session includes \texttt{roots}, the “no assignment found up to the site level” condition does \emph{not} cause a deny; instead, evaluation proceeds to the element’s \texttt{visible} flag. This does not change the semantics of \texttt{visible=false} (which still hides the element).
+The \texttt{roots} role represents a trusted superuser. When a session includes \texttt{roots}, the “no assignment found up to the portal level” condition does \emph{not} cause a deny; instead, evaluation proceeds to the element’s \texttt{visible} flag. This does not change the semantics of \texttt{visible=false} (which still hides the element).
 
 \subsection{RBV Decision Procedure}
 \label{sec:rbv-decision}
@@ -177,27 +177,27 @@ With reference to Figure~\ref{fig:rbv-flow}, the Web Spinner applies Role-Based 
 \paragraph{Page decision}
 \begin{enumerate}
 	\item If the requested page is the Home page, \textbf{ALLOW} by default.
-	\item Else, if no authorization for any of the session roles is found on the page or any ancestor (page \textrightarrow{} area \textrightarrow{} site), \textbf{DENY} — \emph{unless} the session has the \texttt{roots} role, in which case continue to step 3.
+	\item Else, if no authorization for any of the session roles is found on the page or any ancestor (page \textrightarrow{} area \textrightarrow{} portal), \textbf{DENY} — \emph{unless} the session has the \texttt{roots} role, in which case continue to step 3.
 	\item Else, if \texttt{page.visible} is \texttt{false}, \textbf{DENY} and \emph{navigate to the Home page}.
 	\item Otherwise, \textbf{ALLOW}.
 \end{enumerate}
 
 \paragraph{Content decision (for each content on an allowed page)}
 \begin{enumerate}
-	\item If the content or its ancestors (page \textrightarrow{} area \textrightarrow{} site) define authorizations for the session roles:
+	\item If the content or its ancestors (page \textrightarrow{} area \textrightarrow{} portal) define authorizations for the session roles:
 		\begin{enumerate}
 			\item If none of those authorizations evaluate to \texttt{true}, \textbf{DENY}.
 			\item Else, if \texttt{content.visible} is \texttt{false}, \textbf{DENY}.
 			\item Otherwise, \textbf{ALLOW}.
 		\end{enumerate}
-	\item If no role assignment for any session role is found all the way up to the site level, treat as an \emph{explicit deny} — \emph{unless} the session has the \texttt{roots} role, in which case evaluate \texttt{content.visible}: if \texttt{false} then \textbf{DENY}, otherwise \textbf{ALLOW}.
+	\item If no role assignment for any session role is found all the way up to the portal level, treat as an \emph{explicit deny} — \emph{unless} the session has the \texttt{roots} role, in which case evaluate \texttt{content.visible}: if \texttt{false} then \textbf{DENY}, otherwise \textbf{ALLOW}.
 \end{enumerate}
 
 \paragraph{Defaults and inheritance}
 \begin{itemize}
-		\item Pages are \emph{default-deny} (unless Home), requiring an explicit or inherited allow for at least one session role, and \texttt{visible} must not be \texttt{false}. If no role assignment is found all the way to the site level, treat the outcome as an \emph{explicit deny}; sessions with the \texttt{roots} role bypass this specific condition and proceed to the \texttt{visible} check.
-		\item Contents without any role assignment up to the site level are \emph{explicitly denied}. Sessions with the \texttt{roots} role bypass only this condition and proceed to the \texttt{visible} check.
-		\item RBV inherits up the hierarchy; evaluation short-circuits at the nearest level that defines role entries. If none are found by the time the site is reached, the result is an explicit deny (subject to the \texttt{roots} override above).
+		\item Pages are \emph{default-deny} (unless Home), requiring an explicit or inherited allow for at least one session role, and \texttt{visible} must not be \texttt{false}. If no role assignment is found all the way to the portal level, treat the outcome as an \emph{explicit deny}; sessions with the \texttt{roots} role bypass this specific condition and proceed to the \texttt{visible} check.
+		\item Contents without any role assignment up to the portal level are \emph{explicitly denied}. Sessions with the \texttt{roots} role bypass only this condition and proceed to the \texttt{visible} check.
+		\item RBV inherits up the hierarchy; evaluation short-circuits at the nearest level that defines role entries. If none are found by the time the portal is reached, the result is an explicit deny (subject to the \texttt{roots} override above).
 \end{itemize}
 
 \section{User Session Management}
@@ -245,7 +245,7 @@ Incoming URLs are parsed to extract the area/page/content hierarchy. For example
 
 Using the pre-built routing table, URLs are resolved to specific \wbol{} elements. Runtime outcomes:
 \begin{itemize}
-	\item \textbf{Pages}: If the URL resolves to a page that is not visible to the current session (per Figure~\ref{fig:rbv-flow} and \secref{sec:rbv-decision}), the user is taken to the \textbf{Home page}. If the path itself is invalid, the nearest site or area main page is served.
+	\item \textbf{Pages}: If the URL resolves to a page that is not visible to the current session (per Figure~\ref{fig:rbv-flow} and \secref{sec:rbv-decision}), the user is taken to the \textbf{Home page}. If the path itself is invalid, the nearest portal or area main page is served.
 	\item \textbf{Contents}: If a content is not visible, it is omitted entirely and the request returns \texttt{200 OK} with an empty body. If the path is invalid, no result is returned.
 \end{itemize}
 

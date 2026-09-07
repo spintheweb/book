@@ -34,10 +34,10 @@ Hierarchy provides cognitive compression. The \emph{Hierarchical Namespace Patte
 Roles shape *visibility* and *interaction surfaces* but should not fork the structural namespace unnecessarily. This separation sustains maintainability and consistent analytics.
 
 \section{Documentation Through Structure}
-Every \wbol{} element (Site, Area, Page, Content) hosts localized \texttt{description} and \texttt{keywords}. These fields form a vertically integrated documentation system that can encode: quality policies, compliance references, process identifiers, KPIs, audit obligations, data classification tags, and internal taxonomy terms. \autoref{tab:doc-scope} summarizes scope alignment.
+Every \wbol{} element (Portal, Area, Page, Content) hosts localized \texttt{description} and \texttt{keywords}. These fields form a vertically integrated documentation system that can encode: quality policies, compliance references, process identifiers, KPIs, audit obligations, data classification tags, and internal taxonomy terms. \autoref{tab:doc-scope} summarizes scope alignment.
 
 \begin{description}
-	\item[Site] Mission, global quality policy, enterprise standards.
+	\item[Portal] Mission, global quality policy, enterprise standards.
 	\item[Area] Departmental procedures, regulatory scope, operating KPIs.
 	\item[Page] Process walkthroughs, workflow prerequisites, exception handling.
 	\item[Content] Field-level rules, validation, data retention, privacy notes.
@@ -52,7 +52,7 @@ Embedding this metadata enables: contextual help, machine-assisted authoring, in
 		\toprule
 		\textbf{Level} & \textbf{Primary Focus} & \textbf{Typical Metadata} & \textbf{Example Questions Enabled} \\
 		\midrule
-		Site & Enterprise Mission & Mission, quality policy, audit standards, global KPIs & What is the overarching mission? Which global standards govern all Areas? \\
+		Portal & Enterprise Mission & Mission, quality policy, audit standards, global KPIs & What is the overarching mission? Which global standards govern all Areas? \\
 		Area & Department / Domain & Procedures, regulatory scope, data domains, risk class & Which regulations apply to this domain? Who owns the process? \\
 		Page & Process / Journey & Workflow steps, prerequisites, exception handling, SLA & What happens before/after this step? What are escalation paths? \\
 		Content & Field / Action Unit & Validation rules, retention, privacy flags, policy codes & Can this value be exported? How long is data retained? \\
@@ -80,7 +80,7 @@ Pages (\texttt{STWPage}) embody discrete user tasks or journeys. Design methodol
 	\item \textbf{Section Layout}: Header (global actions), sidebars (navigation, filters, summaries), main body (primary archetype), footer (feedback, contacts).
 	\item \textbf{Instrumentation}: Embed identifiers and metadata for analytics, ticketing, and performance tracing.
 \end{enumerate}
-\paragraph{Integrated Ticketing} A mature portal treats structure itself as a support surface. Ticket submissions should auto-capture structural scope (site/area/page/content IDs), user locale, and active filters. This converts qualitative feedback into structured, triage-ready data.
+\paragraph{Integrated Ticketing} A mature portal treats structure itself as a support surface. Ticket submissions should auto-capture structural scope (portal/area/page/content IDs), user locale, and active filters. This converts qualitative feedback into structured, triage-ready data.
 
 \section{Building with Content Blocks}
 \texttt{STWContent} instances are atomic functional or informational units: forms, tables, charts, grids, banners, maps, metrics, documents. Composition principles:

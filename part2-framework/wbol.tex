@@ -78,7 +78,7 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \section{The Common Element Structure}
 \label{sec:stwelement-base}
 
-Every \wbol{} element---\texttt{webbase}, \texttt{area}/\texttt{webbaselet}, \texttt{page}, and \texttt{content}/\texttt{shortcut}---shares a common shape: a \texttt{guid} identity attribute, a localized \texttt{name}, optional \texttt{visibilities} and \texttt{documentation}, and, where applicable, a \texttt{children} element. In the runtime (see \cref{chap:web-spinner}), these XML elements are parsed into the \texttt{STWSite}, \texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} in-memory classes respectively; the class hierarchy is an implementation detail of the \webspinner{}, not a second schema. The full XSD is in Appendix~\ref{app:wbol-xml-schema} (see Appendix: WBOL XML Schema Reference).
+Every \wbol{} element---\texttt{webbase}, \texttt{area}/\texttt{webbaselet}, \texttt{page}, and \texttt{content}/\texttt{shortcut}---shares a common shape: a \texttt{guid} identity attribute, a localized \texttt{name}, optional \texttt{visibilities} and \texttt{documentation}, and, where applicable, a \texttt{children} element. In the runtime (see \cref{chap:web-spinner}), these XML elements are parsed into the \texttt{STWPortal}, \texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} in-memory classes respectively; the class hierarchy is an implementation detail of the \webspinner{}, not a second schema. The full XSD is in Appendix~\ref{app:wbol-xml-schema} (see Appendix: WBOL XML Schema Reference).
 
 \subsection{Property Description}
 
@@ -98,17 +98,17 @@ Every \wbol{} element---\texttt{webbase}, \texttt{area}/\texttt{webbaselet}, \te
 
 This section describes the specialized element types available in \wbol{}.
 
-\subsection{STWSite}
+\subsection{STWPortal}
 
-\texttt{STWSite} is a singleton element that represents the entire portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure.
+\texttt{STWPortal} is a singleton element that represents the entire portal. It inherits from \texttt{STWElement} and acts as the root element of the portal structure.
 
 \subsubsection{Property Description}
 
 \begin{description}
-\item[\textbf{langs}]: A list of supported languages for the site. The first of the list is the default site language.
+\item[\textbf{langs}]: A list of supported languages for the portal. The first of the list is the default portal language.
 \item[\textbf{datasources}]: Defines the data sources used by the portal.
-\item[\textbf{mainpage}]: The GUID of the \texttt{STWPage} that serves as the main entry point for the site.
-\item[\textbf{version}]: A version string for the site.
+\item[\textbf{mainpage}]: The GUID of the \texttt{STWPage} that serves as the main entry point for the portal.
+\item[\textbf{version}]: A version string for the portal.
 \end{description}
 
 \subsubsection{Data Sources and Groups}
