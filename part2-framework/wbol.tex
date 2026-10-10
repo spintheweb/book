@@ -78,7 +78,7 @@ The third and final component of Spin the Web is the \textbf{Spin the Web Studio
 \section{The Common Element Structure}
 \label{sec:stwelement-base}
 
-Every \wbol{} element---\texttt{webbase}, \texttt{area}/\texttt{webbaselet}, \texttt{page}, and \texttt{content}/\texttt{shortcut}---shares a common shape: a \texttt{guid} identity attribute, a localized \texttt{name}, optional \texttt{visibilities} and \texttt{documentation}, and, where applicable, a \texttt{children} element. In the runtime (see \cref{chap:web-spinner}), these XML elements are parsed into the \texttt{STWPortal}, \texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} in-memory classes respectively; the class hierarchy is an implementation detail of the \webspinner{}, not a second schema. The full XSD is in Appendix~\ref{app:wbol-xml-schema} (see Appendix: WBOL XML Schema Reference).
+Every \wbol{} element---\texttt{webbase}, \texttt{area}/\texttt{webbaselet}, \texttt{page}, and \texttt{content}/\texttt{shortcut}---shares a common shape: a \texttt{guid} identity attribute, a localized \texttt{name}, optional \texttt{visibility} and \texttt{documentation}, and, where applicable, a \texttt{children} element. In the runtime (see \cref{chap:web-spinner}), these XML elements are parsed into the \texttt{STWPortal}, \texttt{STWArea}, \texttt{STWPage}, and \texttt{STWContent} in-memory classes respectively; the class hierarchy is an implementation detail of the \webspinner{}, not a second schema. The full XSD is in Appendix~\ref{app:wbol-xml-schema} (see Appendix: WBOL XML Schema Reference).
 
 \subsection{Property Description}
 
@@ -89,7 +89,7 @@ Every \wbol{} element---\texttt{webbase}, \texttt{area}/\texttt{webbaselet}, \te
 \item[\textbf{slug}]: A localizable, URL-friendly identifier, carried as the \texttt{slug} attribute on each \texttt{name/text} entry (one slug per language). Slugs contain only lowercase letters, numbers, periods, and hyphens.
 \item[\textbf{keywords}]: Localizable keywords for SEO, structured like \texttt{name} but without the \texttt{slug} attribute.
 \item[\textbf{description}]: A localizable description of the element, structured like \texttt{keywords}.
-\item[\textbf{visibilities}]: Defines the visibility rules for the element based on user roles: a \texttt{visibilities} element containing \texttt{role} entries, each pairing a role \texttt{id} with a \texttt{visibility} value (\texttt{true}, \texttt{false}, or a visibility function call). If a rule for a role is not defined, the visibility is determined by checking the parent element's visibility rules. This hierarchical check continues up to the root element. If no rule is found, the element is not visible by default.
+\item[\textbf{visibility}]: Defines the visibility rules for the element based on user roles: a \texttt{visibility} element containing \texttt{role} entries, each pairing a role \texttt{id} with a \texttt{visibility} value (\texttt{true}, \texttt{false}, or a visibility function call). If a rule for a role is not defined, the visibility is determined by checking the parent element's visibility rules. This hierarchical check continues up to the root element. If no rule is found, the element is not visible by default.
 \item[\textbf{children}]: A \texttt{children} element containing an ordered mix of nested \texttt{area}, \texttt{webbaselet}, \texttt{page}, \texttt{content}, and \texttt{shortcut} elements, as constrained by the parent's type.
 \end{description}
 

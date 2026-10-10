@@ -10,7 +10,7 @@ This appendix collects the formal XML Schema (XSD) definitions for the main WBOL
 WBOL is deliberately expressed as an XML Schema rather than a data-interchange-only format. Three requirements drove this choice:
 
 \begin{description}
-  \item[\textbf{Referential integrity}] A webbase is a graph of cross-referencing GUIDs: a webbase's \texttt{homepage} must resolve to an actual \texttt{page}; an \texttt{area}'s or \texttt{webbaselet}'s \texttt{mainpage} must resolve to a \texttt{page} within scope; a \texttt{shortcut}'s \texttt{target} and every \texttt{option}'s \texttt{target} must resolve to a navigable element; every role referenced in a \texttt{visibilities} block must be declared in the webbase's \texttt{roles}. XSD's \texttt{xs:key} and \texttt{xs:keyref} express and validate all of these constraints declaratively, something a plain data format cannot do on its own.
+  \item[\textbf{Referential integrity}] A webbase is a graph of cross-referencing GUIDs: a webbase's \texttt{homepage} must resolve to an actual \texttt{page}; an \texttt{area}'s or \texttt{webbaselet}'s \texttt{mainpage} must resolve to a \texttt{page} within scope; a \texttt{shortcut}'s \texttt{target} and every \texttt{option}'s \texttt{target} must resolve to a navigable element; every role referenced in a \texttt{visibility} block must be declared in the webbase's \texttt{roles}. XSD's \texttt{xs:key} and \texttt{xs:keyref} express and validate all of these constraints declaratively, something a plain data format cannot do on its own.
   \item[\textbf{Mixed, localized content}] Names, keywords, descriptions, and documentation are collections of \texttt{text} elements distinguished by \texttt{xml:lang}, and some (like \texttt{documentation}) carry inline, mixed markup. XML's mixed-content model handles this naturally.
   \item[\textbf{Composable namespaces}] \webbaselet{s} are designed to be authored independently and imported into a larger \webbase{}. XML namespaces and qualified element names keep that composition unambiguous.
 \end{description}
@@ -32,7 +32,7 @@ The root element of a complete portal. Requires exactly one \texttt{webbase} per
   \item[\texttt{roles} (required)] At least the seven mandatory preset roles: \texttt{root}, \texttt{administrators}, \texttt{guests}, \texttt{users}, \texttt{developers}, \texttt{translators}, \texttt{seo}, plus any custom roles.
   \item[\texttt{name} (required)] Localized display name (see \S\ref{sec:xsd-name}).
   \item[\texttt{documentation} (optional)] Free-form, localized, mixed-content documentation.
-  \item[\texttt{visibilities} (optional)] Role-based visibility rules (see \S\ref{sec:xsd-visibilities}).
+  \item[\texttt{visibility} (optional)] Role-based visibility rules (see \S\ref{sec:xsd-visibility}).
   \item[\texttt{children} (required)] Any mix of \texttt{area}, \texttt{webbaselet}, \texttt{page}, \texttt{content}, and \texttt{shortcut} elements.
 \end{description}
 \begin{lstlisting}[language=XML,caption={Minimal Webbase}]
@@ -69,7 +69,7 @@ The root element of a complete portal. Requires exactly one \texttt{webbase} per
   \item[\texttt{version} (required on root \texttt{webbaselet} only)] Independent version token for the fragment.
 \end{description}
 \paragraph{Child Elements}
-\texttt{name} (required), \texttt{visibilities} (optional), \texttt{documentation} (optional), \texttt{children} (optional; any mix of \texttt{area}, \texttt{webbaselet}, \texttt{page}, \texttt{content}, \texttt{shortcut}).
+\texttt{name} (required), \texttt{visibility} (optional), \texttt{documentation} (optional), \texttt{children} (optional; any mix of \texttt{area}, \texttt{webbaselet}, \texttt{page}, \texttt{content}, \texttt{shortcut}).
 \begin{lstlisting}[language=XML,caption={Webbaselet Root (importable fragment)}]
 <webbaselet xmlns="https://spintheweb.org/schemas/wbol.xsd"
     guid="aHRWebbaseletRoot1" version="1.0.0">
@@ -89,14 +89,14 @@ A concrete, navigable page. Restricts its \texttt{children} to \texttt{content} 
 \paragraph{Attributes}
 \texttt{guid} (required, pattern \texttt{p[0-9A-Za-z]+}), \texttt{origin} (required), \texttt{template} (optional, default \texttt{index.html}), \texttt{sequence} (optional).
 \paragraph{Child Elements}
-\texttt{name} (required), \texttt{keywords} (required), \texttt{description} (required), \texttt{visibilities} (optional), \texttt{documentation} (optional), \texttt{children} (optional, ordered \texttt{content}/\texttt{shortcut}).
+\texttt{name} (required), \texttt{keywords} (required), \texttt{description} (required), \texttt{visibility} (optional), \texttt{documentation} (optional), \texttt{children} (optional, ordered \texttt{content}/\texttt{shortcut}).
 
 \section{Content (\texttt{content}) and Shortcut (\texttt{shortcut})}
 \texttt{content} is an atomic, interactive data unit rendered within a page region; \texttt{shortcut} is a lightweight pointer that reuses an existing \texttt{content} elsewhere on the page.
 \paragraph{Content Attributes}
 \texttt{guid} (required, pattern \texttt{c[0-9A-Za-z]+}), \texttt{origin} (required), \texttt{type} (required; one of \texttt{text}, \texttt{table}, \texttt{form}, \texttt{list}, \texttt{graph}, \texttt{plots}, \texttt{calendar}, \texttt{tree}, \texttt{tabs}, \texttt{accordion}, \texttt{menu}, \texttt{breadcrumbs}, \texttt{keypad}, \texttt{imagemap}, \texttt{map}, \texttt{serverside}, \texttt{clientside}), \texttt{section} (optional layout region, e.g. \texttt{main}, \texttt{aside-left}, \texttt{popup}), \texttt{sequence} (optional), \texttt{class} (optional CSS hook).
 \paragraph{Content Elements}
-\texttt{name} (required), \texttt{query} (required; the \wbpl{}-processed command, with an optional \texttt{datasource} attribute), \texttt{parameters} (optional querystring payload), \texttt{layouts} (optional, localized \wbll{} templates), \texttt{documentation} (optional), \texttt{options} (optional; see below), \texttt{visibilities} (optional).
+\texttt{name} (required), \texttt{query} (required; the \wbpl{}-processed command, with an optional \texttt{datasource} attribute), \texttt{parameters} (optional querystring payload), \texttt{layouts} (optional, localized \wbll{} templates), \texttt{documentation} (optional), \texttt{options} (optional; see below), \texttt{visibility} (optional).
 \paragraph{Shortcut Attributes}
 \texttt{guid}, \texttt{origin}, \texttt{target} (required, GUID of the \texttt{content} being reused), \texttt{section}, \texttt{sequence}, \texttt{class} (required).
 \begin{lstlisting}[language=XML,caption={Content with a data-bound query}]
@@ -136,12 +136,12 @@ Localizable fields are containers of one or more \texttt{text} elements, each qu
 </name>
 \end{lstlisting}
 
-\section{Visibilities (\texttt{visibilities})}
-\label{sec:xsd-visibilities}
+\section{Visibility (\texttt{visibility})}
+\label{sec:xsd-visibility}
 Attaches role-based visibility rules to any element. Each \texttt{role} entry pairs a declared \texttt{id} with a \texttt{visibility} value: the literal \texttt{true} or \texttt{false}, or a call to a visibility function (pattern \texttt{name()}) resolved at request time to \texttt{true}, \texttt{false}, or \texttt{null} (meaning: inherit from the parent element). Every role \texttt{id} referenced here must already be declared in the webbase's \texttt{roles} element; the schema enforces this via the \texttt{visibilityRoleRefs} keyref.
 \begin{lstlisting}[language=XML,caption={Role-based visibility}]
-<visibilities>
+<visibility>
   <role id="users" visibility="true" />
   <role id="guests" visibility="isPublished()" />
-</visibilities>
+</visibility>
 \end{lstlisting}

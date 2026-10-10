@@ -46,6 +46,27 @@ If you need to skip an argument, use an empty segment: e.g., \wballsyn{e(';usern
 \par\smallskip
 \textit{Cursor movement policy:} \textbf{editing tokens} (form controls such as \texttt{h}, \texttt{e}, \texttt{w}, \texttt{m}) advance the field cursor when the \emph{name} is not specified; \textbf{non-editing tokens} advance only when they implicitly consume the active field \emph{value}.
 
+\subsection{Choice Sources and Option Shape}
+\label{sec:wbll-choice-sources}
+
+Choice symbols share an option-data convention but may support different arities. After WBPL expands placeholders using the current record's context, the choice arguments describe either inline options or a datasource name and query (\texttt{dsn;query}). WBPL performs the substitution; the datasource layer executes the query.
+
+Inline option arity is 1, 2, or 3: one column supplies a value used as both value and label; two columns supply value and label; three columns supply value, label, and group. For a datasource query, up to three result columns map to value, label, and group, and the number of returned columns determines the arity. The token descriptions below specify which arities each symbol supports.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}l l l X@{}}
+\textbf{Symbols} & \textbf{Presentation} & \textbf{Arities} & \textbf{Grouping} \\
+\hline
+\texttt{c}, \texttt{r} & Checkbox or radio controls & 1, 2, 3 & Fieldsets \\
+\texttt{d}, \texttt{D} & Single-select controls & 1, 2, 3 & Optgroups \\
+\texttt{s}, \texttt{S} & Multiple-select controls & 1, 2, 3 & Optgroups \\
+\texttt{i}, \texttt{n} & Non-interactive output & 1, 2 & Symbol-specific \\
+\texttt{e} & Text input with datalist options & 1 & Not applicable \\
+\end{tabularx}
+\end{center}
+
+Grouped options are presented according to the symbol: select controls use \texttt{<optgroup>}, while \texttt{c} and \texttt{r} use \texttt{<fieldset>} groups. Other symbols render the same option data using their own presentation.
+
 % Example recordset used in examples
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
@@ -245,9 +266,9 @@ f\rf
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{e('format[;name][;value]')} \\
+\textbf{Token} & \wballsyn{e('format;name;value;1;options...')} or \wballsyn{e('format;name;value;dsn;query')} \\
 \hline
-\textbf{Description} & Renders an input element. Arguments are \emph{positional but optional}. Defaults: \textit{format} = \texttt{text}, \textit{name} = active field name, \textit{value} = active field value. \textbf{Format options:} any HTML5 input type (\texttt{text}, \texttt{email}, \texttt{url}, \texttt{tel}, \texttt{number}, \texttt{date}, \texttt{datetime-local}, \texttt{time}, \texttt{month}, \texttt{week}, \texttt{color}, \texttt{range}, etc.); or a numeric/date-time formatting string (e.g., \texttt{\#,\#\#0.00} for decimals, \texttt{yyyy-MM-dd} for dates). Numeric patterns set \texttt{type="number"} with appropriate \texttt{step} attribute. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance (even if \textit{value} is omitted). \textbf{Non-interactive mode:} renders as \textbf{f} (formatted field value). \\
+\textbf{Description} & Renders an input element. Arguments are \emph{positional but optional}. Defaults: \textit{format} = \texttt{text}, \textit{name} = active field name, \textit{value} = active field value. For a text input, inline arity-1 options or a datasource query returning one column may provide datalist suggestions; each suggestion is both its value and label. \textbf{Format options:} any HTML5 input type (\texttt{text}, \texttt{email}, \texttt{url}, \texttt{tel}, \texttt{number}, \texttt{date}, \texttt{datetime-local}, \texttt{time}, \texttt{month}, \texttt{week}, \texttt{color}, \texttt{range}, etc.); or a numeric/date-time formatting string (e.g., \texttt{\#,\#\#0.00} for decimals, \texttt{yyyy-MM-dd} for dates). Numeric patterns set \texttt{type="number"} with appropriate \texttt{step} attribute. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified; if \textit{name} is provided, does not advance (even if \textit{value} is omitted). \textbf{Non-interactive mode:} renders as \textbf{f} (formatted field value). \\
 \hline
 \textbf{Example} & \\
 \hline
@@ -618,17 +639,17 @@ b(';stw;submit')t('Save')
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{c('mode;name;value;options...')} \\
+\textbf{Token} & \wballsyn{c('name;value;arity;options...')} or \wballsyn{c('name;value;dsn;query')} \\
 \hline
-\textbf{Description} & Renders checkbox input(s). \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list (each item is both value and label); \texttt{mode=2} = key-value pairs (value;label;value;label...). For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields (id, value), acts as mode=2. Arguments: \textit{mode}, \textit{name} (optional, defaults to active field), \textit{value} (optional, defaults to active field value), then options. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders as disabled checkboxes. \\
+\textbf{Description} & Renders checkbox input(s) from the shared choice data. Inline options use arity 1 (value also supplies the label), 2 (value and label), or 3 (value, label, and group). Alternatively, the choice source may specify a datasource and query (\texttt{dsn;query}); after WBPL expansion, the result's one to three columns determine the arity. Arity 3 groups options into fieldsets. Arguments: \textit{name} (optional, defaults to the active field), \textit{value} (optional, defaults to the active field value), then the choice source. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \\
 \hline
 \textbf{Example} & \\
 \hline
 \end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
-c('0;tags;;mysqldb;SELECT id,name FROM tags') // Datasource (2 fields -> key-value)
-c('1;agree;;yes;no;maybe') // Simple list
-c('2;choice;;1;Option A;2;Option B') // Key-value pairs
+c('tags;;mysqldb;SELECT id,name FROM tags') // Datasource (2 columns -> value and label)
+c('agree;;1;yes;no;maybe') // Arity 1: each option is its own value and label
+c('choice;;2;1;Option A;2;Option B') // Arity 2: value and label
 \end{lstlisting}
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
@@ -645,15 +666,15 @@ c('2;choice;;1;Option A;2;Option B') // Key-value pairs
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{r('mode;name;value;options...')} \\
+\textbf{Token} & \wballsyn{r('name;value;arity;options...')} or \wballsyn{r('name;value;dsn;query')} \\
 \hline
-\textbf{Description} & Renders radio button input(s). \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list; \texttt{mode=2} = key-value pairs. For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields, acts as mode=2. Arguments: \textit{mode}, \textit{name} (optional), \textit{value} (optional), then options. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders as disabled radio buttons. \\
+\textbf{Description} & Renders radio button input(s) from the shared choice data. Inline options use arity 1 (value also supplies the label), 2 (value and label), or 3 (value, label, and group). Alternatively, the choice source may specify a datasource and query (\texttt{dsn;query}); after WBPL expansion, the result's one to three columns determine the arity. Arity 3 groups options into fieldsets. Arguments: \textit{name} (optional, defaults to the active field), \textit{value} (optional, defaults to the active field value), then the choice source. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \\
 \hline
 \textbf{Example} & \\
 \hline
 \end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
-r('1;gender;;male;female;other')
+r('gender;;1;male;female;other')
 \end{lstlisting}
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
@@ -668,15 +689,15 @@ r('1;gender;;male;female;other')
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{d('name[;value];mode;options...')} or \wballsyn{D(...)} \\
+\textbf{Token} & \wballsyn{d('name[;value];arity;options...')} or \wballsyn{d('name[;value];dsn;query')} (same forms for \texttt{D}) \\
 \hline
-\textbf{Description} & Renders a dropdown select. \textbf{Lowercase d} allows empty selection (includes \texttt{<option></option>}); \textbf{uppercase D} requires selection (no empty option). \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list; \texttt{mode=2} = key-value pairs. For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields, acts as mode=2. Arguments: \textit{name} (optional), \textit{value} (optional), \textit{mode}, then options. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders as \textbf{n} (mapped value display). \\
+\textbf{Description} & Renders a single-select control from the shared choice data. \textbf{Lowercase d} allows an empty selection; \textbf{uppercase D} does not add an empty option. Inline choices use arity 1 (value also supplies the label), 2 (value and label), or 3 (value, label, and group); arity 3 renders groups as \texttt{<optgroup>} elements. Alternatively, the choice source may specify a datasource and query (\texttt{dsn;query}); after WBPL expansion, the result's one to three columns determine the arity. Arguments: \textit{name} (optional, defaults to the active field), \textit{value} (optional, defaults to the active field value), then the choice source. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \\
 \hline
 \textbf{Example} & \\
 \hline
 \end{tabularx}}
 \begin{lstlisting}[style=wbll-appendix, language=WBLL]
-d('country;;0;mysqldb;SELECT id,name FROM countries') // Datasource
+d('country;;mysqldb;SELECT id,name FROM countries') // Datasource (2 columns: value and label)
 d('city;;1;Milan;Paris;Berlin') // Simple list
 D('status;;2;1;Active;2;Inactive') // Key-value pairs
 \end{lstlisting}
@@ -695,9 +716,9 @@ D('status;;2;1;Active;2;Inactive') // Key-value pairs
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{s('name[;value];mode;options...')} or \wballsyn{S(...)} \\
+\textbf{Token} & \wballsyn{s('name[;value];arity;options...')} or \wballsyn{s('name[;value];dsn;query')} (same forms for \texttt{S}) \\
 \hline
-\textbf{Description} & Renders a multi-select dropdown with \texttt{multiple} attribute. \textbf{Lowercase s} allows empty; \textbf{uppercase S} requires selection. \textbf{Option modes:} \texttt{mode=0} = datasource query (\texttt{dsn;SELECT ...}); \texttt{mode=1} = simple list; \texttt{mode=2} = key-value pairs. For datasource mode, if query returns 1 field, acts as mode=1; if 2 fields, acts as mode=2. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \textbf{Non-interactive mode:} renders comma-separated mapped values (similar to \textbf{n} but handles multiple selections). \\
+\textbf{Description} & Renders a multiple-select control from the shared choice data. \textbf{Lowercase s} includes an empty option; \textbf{uppercase S} does not. Inline choices use arity 1 (value also supplies the label), 2 (value and label), or 3 (value, label, and group); arity 3 renders groups as \texttt{<optgroup>} elements. Alternatively, the choice source may specify a datasource and query (\texttt{dsn;query}); after WBPL expansion, the result's one to three columns determine the arity. Arguments: \textit{name} (optional, defaults to the active field), \textit{value} (optional, defaults to the active field value), then the choice source. \textbf{Cursor rule (editing):} advances when \textit{name} is not specified. \\
 \hline
 \textbf{Example} & \\
 \hline
@@ -741,9 +762,9 @@ u\a('accept="image/*"')
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{i('mode;options...')} \\
+\textbf{Token} & \wballsyn{i('URL')} or \wballsyn{i('arity;options...')} or \wballsyn{i('dsn;query')} \\
 \hline
-\textbf{Description} & Renders an image element. \textbf{Modes:} empty or \texttt{0} = direct URL from \textit{mode} or active field value; \texttt{1} = indexed by value (field value selects from option list); \texttt{2} = key-value pairs (field value matches key, renders corresponding URL). \textbf{Cursor rule (non-editing):} advances. \\
+\textbf{Description} & Renders an image. A direct URL may be supplied, or choice data may map the current field value to an image URL. Inline choices support arity 1 (indexed image URLs) or 2 (value and image URL). Alternatively, a datasource name and query (\texttt{dsn;query}) may provide one or two result columns after WBPL expansion. \textbf{Cursor rule (non-editing):} advances when the current field value is used implicitly. \\
 \hline
 \textbf{Example} & \\
 \hline
@@ -769,9 +790,9 @@ i('2;1;img-one.png;2;img-two.png')
 \begin{tcolorbox}[tokenbox]
 {\small\setstretch{1.05}%
 \begin{tabularx}{\linewidth}{@{}p{0.18\linewidth} X@{}}
-\textbf{Token} & \wballsyn{n('mode;options...')} \\
+\textbf{Token} & \wballsyn{n('arity;options...')} or \wballsyn{n('dsn;query')} \\
 \hline
-\textbf{Description} & Displays a mapped value (non-interactive version of dropdown). \textbf{Modes:} \texttt{1} = indexed by value; \texttt{2} = key-value pairs. \textbf{Cursor rule (non-editing):} advances. \\
+\textbf{Description} & Displays the label corresponding to the current value as plain text. Inline choices use arity 1 (value also supplies the label) or 2 (value and label). Alternatively, the choice source may specify a datasource and query (\texttt{dsn;query}); after WBPL expansion, one or two result columns determine the arity. \textbf{Cursor rule (non-editing):} advances when the current field value is used implicitly. \\
 \hline
 \textbf{Example} & \\
 \hline

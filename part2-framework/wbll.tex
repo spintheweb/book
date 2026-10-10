@@ -11,9 +11,16 @@
 % Macroscopic (WBOL) vs microscopic (WBLL)
 In \wbol{}, the portal is specified \textit{macroscopically}: from \emph{Portal} to \emph{Area} to \emph{Page}, and for each Page the set of \emph{Contents}. For every Content, \wbol{} declares its \emph{subtype} (for example: table, calendar, tree, menu, form), the \emph{datasource}, and the \emph{command} to run. WBLL operates \textit{microscopically}, describing how the queried data should be rendered within that Content’s shape.
 
+\subsection{Rendering One Record at a Time}
+\label{sec:wbll-record-context}
+
+WBLL renders one record per invocation. It does not iterate the primary recordset or decide how rendered fragments are assembled into the surrounding content. Those responsibilities belong to the \wbol{} content subtype and its runtime renderer: for example, a table renderer may invoke WBLL for each row, while a calendar or tree renderer may invoke it for each event or node and place the resulting fragment in the appropriate structure.
+
+Each invocation receives the current record's field values and placeholders. A WBLL symbol may also use a secondary datasource query to obtain choices for a control in that record. This query supplies option data; it does not change WBLL's one-record rendering boundary or make WBLL responsible for iterating the primary content records.
+
 \subsection{Data Context and Field Cursor}
 
-It is the responsibility of the \wbol{} content definition to command data. The result is an ordered recordset, where both the field names and their sequence are important for rendering.
+The \wbol{} content definition declares the primary datasource and command. The runtime executes that command and passes the resulting recordset to the content subtype, which invokes WBLL for the records it renders. Each invocation receives the current record and the ordered field names; both field names and their sequence are important for rendering.
 
 The WBLL interpreter maintains a \textbf{field cursor} that tracks the current position within the recordset fields. Many tokens operate on the field at the current cursor position if no explicit field name is provided; tokens that specify a field name use that field without moving the cursor. Some tokens may also vary their behavior based on the content subtype; this is documented with each token where relevant.
 
@@ -31,18 +38,27 @@ By convention, the field cursor advances if and only if a token implicitly consu
 
 Implementations typically mark a token as having consumed the active field only if it bound to it implicitly; explicit bindings and literal-only tokens leave the cursor position intact.
 
+\subsection{Choice Data and Presentation}
+\label{sec:wbll-choice-data}
+
+Choice symbols use a common option-data model but render it differently according to the symbol. After WBPL expands placeholders in the symbol's arguments, the expanded arguments are interpreted either as inline options or as a datasource name and query (\texttt{dsn;query}). WBPL performs substitution; it does not execute the query. The datasource layer executes a choice query in the current record's context.
+
+Inline options specify an arity of 1, 2, or 3. With arity 1, each option supplies its own value and label; with arity 2, each option supplies a value and label; with arity 3, each option also specifies a group. For a datasource query, up to three result columns map to value, label, and group; the number of columns determines the arity. A symbol may support only a subset of these arities.
+
+The symbol determines how the options are presented. Select controls render groups as \texttt{<optgroup>} elements. Checkbox and radio controls (\texttt{c} and \texttt{r}) render each group in a \texttt{<fieldset>}. Other choice symbols use the same option data for their own presentation, such as plain-text mappings or datalist options.
+
 This chapter establishes the presentation-layer contracts. In the next chapters we detail modular composition (\cref{chap:webbaselets}) and the runtime (\cref{chap:web-spinner}).
 
 \subsection{Language Internals}
 
 At its core, WBLL is a compact, token-based templating language. Unlike tag-based languages like HTML, WBLL uses a sequence of single-character mnemonics and special commands to define the structure and appearance of content. This design prioritizes conciseness and efficient processing.
 
-The rendering process involves two main stages:
+For a given WBLL invocation, the rendering process involves two main stages:
 
 \begin{enumerate}
     \item \textbf{Lexing (Tokenization):} The WBLL source string is first parsed by a lexer, which uses a comprehensive regular expression to break the text into a series of tokens. Each token represents a specific layout element, such as a link (\texttt{a}), a button (\texttt{b}), a form input (\texttt{e}), or a simple text block (\texttt{t}). The lexer also captures arguments, attributes, and parameters associated with each token. Any unrecognized characters result in a syntax error.
     
-    \item \textbf{Compilation and Rendering:} The resulting array of tokens is then compiled into a dynamic JavaScript render function. This function is specifically generated to produce HTML from the token sequence. When executed, it iterates through the tokens, merges data from records and session placeholders, and constructs the final HTML string. This just-in-time compilation allows for highly efficient rendering, as the logic is tailored precisely to the given layout.
+    \item \textbf{Compilation and Rendering:} The resulting array of tokens is then compiled into a dynamic JavaScript render function. This function is specifically generated to produce HTML from the token sequence. When executed, it walks the tokens, uses the current record's values and session placeholders, and constructs the HTML fragment for that invocation. The enclosing content renderer—not this function—decides which records to render and how to embed each fragment. This just-in-time compilation allows for highly efficient rendering, as the logic is tailored precisely to the given layout.
 \end{enumerate}
 
 

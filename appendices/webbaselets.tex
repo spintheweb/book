@@ -44,7 +44,7 @@ A minimal root for each webbaselet as a \texttt{webbaselet} element:
 \section{Structured Classification for Webbaselets}
 \label{sec:app-webbaselets-classification}
 
-To make webbaselets discoverable and governable across the ecosystem, the root \texttt{webbaselet} of each SHOULD declare a compact, structured \emph{classification}. This is a proposed extension to the base \wbol{} XSD (Appendix~\ref{app:wbol-xml-schema}): a dedicated \texttt{classification} element, distinct from \texttt{name}/\texttt{visibilities}/\texttt{documentation}, to avoid collisions with core elements. Engines MAY also surface these as indexed metadata for search.
+To make webbaselets discoverable and governable across the ecosystem, the root \texttt{webbaselet} of each SHOULD declare a compact, structured \emph{classification}. This is a proposed extension to the base \wbol{} XSD (Appendix~\ref{app:wbol-xml-schema}): a dedicated \texttt{classification} element, distinct from \texttt{name}/\texttt{visibility}/\texttt{documentation}, to avoid collisions with core elements. Engines MAY also surface these as indexed metadata for search.
 
 \subsection{Classification keys}
 Recommended fields and value ranges:
@@ -142,7 +142,7 @@ Key entities managed by the Ecosystem webbaselet:
 \begin{lstlisting}[language=JSON,caption={Ecosystem entities}]
 {
   "catalogItem": {
-    "_id": "eco-wbl-hr-directory",
+    "uuid": "eco-wbl-hr-directory",
     "namespace": "hr-directory",
     "name": {"en":"HR People Directory"},
     "summary": {"en": "Org-wide searchable people directory"},
@@ -158,7 +158,7 @@ Key entities managed by the Ecosystem webbaselet:
     "status": "published"
   },
   "review": {
-    "_id": "rev-123",
+    "uuid": "rev-123",
     "item": "eco-wbl-hr-directory",
     "user": "u:alice",
     "stars": 5,
@@ -214,9 +214,9 @@ Purpose: model, execute, and monitor business processes with tasks, SLAs, and ap
 \subsection{Data Model}
 \begin{lstlisting}[language=JSON,caption={BPMS entities}]
 {
-  "process": { "_id": "proc-id", "name": {"en": "Onboarding"}, "version": 3, "stages": ["init","docs","it","done"] },
-  "instance": { "_id": "pi-123", "process": "proc-id", "stage": "docs", "state": "active", "assignees": ["hr:manager"], "due": "2025-09-30" },
-  "task": { "_id": "task-789", "instance": "pi-123", "type": "approve", "owner": "hr:manager", "status": "open", "slaHours": 48 },
+  "process": { "uuid": "proc-id", "name": {"en": "Onboarding"}, "version": 3, "stages": ["init","docs","it","done"] },
+  "instance": { "uuid": "pi-123", "process": "proc-id", "stage": "docs", "state": "active", "assignees": ["hr:manager"], "due": "2025-09-30" },
+  "task": { "uuid": "task-789", "instance": "pi-123", "type": "approve", "owner": "hr:manager", "status": "open", "slaHours": 48 },
   "event": { "kind": "task.completed", "ref": "task-789", "by": "hr:manager", "at": "2025-09-12T08:30:00Z" }
 }
 \end{lstlisting}
@@ -244,7 +244,7 @@ Purpose: track presence, leave requests, balances, holidays, and approvals.
 {
   "calendar": { "year": 2025, "holidays": ["2025-01-01","2025-12-25"] },
   "balance": { "user": "u:alice", "year": 2025, "vacation": 15, "sick": 5 },
-  "leave": { "_id": "lv-42", "user": "u:alice", "from": "2025-09-15", "to": "2025-09-20", "type": "vacation", "status": "pending", "approver": "mgr:bob" }
+  "leave": { "uuid": "lv-42", "user": "u:alice", "from": "2025-09-15", "to": "2025-09-20", "type": "vacation", "status": "pending", "approver": "mgr:bob" }
 }
 \end{lstlisting}
 
@@ -266,8 +266,8 @@ Purpose: log, track, and resolve issues/requests with queues, priorities, and SL
 \subsection{Data Model}
 \begin{lstlisting}[language=JSON,caption={Ticket entities}]
 {
-  "ticket": { "_id": "t-1001", "queue": "it", "kind": "incident", "priority": "high", "status": "open", "subject": "Laptop fan noisy", "requester": "u:carol", "assignee": "it:agent01" },
-  "comment": { "_id": "c-1", "ticket": "t-1001", "by": "u:carol", "when": "2025-09-12T09:00:00Z", "text": "Happens after 10min" },
+  "ticket": { "uuid": "t-1001", "queue": "it", "kind": "incident", "priority": "high", "status": "open", "subject": "Laptop fan noisy", "requester": "u:carol", "assignee": "it:agent01" },
+  "comment": { "uuid": "c-1", "ticket": "t-1001", "by": "u:carol", "when": "2025-09-12T09:00:00Z", "text": "Happens after 10min" },
   "sla": { "queue": "it", "kind": "incident", "responseHours": 4, "resolutionHours": 48 }
 }
 \end{lstlisting}
