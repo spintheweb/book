@@ -5,21 +5,21 @@
 This chapter documents the concrete technologies used to implement the web spinner mechanics and how the theoretical constructs from Part II are realized in a working system.
 
 \section{Runtime and Languages}
-The reference implementation is written in TypeScript and runs on Node.js 22.18 or later:
+The reference implementation is written in JavaScript and runs on Node.js 22.18 or later:
 \begin{itemize}
-	\item Node.js runtime and TypeScript for server-side logic
+	\item Node.js runtime and JavaScript for server-side logic
 	\item Standard Web APIs (URL, URLSearchParams, Fetch, Crypto) alongside Node.js APIs and npm packages
 	\item npm scripts and Node.js utilities for development, testing, asset builds, and releases
-	\item Containerization via a multi-stage Dockerfile based on the official Node.js image
+	\item Containerization via a Dockerfile based on the official Node.js image
 \end{itemize}
 
 \subsection{Why Node.js for the \webspinner?}
 Node.js provides a mature server runtime and package ecosystem while retaining the modern JavaScript and Web API features used by the \webspinner:
 \begin{itemize}
-	\item \textbf{TypeScript end-to-end:} one language for the spinner, utilities, and any shared logic with client code.
+	\item \textbf{JavaScript end-to-end:} one language for the spinner, utilities, and any shared logic with client code.
 	\item \textbf{Web APIs in the server:} standard \texttt{URL}, \texttt{Request/Response}, \texttt{Fetch}, and \texttt{Crypto} reduce bespoke abstractions.
 	\item \textbf{Package ecosystem:} npm dependencies provide database drivers, XML parsing, and WebSocket support.
-	\item \textbf{Integrated tooling:} npm scripts, the built-in Node.js test runner, and the TypeScript compiler support development and releases.
+	\item \textbf{Integrated tooling:} npm scripts and the built-in Node.js test runner support development and releases.
 	\item \textbf{Simple deploys:} reproducible Docker images and the widely available Node.js runtime keep operations light.
 	\item \textbf{Native ESM:} native modules and top-level \texttt{await} fit the compilation model used by \wbll and \wbpl tooling.
 \end{itemize}
@@ -72,7 +72,7 @@ For a content render request:
 \begin{itemize}
 	\item npm scripts run Node.js tasks to merge and minify static assets (e.g., CSS and JavaScript) for the \texttt{public/} client
 	\item Tests: parsing and evaluation tests for WBPL ensure correctness of expressions and escaping
-	\item Docker: a multi-stage Node.js build installs npm dependencies and ships a non-root runtime image
+	\item Docker: a Node.js image installs npm dependencies and ships a non-root runtime image
 \end{itemize}
 
 \section{Where the Mechanics Live (Guide to Source)}

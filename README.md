@@ -30,7 +30,7 @@ the eponymous open-source **Spin the Web Project**.
 - Chapter 8: Webbase and Webbaselets
 - Chapter 9: Web Spinner Runtime Architecture and Mechanics
 - Chapter 10: Spin the Web Studio: An Integrated Development Environment
-- Chapter 11: Technology Stack and Implementation Mechanics — Node.js/TypeScript
+- Chapter 11: Technology Stack and Implementation Mechanics — Node.js/JavaScript
   runtime, WBLL layout interpreter, WBPL, session/state, security, and
   deployment
 
