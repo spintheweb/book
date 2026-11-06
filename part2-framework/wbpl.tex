@@ -41,7 +41,7 @@ Text inside curly braces is included \textbf{only if} at least one placeholder w
 
 This block behaves similarly to curly braces, but with an added feature for cleaning up command syntax. If the block is removed because its placeholders are empty, the engine will also intelligently remove a single adjacent keyword (like \texttt{AND}, \texttt{OR}). This is designed to handle optional conditional clauses in SQL.
 
-For example, in \texttt{SELECT * FROM users WHERE 1=1 AND [user_id = @id]}, the \texttt{AND} keyword and the entire bracketed expression will be removed if \texttt{@id} has no value.
+For example, in \verb|SELECT * FROM users WHERE 1=1 AND [user_id = @id]|, the \texttt{AND} keyword and the entire bracketed expression will be removed if \texttt{@id} has no value.
 
 \subsection{Escaping}
 

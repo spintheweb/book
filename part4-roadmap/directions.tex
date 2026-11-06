@@ -12,6 +12,26 @@ This chapter explores the transformative potential of Spin the Web as it evolves
 	\item Natural-language prompts mapped to parameterized actions
 \end{itemize}
 
+\section{Agentic Access and Training-Oriented Rendering}
+\label{sec:agentic-access}
+
+A distinct \textbf{agentic} or \textbf{AI} role is useful not as a special case of the user interface, but as a first-class access mode for the portal itself. The regular human user sees the rendered page in the conventional sense: HTML, CSS, navigation, and the final interaction surface. An agent, by contrast, should receive the same page in a richer, machine-readable envelope that includes both the human-visible result and the declarative structure that produced it. In other words, an agentic user is not only shown \emph{what} a regular user sees, but also \emph{why} that result was assembled and \emph{which} underlying WBOL fragment and metadata were used to produce it.
+
+This is not a leak of implementation detail; it is a semantic contract. A portal that can expose its rendered HTML together with the relevant \wbol{} fragment, localized metadata, role constraints, datasource bindings, and request context becomes self-describing to both humans and AI systems. The same portal can then serve multiple audiences simultaneously: a human reader receives a polished experience, while an AI agent receives the canonical structure of the content, its provenance, and the intent of the request that shaped the response. This distinction is essential in enterprise settings, where the business meaning of a page often matters more than the final presentation markup alone.
+
+For Spin the Web, the natural pattern is therefore to define an explicit AI role whose view is a structured render contract. The contract should include:
+\begin{itemize}
+	\item the rendered HTML or normalized view for human inspection;
+	\item the relevant \wbol{} subtree that generated that view;
+	\item contextual metadata describing the active page, area, content, and user role;
+	\item the resolved datasource and parameter set that informed the response;
+	\item optional provenance information such as visibility rules, language selection, and request history.
+\end{itemize}
+
+Such a role is immediately valuable for retrieval, reasoning, and evaluation. An agent can ground its response in the declarative content model rather than guessing from a flattened HTML snippet. It can explain why a page was shown, what alternatives were available, and which business object or policy regime governed the response. The benefit is especially strong in training and benchmarking scenarios: the portal can expose paired examples of \emph{intent} $\rightarrow$ \emph{WBOL fragment} $\rightarrow$ \emph{rendered HTML} $\rightarrow$ \emph{metadata}, creating a transparent dataset for supervised learning, simulation, and policy testing.
+
+This idea also aligns with the broader philosophy of Spin the Web. A portal is not only a set of screens; it is a machine-readable model of an organization, a process, and a governance environment. By exposing the WBOL fragment used to generate a page, the system turns the portal into an interpretable digital substrate for AI. The result is a portal that is simultaneously human-facing and machine-traceable—an essential foundation for trustworthy agentic systems, auditable automation, and future AI-assisted enterprise operations.
+
 \section{Knowledge and Reasoning}
 \begin{itemize}
 	\item Retrieval pipelines grounded in the webbase, logs, and domain docs
@@ -54,7 +74,6 @@ The Spin the Web framework's emphasis on declarative languages and embedded docu
 Such a digital ecosystem would fundamentally reshape how businesses discover, evaluate, and engage with one another, creating unprecedented opportunities for efficiency, innovation, and global economic integration through structured digital representation.
 
 \section{Closing Thoughts}
-[section{Unification of WBOL and AI: Consequences and Opportunities}]
 
 The unification brought about by \wbol{} and modern AI has profound consequences for the future of digital ecosystems:
 \begin{itemize}
