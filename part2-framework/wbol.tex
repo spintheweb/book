@@ -117,14 +117,14 @@ This section describes the specialized element types available in \wbol{}.
 The \texttt{connectors} element within the webbase root provides a flexible framework for defining how the portal connects to and manages external systems. Beyond simple connection definitions, \wbol{} supports advanced data organization concepts:
 
 \begin{description}
-\item[\textbf{Connector Configuration}]: Each \texttt{connector} element is configured with an \texttt{id}, a \texttt{queryLanguage}, and a \texttt{connection-string}. Supported connector types include:
+\item[\textbf{Connector Configuration}]: Each \texttt{connector} element is configured with an \texttt{id}, a \texttt{queryLanguage}, and a \texttt{connection-string}. WBOL does not constrain the backend vendor or data model. The current Webspinner runtime provides adapters for:
 \begin{itemize}
-\item Relational databases (SQL-based)
-\item NoSQL databases (document, key-value, graph)
+\item MySQL, PostgreSQL, and Microsoft SQL Server
+\item MongoDB document databases
 \item REST APIs and web services
-\item File-based connector (CSV, JSON, XML)
-\item Enterprise systems (ERP, CRM, HRM)
+\item Shell commands
 \end{itemize}
+Other backends can be integrated through connector adapters that implement their native query language and data operations. The \texttt{stwinsert}, \texttt{stwupdate}, and \texttt{stwdelete} actions share a CRUD contract across the supported database adapters.
 
 \item[\textbf{Data Groups}]: Connectors can be organized into logical groups that facilitate:
 \begin{itemize}
