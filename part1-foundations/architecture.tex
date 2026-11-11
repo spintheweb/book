@@ -40,7 +40,7 @@ The architecture consists of three core components:
 \wbol{} defines several fundamental element types:
 
 \begin{description}
-\item[\textbf{STWPortal}]: The root element containing global configuration, datasources, and portal-wide settings
+\item[\textbf{STWPortal}]: The root element containing global configuration, connector, and portal-wide settings
 \item[\textbf{STWArea}]: Logical groupings of related functionality, typically corresponding to business domains
 \item[\textbf{STWPage}]: Individual pages within areas, defining layout sections and content organization
 \item[\textbf{STWContent}]: Atomic content elements that encapsulate data queries, business logic, and presentation rules
@@ -66,7 +66,7 @@ The Web Spinner runtime serves as the execution layer that brings \wbol{} specif
 \item[\textbf{Configuration Interpretation}]: Parsing and optimizing \wbol{} documents for runtime execution
 \item[\textbf{Request Routing}]: Mapping incoming URLs to appropriate portal elements based on the \webbase{} structure
 \item[\textbf{Security Enforcement}]: Implementing role-based access control and content filtering
-\item[\textbf{Data Integration}]: Orchestrating queries across multiple datasources and systems
+\item[\textbf{Data Integration}]: Orchestrating queries across multiple connectors and systems
 \item[\textbf{Content Assembly}]: Dynamically composing responses based on user context and permissions
 \end{description}
 
@@ -77,7 +77,7 @@ The Web Spinner operates through several key subsystems:
 \begin{description}
 \item[\textbf{Webbase Loader}]: Loads and parses \wbol{} documents into optimized in-memory structures
 \item[\textbf{Authorization Module}]: Evaluates role-based visibility rules in real-time
-\item[\textbf{Command Processor}]: Handles \wbpl{} placeholder resolution and datasource command execution
+\item[\textbf{Command Processor}]: Handles \wbpl{} placeholder resolution and connector command execution
 \item[\textbf{Content Cache}]: Manages caching strategies for improved performance
 \item[\textbf{Session Manager}]: Maintains user state and authentication information
 \end{description}
@@ -104,7 +104,7 @@ The familiar UNIX-style \texttt{rwx} access paradigm can be expressed with RBV: 
 
 \begin{itemize}
 	\item \textbf{Asynchronous Processing}: Content elements are fetched independently for optimal loading times
-	\item \textbf{Intelligent Caching}: Multi-level caching strategies reduce datasource load
+	\item \textbf{Intelligent Caching}: Multi-level caching strategies reduce connector load
 	\item \textbf{Connection Pooling}: Efficient resource management for database and API connections
 	\item \textbf{Horizontal Scaling}: Support for load-balanced, multi-instance deployments
 \end{itemize}
@@ -121,7 +121,7 @@ The Studio is dynamically added to the portal \webbase{} when users with develop
 \begin{description}
 \item[\textbf{Visual Design Interface}]: Graphical tools for designing portal structure and navigation through an interactive \webbase{} hierarchy displayed in the side bar
 \item[\textbf{Code Assistance}]: Intelligent editing support for \wbol{} and \wbpl{} syntax with multi-tab file editing capabilities
-\item[\textbf{Data Source Integration}]: Tools for connecting to and testing various data sources, accessible through portal primary folder contents
+\item[\textbf{Connector Integration}]: Tools for connecting to and testing various connectors, accessible through portal primary folder contents
 \item[\textbf{Preview and Testing}]: Real-time preview capabilities with role simulation in the persistent browser tab that displays the live portal
 \item[\textbf{Version Control}]: Integration with standard source control systems through the side bar source control panel
 \item[\textbf{Comprehensive Search}]: Unified search capabilities across both \webbase{} definitions and folder contents
@@ -223,7 +223,7 @@ Common implementation patterns emerge when working with this architecture:
 \begin{itemize}
 	\item Design \texttt{STWContent} elements as reusable components
 	\item Create area-specific templates for consistent user experience
-	\item Develop shared datasource configurations for common data patterns
+	\item Develop shared connector configurations for common data patterns
 	\item Build libraries of common UI components and layouts
 \end{itemize}
 

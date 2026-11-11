@@ -14,7 +14,7 @@ While the \wbol{} and \wbpl{} languages provide a powerful declarative framework
 
 \begin{itemize}
     \item Write and edit complex \wbol{} files in a standard text editor, without syntax highlighting, validation, or autocompletion.
-    \item Manage portal resources, such as datasources and user roles, through command-line interfaces or direct database manipulation.
+    \item Manage portal resources, such as connectors and user roles, through command-line interfaces or direct database manipulation.
     \item Create and test \wbpl{} queries in a separate database management system, disconnected from the portal context.
     \item Manually compile and deploy the \webbase{} to see the results of any changes.
 \end{itemize}
@@ -66,7 +66,7 @@ This design creates an in-place development experience where:
 The Studio's side bar provides comprehensive navigation and development tools through multiple specialized views:
 
 \begin{description}
-    \item[Interactive \webbase{} Hierarchy] A tree view displaying the complete structure of the \webbase{}, allowing developers to navigate between \webbaselets{}, datasources, and configurations with visual context.
+    \item[Interactive \webbase{} Hierarchy] A tree view displaying the complete structure of the \webbase{}, allowing developers to navigate between \webbaselets{}, connectors, and configurations with visual context.
     \item[Portal Primary Folder Contents] Direct access to the portal's file system, enabling quick file management and resource organization.
     \item[Search] Comprehensive search capabilities across both \webbase{} definitions and folder contents, supporting pattern matching and content searches.
     \item[Debugging] Integrated debugging tools for \wbpl{} queries, \webbaselet{} execution, and runtime diagnostics.
@@ -92,14 +92,14 @@ A rich text editor with full support for the \wbol{} syntax, featuring:
 An interactive tool for creating, testing, and debugging \wbpl{} queries:
 \begin{itemize}
     \item A graphical interface for building complex queries.
-    \item The ability to execute queries against live datasources and view the results instantly.
+    \item The ability to execute queries against live connectors and view the results instantly.
     \item A "persona simulator" to test queries under different user roles and contexts.
 \end{itemize}
 
 \subsection{Resource Management}
 A centralized dashboard for managing all portal resources:
 \begin{itemize}
-    \item \textbf{Datasource Configuration}: Connect to and manage various data sources (databases, APIs, etc.).
+    \item \textbf{Connector Configuration}: Connect to and manage various connectors (databases, APIs, etc.).
     \item \textbf{User and Role Management}: Define user roles and assign permissions.
     \item \textbf{Asset Library}: Upload and manage static assets like images, CSS, and JavaScript files.
 \end{itemize}

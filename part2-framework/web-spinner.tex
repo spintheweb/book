@@ -49,9 +49,9 @@ The loaded \webbase{} is parsed and transformed into an optimized in-memory obje
 	\item Indexing elements by slug for efficient URL routing
 \end{itemize}
 
-\subsection{Datasource Configuration}
+\subsection{Connector Configuration}
 
-All datasources defined in the \texttt{STWPortal} element are initialized and connection pools are established. This includes databases, \rest{} APIs, file systems, and any other external data providers.
+All connectors defined in the \texttt{STWPortal} element are initialized and connection pools are established. This includes databases, \rest{} APIs, file systems, and any other external data providers.
 
 \subsection{Route Table Generation}
 
@@ -225,7 +225,7 @@ The session maintains:
 	\item Current language preference
 	\item Navigation history
 	\item Cached command results (when appropriate)
-	\item Active datasource connections
+	\item Active connector connections
 \end{itemize}
 
 \section{Request Routing and Processing}
@@ -307,17 +307,17 @@ The client then requests individual content elements:
 For each content request, the Web Spinner:
 \begin{enumerate}
 	\item Validates user authorization for the specific content element
-	\item Resolves the associated datasource and command
+	\item Resolves the associated connector and command
 	\item Processes the command through the \wbpl{} (Webbase Placeholders Language) engine
-	\item Executes the processed command against the datasource
+	\item Executes the processed command against the connector
 	\item Applies the content layout transformation
 	\item Returns the rendered content or raw data (depending on the request type)
 \end{enumerate}
 
-\section{Datasource Connection and Command Management}
-\label{sec:datasource-management}
+\section{Connector Connection and Command Management}
+\label{sec:connector-management}
 
-The Web Spinner maintains a sophisticated datasource management system:
+The Web Spinner maintains a sophisticated connector management system:
 
 \subsection{Connection Pooling}
 
@@ -333,9 +333,9 @@ Raw queries defined in \texttt{STWContent} elements undergo several processing s
 	\item[\textbf{Optimization}]: Command plans may be cached for frequently-executed queries
 \end{description}
 
-\subsection{Multi-Datasource Support}
+\subsection{Multi-Connector Support}
 
-The system supports heterogeneous datasources:
+The system supports heterogeneous connectors:
 
 \begin{description}
 	\item[\textbf{Relational Databases}]: SQL queries with full \wbpl{} placeholder support
@@ -346,7 +346,7 @@ The system supports heterogeneous datasources:
 
 \subsection{Error Handling}
 
-Datasource errors are gracefully handled:
+Connector errors are gracefully handled:
 \begin{itemize}
 	\item Connection failures trigger automatic retry logic
 	\item Command errors are logged and appropriate error responses are returned
@@ -363,7 +363,7 @@ The Web Spinner implements several performance and reliability features:
 Each content element has configurable timeout settings:
 
 \begin{description}
-	\item[\textbf{Command Timeout}]: Maximum time allowed for datasource queries
+	\item[\textbf{Command Timeout}]: Maximum time allowed for connector queries
 	\item[\textbf{Layout Timeout}]: Maximum time for layout compilation and rendering
 	\item[\textbf{Total Request Timeout}]: Overall timeout for content delivery
 \end{description}
@@ -373,7 +373,7 @@ Each content element has configurable timeout settings:
 Multiple levels of caching improve performance:
 
 \begin{description}
-	\item[\textbf{Command Result Caching}]: Datasource results are cached based on command signatures
+	\item[\textbf{Command Result Caching}]: Connector results are cached based on command signatures
 	\item[\textbf{Layout Caching}]: Compiled layouts are cached until templates change
 	\item[\textbf{Response Caching}]: Complete HTTP responses may be cached for static content
 \end{description}
@@ -392,7 +392,7 @@ Multiple Web Spinner instances can operate in parallel:
 The Web Spinner provides comprehensive monitoring:
 \begin{itemize}
 	\item Request/response times and throughput metrics
-	\item Datasource performance and error rates
+	\item Connector performance and error rates
 	\item User session analytics and behavior patterns
 	\item System resource utilization and capacity planning data
 \end{itemize}

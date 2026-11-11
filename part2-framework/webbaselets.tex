@@ -20,10 +20,10 @@ This modularity ensures that the portal can evolve without requiring a monolithi
 A \webbase{} represents a complete, self-contained portal. It includes:
 
 \begin{description}
-\item[\textbf{Portal Configuration}]: The root \texttt{webbase} element containing global settings, supported languages, and datasource definitions
+\item[\textbf{Portal Configuration}]: The root \texttt{webbase} element containing global settings, supported languages, and connector definitions
 \item[\textbf{Navigation Hierarchy}]: A complete tree of areas, pages, and content elements that define the portal structure
 \item[\textbf{Security Model}]: Comprehensive visibility rules and role-based access controls throughout the hierarchy
-\item[\textbf{Data Integration}]: Datasource configurations and command templates for dynamic content generation
+\item[\textbf{Data Integration}]: Connector configurations and command templates for dynamic content generation
 \end{description}
 
 \subsection{Webbase Example Structure}
@@ -33,9 +33,9 @@ A \webbase{} represents a complete, self-contained portal. It includes:
 <webbase xmlns="https://spintheweb.org/schemas/wbol.xsd"
     guid="w1234567890123456789012" homepage="p876543210987654321"
     protocol="https://" defaultLanguage="en">
-  <datasources>
-    <datasource id="main" queryLanguage="SQL" connection-string="..." />
-  </datasources>
+  <connectors>
+    <connector id="main" queryLanguage="SQL" connection-string="..." />
+  </connectors>
   <roles>
     <role id="root" /><role id="administrators" /><role id="guests" />
     <role id="users" /><role id="developers" /><role id="translators" /><role id="seo" />

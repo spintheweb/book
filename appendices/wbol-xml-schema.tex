@@ -28,7 +28,7 @@ The root element of a complete portal. Requires exactly one \texttt{webbase} per
 \end{description}
 \paragraph{Child Elements}
 \begin{description}
-  \item[\texttt{datasources} (optional)] One or more \texttt{datasource} definitions (\texttt{id}, \texttt{queryLanguage}, \texttt{connection-string}).
+  \item[\texttt{connectors} (optional)] One or more \texttt{connector} definitions (\texttt{id}, \texttt{queryLanguage}, \texttt{connection-string}).
   \item[\texttt{roles} (required)] At least the seven mandatory preset roles: \texttt{root}, \texttt{administrators}, \texttt{guests}, \texttt{users}, \texttt{developers}, \texttt{translators}, \texttt{seo}, plus any custom roles.
   \item[\texttt{name} (required)] Localized display name (see \S\ref{sec:xsd-name}).
   \item[\texttt{documentation} (optional)] Free-form, localized, mixed-content documentation.
@@ -96,14 +96,14 @@ A concrete, navigable page. Restricts its \texttt{children} to \texttt{content} 
 \paragraph{Content Attributes}
 \texttt{guid} (required, pattern \texttt{c[0-9A-Za-z]+}), \texttt{origin} (required), \texttt{type} (required; one of \texttt{text}, \texttt{table}, \texttt{form}, \texttt{list}, \texttt{graph}, \texttt{plots}, \texttt{calendar}, \texttt{tree}, \texttt{tabs}, \texttt{accordion}, \texttt{menu}, \texttt{breadcrumbs}, \texttt{keypad}, \texttt{imagemap}, \texttt{map}, \texttt{serverside}, \texttt{clientside}), \texttt{section} (optional layout region, e.g. \texttt{main}, \texttt{aside-left}, \texttt{popup}), \texttt{sequence} (optional), \texttt{class} (optional CSS hook).
 \paragraph{Content Elements}
-\texttt{name} (required), \texttt{query} (required; the \wbpl{}-processed command, with an optional \texttt{datasource} attribute), \texttt{parameters} (optional querystring payload), \texttt{layouts} (optional, localized \wbll{} templates), \texttt{documentation} (optional), \texttt{options} (optional; see below), \texttt{visibility} (optional).
+\texttt{name} (required), \texttt{query} (required; the \wbpl{}-processed command, with an optional \texttt{connector} attribute), \texttt{parameters} (optional querystring payload), \texttt{layouts} (optional, localized \wbll{} templates), \texttt{documentation} (optional), \texttt{options} (optional; see below), \texttt{visibility} (optional).
 \paragraph{Shortcut Attributes}
 \texttt{guid}, \texttt{origin}, \texttt{target} (required, GUID of the \texttt{content} being reused), \texttt{section}, \texttt{sequence}, \texttt{class} (required).
 \begin{lstlisting}[language=XML,caption={Content with a data-bound query}]
 <content xmlns="https://spintheweb.org/schemas/wbol.xsd"
     guid="cEmployeeList00001" origin="pHRDirectory0001" type="table" section="main">
   <name><text xml:lang="en" slug="employees">Employees</text></name>
-  <query datasource="MSSQL">SELECT name, department FROM employees WHERE active = 1</query>
+  <query connector="MSSQL">SELECT name, department FROM employees WHERE active = 1</query>
   <layouts><text xml:lang="en">name | department</text></layouts>
 </content>
 \end{lstlisting}

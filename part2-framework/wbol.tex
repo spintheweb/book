@@ -106,36 +106,36 @@ This section describes the specialized element types available in \wbol{}.
 
 \begin{description}
 \item[\textbf{langs}]: A list of supported languages for the portal. The first of the list is the default portal language.
-\item[\textbf{datasources}]: Defines the data sources used by the portal.
+\item[\textbf{connector}]: Defines the connector used by the portal.
 \item[\textbf{mainpage}]: The GUID of the \texttt{STWPage} that serves as the main entry point for the portal.
 \item[\textbf{version}]: A version string for the portal.
 \end{description}
 
-\subsubsection{Data Sources and Groups}
-\label{sec:datasources-groups}
+\subsubsection{Connectors and Groups}
+\label{sec:connector-groups}
 
-The \texttt{datasources} element within the webbase root provides a flexible framework for defining how the portal connects to and manages external data systems. Beyond simple connection definitions, \wbol{} supports advanced data organization concepts:
+The \texttt{connectors} element within the webbase root provides a flexible framework for defining how the portal connects to and manages external systems. Beyond simple connection definitions, \wbol{} supports advanced data organization concepts:
 
 \begin{description}
-\item[\textbf{Data Source Configuration}]: Each \texttt{datasource} element is configured with an \texttt{id}, a \texttt{queryLanguage}, and a \texttt{connection-string}. Supported data source types include:
+\item[\textbf{Connector Configuration}]: Each \texttt{connector} element is configured with an \texttt{id}, a \texttt{queryLanguage}, and a \texttt{connection-string}. Supported connector types include:
 \begin{itemize}
 \item Relational databases (SQL-based)
 \item NoSQL databases (document, key-value, graph)
 \item REST APIs and web services
-\item File-based data sources (CSV, JSON, XML)
+\item File-based connector (CSV, JSON, XML)
 \item Enterprise systems (ERP, CRM, HRM)
 \end{itemize}
 
-\item[\textbf{Data Groups}]: Data sources can be organized into logical groups that facilitate:
+\item[\textbf{Data Groups}]: Connectors can be organized into logical groups that facilitate:
 \begin{itemize}
 \item Access control and security policies
 \item Performance optimization through connection pooling
-\item Load balancing across redundant data sources
+\item Load balancing across redundant connector
 \item Backup and failover configurations
 \item Administrative grouping for different business units
 \end{itemize}
 
-\item[\textbf{Accessibility Integration}]: The data source framework includes provisions for accessibility compliance:
+\item[\textbf{Accessibility Integration}]: The connector framework includes provisions for accessibility compliance:
 \begin{itemize}
 \item Metadata enrichment for screen readers and assistive technologies
 \item Alternative data representations for different accessibility needs
@@ -144,7 +144,7 @@ The \texttt{datasources} element within the webbase root provides a flexible fra
 \end{itemize}
 \end{description}
 
-This comprehensive approach to data source management ensures that \wbol{} can integrate seamlessly with complex enterprise data environments while maintaining accessibility and security standards.
+This comprehensive approach to connector management ensures that \wbol{} can integrate seamlessly with complex enterprise data environments while maintaining accessibility and security standards.
 
 \subsection{STWArea}
 
@@ -173,8 +173,8 @@ This comprehensive approach to data source management ensures that \wbol{} can i
 \item[\textbf{cssClass}]: An optional CSS class (the \texttt{class} attribute) to apply to the content element for styling.
 \item[\textbf{section}]: The name of the page section where this content should be rendered (e.g., "header", "main", "sidebar").
 \item[\textbf{sequence}]: A number that determines the order of content within a section.
-\item[\textbf{dsn}]: The \texttt{datasource} attribute on the \texttt{query} element, which identifies a specific data source configured in the webbase root.
-\item[\textbf{command}]: The text of the \texttt{query} element, executed against the specified data source. Before execution, this text is processed by the \textbf{Webbase Placeholders Language (\wbpl{})} processor. This processor replaces placeholders within the command with values sourced from several locations: the \texttt{parameters} element, the URL querystring, session variables, global variables, and HTTP headers. After this substitution, the resulting command is executed by the data source using its native language (e.g., SQL for a relational database, or JSONata if the data source is a JSON-based API).
+\item[\textbf{connector}]: The \texttt{connector} attribute on the \texttt{query} element, which identifies a specific connector configured in the webbase root.
+\item[\textbf{command}]: The text of the \texttt{query} element, executed against the specified connector. Before execution, this text is processed by the \textbf{Webbase Placeholders Language (\wbpl{})} processor. This processor replaces placeholders within the command with values sourced from several locations: the \texttt{parameters} element, the URL querystring, session variables, global variables, and HTTP headers. After this substitution, the resulting command is executed by the connector using its native language (e.g., SQL for a relational database, or JSONata if the connector is a JSON-based API).
 \item[\textbf{params}]: The \texttt{parameters} element, a string formatted as a standard querystring (e.g., \texttt{key1=value1\&key2=value2}).
 \item[\textbf{layout}]: The \texttt{layouts} element that defines, per language, how the fetched data should be rendered.
 \end{description}

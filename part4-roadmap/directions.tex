@@ -17,14 +17,14 @@ This chapter explores the transformative potential of Spin the Web as it evolves
 
 A distinct \textbf{agentic} or \textbf{AI} role is useful not as a special case of the user interface, but as a first-class access mode for the portal itself. The regular human user sees the rendered page in the conventional sense: HTML, CSS, navigation, and the final interaction surface. An agent, by contrast, should receive the same page in a richer, machine-readable envelope that includes both the human-visible result and the declarative structure that produced it. In other words, an agentic user is not only shown \emph{what} a regular user sees, but also \emph{why} that result was assembled and \emph{which} underlying WBOL fragment and metadata were used to produce it.
 
-This is not a leak of implementation detail; it is a semantic contract. A portal that can expose its rendered HTML together with the relevant \wbol{} fragment, localized metadata, role constraints, datasource bindings, and request context becomes self-describing to both humans and AI systems. The same portal can then serve multiple audiences simultaneously: a human reader receives a polished experience, while an AI agent receives the canonical structure of the content, its provenance, and the intent of the request that shaped the response. This distinction is essential in enterprise settings, where the business meaning of a page often matters more than the final presentation markup alone.
+This is not a leak of implementation detail; it is a semantic contract. A portal that can expose its rendered HTML together with the relevant \wbol{} fragment, localized metadata, role constraints, connector bindings, and request context becomes self-describing to both humans and AI systems. The same portal can then serve multiple audiences simultaneously: a human reader receives a polished experience, while an AI agent receives the canonical structure of the content, its provenance, and the intent of the request that shaped the response. This distinction is essential in enterprise settings, where the business meaning of a page often matters more than the final presentation markup alone.
 
 For Spin the Web, the natural pattern is therefore to define an explicit AI role whose view is a structured render contract. The contract should include:
 \begin{itemize}
 	\item the rendered HTML or normalized view for human inspection;
 	\item the relevant \wbol{} subtree that generated that view;
 	\item contextual metadata describing the active page, area, content, and user role;
-	\item the resolved datasource and parameter set that informed the response;
+	\item the resolved connector and parameter set that informed the response;
 	\item optional provenance information such as visibility rules, language selection, and request history.
 \end{itemize}
 
@@ -81,7 +81,7 @@ The unification brought about by \wbol{} and modern AI has profound consequences
 	\item \textbf{Automated Reasoning and Decision Making:} AI agents can use \wbol{}'s structured data to perform complex reasoning, automate workflows, and make context-aware decisions, resulting in smarter web applications that adapt to user needs and business environments.
 	\item \textbf{Accelerated Innovation:} Developers and organizations can build new tools and services more rapidly, as AI can interpret and act on \wbol{}-described resources without manual intervention, reducing development time and errors.
 	\item \textbf{Enhanced Discoverability and Personalization:} AI systems can use \wbol{} metadata to better understand user intent and preferences, enabling more accurate search, recommendation, and personalization features.
-	\item \textbf{Cross-Domain Integration:} The modularity of \wbol{} and the generalization capabilities of AI make it easier to connect disparate systems, data sources, and services, fostering a unified and intelligent web ecosystem.
+	\item \textbf{Cross-Domain Integration:} The modularity of \wbol{} and the generalization capabilities of AI make it easier to connect disparate systems, connector, and services, fostering a unified and intelligent web ecosystem.
 \end{itemize}
 
 In summary, the synergy between \wbol{} and AI transforms the web from a collection of static resources into a dynamic, intelligent, and interoperable environment, driving new possibilities for automation, personalization, and innovation.
@@ -101,6 +101,6 @@ Looking forward, the Project actively advocates for enterprise software vendors 
 
 In this paradigm, WBOL orchestrates UI, navigation, and user journeys, while all backend interactions—authentication, business rules, data queries—are handled via API calls. This separation of concerns supports agile development, scalability, and global adoption. As more enterprise systems adopt API-first strategies, WBOL can unify them, delivering consistent, brand-aligned experiences for both human and machine users.
 
-Crucially, WBOL can interact with any enterprise software—provided the data is made accessible—using a uniform paradigm: data is searched, the search result is a list, and the items in the list can be explored. This means that on a single webpage, different datasources (from multiple systems) can be accessed and presented as if they were managed by a single unified software. This capability opens the full universe of eBranding: organizations can design digital experiences that seamlessly blend data and functionality from diverse platforms, delivering a coherent brand identity and user journey across all business domains.
+Crucially, WBOL can interact with any enterprise software—provided the data is made accessible—using a uniform paradigm: data is searched, the search result is a list, and the items in the list can be explored. This means that on a single webpage, different connectors (from multiple systems) can be accessed and presented as if they were managed by a single unified software. This capability opens the full universe of eBranding: organizations can design digital experiences that seamlessly blend data and functionality from diverse platforms, delivering a coherent brand identity and user journey across all business domains.
 
 Intelligent agents enhance the portal experience rather than replace it. WBLL and WBOL remain the foundation, while agents act as advanced collaborators—able to read, write, and reason across the webbase to accelerate meaningful work and unlock new possibilities for automation and insight.

@@ -107,7 +107,7 @@ SELECT * FROM orders WHERE status IN ('pending','shipped','delivered')
 \section{Integration with WBOL}
 \label{sec:wbpl-integration}
 
-\wbpl{} is primarily used by \texttt{STWContent} elements in \wbol{} documents. The \texttt{command} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified datasource.
+\wbpl{} is primarily used by \texttt{STWContent} elements in \wbol{} documents. The \texttt{command} attribute of an \texttt{STWContent} element contains a template string that is processed by the \wbpl{} engine before being executed against the specified connector.
 
 The placeholder values are sourced from multiple locations in order of precedence:
 \begin{enumerate}
