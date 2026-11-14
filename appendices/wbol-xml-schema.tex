@@ -29,7 +29,7 @@ The root element of a complete portal. Requires exactly one \texttt{webbase} per
 \paragraph{Child Elements}
 \begin{description}
   \item[\texttt{connectors} (optional)] One or more \texttt{connector} definitions (\texttt{id}, \texttt{queryLanguage}, \texttt{connection-string}).
-  \item[\texttt{roles} (required)] At least the seven mandatory preset roles: \texttt{root}, \texttt{administrators}, \texttt{guests}, \texttt{users}, \texttt{developers}, \texttt{translators}, \texttt{seo}, plus any custom roles.
+  \item[\texttt{roles} (required)] At least the seven mandatory preset roles: \texttt{root}, \texttt{administrator}, \texttt{guest}, \texttt{user}, \texttt{developer}, \texttt{leaddeveloper}, \texttt{seo}, plus any custom roles.
   \item[\texttt{name} (required)] Localized display name (see \S\ref{sec:xsd-name}).
   \item[\texttt{documentation} (optional)] Free-form, localized, mixed-content documentation.
   \item[\texttt{visibility} (optional)] Role-based visibility rules (see \S\ref{sec:xsd-visibility}).
@@ -41,8 +41,8 @@ The root element of a complete portal. Requires exactly one \texttt{webbase} per
     guid="w2FYn1HghFMNRz8sX5s32YP" homepage="p41eZz1dU5ZxBafbmZeyQEB"
     protocol="https://" defaultLanguage="en">
   <roles>
-    <role id="root" /><role id="administrators" /><role id="guests" />
-    <role id="users" /><role id="developers" /><role id="translators" /><role id="seo" />
+    <role id="root" /><role id="administrator" /><role id="guest" />
+    <role id="user" /><role id="developer" /><role id="leaddeveloper" /><role id="seo" />
   </roles>
   <name>
     <text xml:lang="en" slug="portal">Corporate Portal</text>
@@ -141,7 +141,7 @@ Localizable fields are containers of one or more \texttt{text} elements, each qu
 Attaches role-based visibility rules to any element. Each \texttt{role} entry pairs a declared \texttt{id} with a \texttt{visibility} value: the literal \texttt{true} or \texttt{false}, or a call to a visibility function (pattern \texttt{name()}) resolved at request time to \texttt{true}, \texttt{false}, or \texttt{null} (meaning: inherit from the parent element). Every role \texttt{id} referenced here must already be declared in the webbase's \texttt{roles} element; the schema enforces this via the \texttt{visibilityRoleRefs} keyref.
 \begin{lstlisting}[language=XML,caption={Role-based visibility}]
 <visibility>
-  <role id="users" visibility="true" />
-  <role id="guests" visibility="isPublished()" />
+  <role id="user" visibility="true" />
+  <role id="guest" visibility="isPublished()" />
 </visibility>
 \end{lstlisting}

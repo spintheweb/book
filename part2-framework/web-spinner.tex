@@ -82,9 +82,9 @@ Authenticated entities are assigned one or more roles.
 When a portal is accessed, the requester is automatically treated as a \textbf{guest user}.
 
 \begin{itemize}
-	\item The guest user is assigned the \texttt{guests} role by default.
+	\item The guest user is assigned the \texttt{guest} role by default.
 	\item This role governs visibility for unauthenticated users.
-	\item Content not explicitly visible to \texttt{guests} will return a \texttt{200 OK} with an empty response.
+	\item Content not explicitly visible to \texttt{guest} will return a \texttt{200 OK} with an empty response.
 \end{itemize}
 
 This ensures safe default behavior and prevents metadata leakage.
@@ -105,7 +105,7 @@ This paradigm simplifies access control and enforces privacy by design.
 \resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[node distance=1.6cm,>=stealth,rounded corners,align=center]
 	% Nodes
-	\node[draw, fill=gray!10, minimum width=2.8cm] (roles) {Session Roles\\\small guests, users, ...};
+	\node[draw, fill=gray!10, minimum width=2.8cm] (roles) {Session Roles\\\small guest, user, ...};
 	\node[draw, fill=gray!10, right=2.8cm of roles, minimum width=3.6cm] (element) {Requested Element\\\small Page / Content};
 	\node[draw, fill=blue!10, below=1.8cm of element, minimum width=5.2cm] (inherit) {RBV Inheritance\\\small true / false / undefined\\inherit up to root};
 	\node[draw, fill=green!10, right=3.2cm of element, minimum width=3.8cm] (filter) {Visibility Filter\\\small visible? yes/no};
@@ -147,27 +147,27 @@ Roles can be assigned to:
 \end{itemize}
 If no role is explicitly assigned, it inherits from its parent.
 
-\paragraph{Default Role: Guests}
-The \texttt{guests} role is automatically assigned to the portal home page and its contents. All other elements are invisible to guests unless explicitly made visible.
+\paragraph{Default Role: Guest}
+The \texttt{guest} role is automatically assigned to the portal home page and its contents. All other elements are invisible to users with the guest role unless explicitly made visible.
 
 \subsection{Predefined Roles}
 
 Spin the Web defines the following non-deletable roles:
 
 \begin{itemize}
-	\item \texttt{roots} \hfill\emph{superuser; see override below}
-	\item \texttt{guests}
-	\item \texttt{users}
-	\item \texttt{administrators}
-	\item \texttt{developers}
-	\item \texttt{webmasters}
-	\item \texttt{translators}
+	\item \texttt{root} \hfill\emph{superuser; see override below}
+	\item \texttt{administrator}
+	\item \texttt{guest}
+	\item \texttt{user}
+	\item \texttt{developer}
+	\item \texttt{leaddeveloper}
+	\item \texttt{seo}
 \end{itemize}
 
 You may define additional roles as needed. A good starting point is your organizational chart.
 
-\paragraph{Superuser override (\texttt{roots})}
-The \texttt{roots} role represents a trusted superuser. When a session includes \texttt{roots}, the “no assignment found up to the portal level” condition does \emph{not} cause a deny; instead, evaluation proceeds to the element’s \texttt{visible} flag. This does not change the semantics of \texttt{visible=false} (which still hides the element).
+\paragraph{Superuser override (\texttt{root})}
+The \texttt{root} role represents a trusted superuser. When a session includes \texttt{root}, the “no assignment found up to the portal level” condition does \emph{not} cause a deny; instead, evaluation proceeds to the element’s \texttt{visible} flag. This does not change the semantics of \texttt{visible=false} (which still hides the element).
 
 \subsection{RBV Decision Procedure}
 \label{sec:rbv-decision}
@@ -177,7 +177,7 @@ With reference to Figure~\ref{fig:rbv-flow}, the Web Spinner applies Role-Based 
 \paragraph{Page decision}
 \begin{enumerate}
 	\item If the requested page is the Home page, \textbf{ALLOW} by default.
-	\item Else, if no authorization for any of the session roles is found on the page or any ancestor (page \textrightarrow{} area \textrightarrow{} portal), \textbf{DENY} — \emph{unless} the session has the \texttt{roots} role, in which case continue to step 3.
+	\item Else, if no authorization for any of the session roles is found on the page or any ancestor (page \textrightarrow{} area \textrightarrow{} portal), \textbf{DENY} — \emph{unless} the session has the \texttt{root} role, in which case continue to step 3.
 	\item Else, if \texttt{page.visible} is \texttt{false}, \textbf{DENY} and \emph{navigate to the Home page}.
 	\item Otherwise, \textbf{ALLOW}.
 \end{enumerate}
@@ -190,14 +190,14 @@ With reference to Figure~\ref{fig:rbv-flow}, the Web Spinner applies Role-Based 
 			\item Else, if \texttt{content.visible} is \texttt{false}, \textbf{DENY}.
 			\item Otherwise, \textbf{ALLOW}.
 		\end{enumerate}
-	\item If no role assignment for any session role is found all the way up to the portal level, treat as an \emph{explicit deny} — \emph{unless} the session has the \texttt{roots} role, in which case evaluate \texttt{content.visible}: if \texttt{false} then \textbf{DENY}, otherwise \textbf{ALLOW}.
+	\item If no role assignment for any session role is found all the way up to the portal level, treat as an \emph{explicit deny} — \emph{unless} the session has the \texttt{root} role, in which case evaluate \texttt{content.visible}: if \texttt{false} then \textbf{DENY}, otherwise \textbf{ALLOW}.
 \end{enumerate}
 
 \paragraph{Defaults and inheritance}
 \begin{itemize}
-		\item Pages are \emph{default-deny} (unless Home), requiring an explicit or inherited allow for at least one session role, and \texttt{visible} must not be \texttt{false}. If no role assignment is found all the way to the portal level, treat the outcome as an \emph{explicit deny}; sessions with the \texttt{roots} role bypass this specific condition and proceed to the \texttt{visible} check.
-		\item Contents without any role assignment up to the portal level are \emph{explicitly denied}. Sessions with the \texttt{roots} role bypass only this condition and proceed to the \texttt{visible} check.
-		\item RBV inherits up the hierarchy; evaluation short-circuits at the nearest level that defines role entries. If none are found by the time the portal is reached, the result is an explicit deny (subject to the \texttt{roots} override above).
+		\item Pages are \emph{default-deny} (unless Home), requiring an explicit or inherited allow for at least one session role, and \texttt{visible} must not be \texttt{false}. If no role assignment is found all the way to the portal level, treat the outcome as an \emph{explicit deny}; sessions with the \texttt{root} role bypass this specific condition and proceed to the \texttt{visible} check.
+		\item Contents without any role assignment up to the portal level are \emph{explicitly denied}. Sessions with the \texttt{root} role bypass only this condition and proceed to the \texttt{visible} check.
+		\item RBV inherits up the hierarchy; evaluation short-circuits at the nearest level that defines role entries. If none are found by the time the portal is reached, the result is an explicit deny (subject to the \texttt{root} override above).
 \end{itemize}
 
 \section{User Session Management}
@@ -207,7 +207,7 @@ The Web Spinner maintains stateful user sessions to manage authentication, autho
 
 \subsection{Session Establishment}
 
-When a user first accesses the portal, a new session is created with a unique identifier; a guest user is set as the session user (assigned the \texttt{guests} role). Sessions are maintained using cookies, JWT tokens, or other mechanisms.
+When a user first accesses the portal, a new session is created with a unique identifier; a guest user is set as the session user (assigned the \texttt{guest} role). Sessions are maintained using cookies, JWT tokens, or other mechanisms.
 
 \subsection{Authentication Integration}
 
