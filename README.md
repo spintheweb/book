@@ -6,15 +6,16 @@
 
 [**Read the latest PDF**](https://spintheweb.github.io/book/SpinTheWeb.pdf)
 
-This book presents the Spin the Web framework, from foundational concepts to
-implementation techniques. The content details the Webbase Ontology Language
-(WBOL), the Web Spinner, and Spin the Web Studio, and then provides a guide on
-how to use it to build web portals. The framework and this book are stewarded by
-the eponymous open-source **Spin the Web Project**.
+The book follows a four-part progression: philosophy and foundations, the
+technical framework, portal implementation, and expansion into a network of
+portals. It details the Webbase Ontology Language (WBOL), the Web Spinner, and
+Spin the Web Studio, and guides readers in using them to build web portals. The
+framework and this book are stewarded by the eponymous open-source **Spin the
+Web Project**.
 
 ## Book Content
 
-### Part I: The Foundations (Chapters 1–4)
+### Part I: The Foundations — Philosophy (Chapters 1–4)
 
 - Chapter 1: Genesis and History — History and evolution of Spin the Web
 - Chapter 2: Introduction to Enterprise Portal Challenges — Problem domain
@@ -22,7 +23,7 @@ the eponymous open-source **Spin the Web Project**.
 - Chapter 3: Web Portals as Virtualized Enterprises — Concept and rationale
 - Chapter 4: Architecture Overview — System design principles
 
-### Part II: The Framework (Chapters 5–11)
+### Part II: The Framework — Technical Foundations (Chapters 5–11)
 
 - Chapter 5: WBOL (Webbase Ontology Language) — Declarative language
 - Chapter 6: WBPL (Webbase Placeholders Language) — Placeholder management
@@ -34,16 +35,18 @@ the eponymous open-source **Spin the Web Project**.
   runtime, WBLL layout interpreter, WBPL, session/state, security, and
   deployment
 
-### Part III: The Portal (Chapters 12–13)
+### Part III: The Portal — Implementation (Chapters 12–14)
 
-- Chapter 12: Implementing Portal Contents — Structure, semantics, information
+- Chapter 12: Enterprise — Purpose, processes, structure, communication, and
+  the portal's role as the enterprise channel
+- Chapter 13: Implementing Portal Contents — Structure, semantics, information
   architecture, documentation, search, and evolution
-- Chapter 13: Implementing Portal Visuals — Layout, navigation systems,
+- Chapter 14: Implementing Portal Visuals — Layout, navigation systems,
   interaction, accessibility, theming, and performance
 
-### Part IV: The Roadmap (Chapter 14)
+### Part IV: A Network of Portals — Expansion (Chapter 15)
 
-- Chapter 14: The Roadmap
+- Chapter 15: Interconnected Portals
 
 ### Appendices
 
@@ -87,13 +90,14 @@ the eponymous open-source **Spin the Web Project**.
 │   ├── web-spinner.tex        # The Web Spinner Runtime
 │   ├── studio.tex             # The Spin the Web Studio
 │   └── technology.tex         # Technology stack of the reference implementation
-├── part3-implementation/      # Part III: Implementation (Contents & Visuals)
+├── part3-portal/              # Part III: The Portal
 │   ├── intro.tex              # Part introduction
+│   ├── enterprise.tex         # Enterprise purpose, processes, and communication
 │   ├── contents.tex           # Implementing portal contents (structure, semantics, IA)
 │   └── visuals.tex            # Implementing portal visuals (layout, interaction, branding)
-├── part4-roadmap/             # Part IV: The Roadmap
+├── part4-network/             # Part IV: A Network of Portals
 │   ├── intro.tex              # Part introduction
-│   └── directions.tex         # Roadmap and evolution
+│   └── directions.tex         # Interconnected portals and expansion
 ├── figures/                   # Images and diagrams
 │   ├── logo.png               # Logo
 │   └── spin-the-web.png       # Architecture diagram
